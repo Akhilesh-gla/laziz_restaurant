@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laziz Restaurant Gurgaon | Best Mughlai & North Indian Food</title>
+  <meta name="description" content="Laziz Restaurant in Gurgaon serves the finest North Indian, Mughlai, Biryani, Chinese, BBQ, and Rolls. Located in Sector 21, Old Delhi Road. Reserve your table today!" />
+  <meta name="keywords" content="best restaurant in Gurgaon, best Mughlai restaurant Gurgaon, best biryani in Gurgaon, restaurant near Sector 21 Gurgaon, North Indian restaurant Gurgaon" />
+  <meta property="og:title" content="Laziz Restaurant Gurgaon | Mughlai & North Indian Food" />
+  <meta property="og:description" content="Authentic flavors, royal ambiance. Dine at Laziz Restaurant, Sector 21 Gurgaon." />
+  <meta property="og:type" content="restaurant" />
+  <link rel="canonical" href="https://lazizrestaurant.in" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cinzel:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Laziz Restaurant",
+    "image": "https://lazizrestaurant.in/og-image.jpg",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Shri Ram Swaroop Market, Old Delhi Road, Near Hanuman Mandir",
+      "addressLocality": "Sector 21, Gurgaon",
+      "addressRegion": "Haryana",
+      "postalCode": "122001",
+      "addressCountry": "IN"
+    },
+    "telephone": "+919717788806",
+    "openingHours": "Mo-Su 11:00-23:15",
+    "servesCuisine": ["North Indian", "Mughlai", "Chinese", "Biryani", "BBQ"],
+    "priceRange": "₹₹",
+    "url": "https://lazizrestaurant.in"
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red: #E63946;
+      --gold: #F4A261;
+      --dark: #1F1F1F;
+      --darkbg: #141414;
+      --light: #F8F8F8;
+      --cream: #FFF4E6;
+      --cta: #FF4D4D;
+      --text: #222222;
+      --muted: #888;
+      --border: rgba(244,162,97,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--darkbg);
+      color: var(--light);
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 5%;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(20,20,20,0.97);
+      backdrop-filter: blur(20px);
+      padding: 12px 5%;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    }
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--red); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--red);
+      color: white !important;
+      padding: 10px 22px;
+      border-radius: 4px;
+      font-size: 0.75rem !important;
+      letter-spacing: 1px;
+      transition: all 0.3s ease !important;
+    }
+    .nav-cta:hover { background: var(--cta) !important; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(230,57,70,0.4); }
+    .nav-cta::after { display: none !important; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 26px; height: 2px; background: var(--gold); transition: all 0.3s; display: block; }
+
+    /* ── HERO ── */
+    #hero {
+      height: 100vh; min-height: 700px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=1920&q=80') center/cover no-repeat;
+      transform: scale(1.1);
+      animation: heroZoom 20s ease-in-out infinite alternate;
+    }
+    @keyframes heroZoom { from { transform: scale(1.1); } to { transform: scale(1.2); } }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(20,20,20,0.92) 0%, rgba(20,20,20,0.7) 50%, rgba(20,20,20,0.85) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center;
+      padding: 0 20px;
+      animation: fadeUp 1.2s ease forwards;
+    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-badge {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(244,162,97,0.4);
+      padding: 8px 20px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+      animation: fadeUp 1s 0.2s ease both;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: white;
+      animation: fadeUp 1s 0.4s ease both;
+    }
+    .hero-title em { color: var(--gold); font-style: italic; }
+    .hero-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.9rem, 2vw, 1.3rem);
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 3px;
+      margin: 20px 0 40px;
+      animation: fadeUp 1s 0.6s ease both;
+    }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeUp 1s 0.8s ease both; }
+    .btn-primary {
+      background: var(--red);
+      color: white;
+      padding: 16px 36px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(230,57,70,0.35);
+    }
+    .btn-primary:hover { background: #c0303d; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(230,57,70,0.5); }
+    .btn-outline {
+      background: transparent;
+      color: white;
+      padding: 15px 36px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid rgba(244,162,97,0.6);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
+    .hero-scroll {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .hero-scroll span { font-size: 1.2rem; }
+    @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-8px); } }
+    .hero-stats {
+      position: absolute; bottom: 40px; right: 5%;
+      display: flex; gap: 40px;
+      animation: fadeUp 1s 1s ease both;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 900;
+      color: var(--gold);
+      display: block;
+    }
+    .stat-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.5);
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 5%; }
+    .section-header { text-align: center; margin-bottom: 70px; }
+    .section-tag {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 700; color: white; line-height: 1.2;
+    }
+    .section-title em { color: var(--gold); font-style: italic; }
+    .section-line {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--gold));
+      margin: 20px auto 0;
+      border-radius: 2px;
+    }
+    .section-desc {
+      max-width: 600px; margin: 20px auto 0;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem; line-height: 1.8;
+    }
+
+    /* ── ABOUT ── */
+    #about { background: var(--dark); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-main {
+      width: 100%; border-radius: 4px;
+      height: 500px; object-fit: cover;
+      filter: brightness(0.9) saturate(1.1);
+      display: block;
+      background: url('https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=800&q=80') center/cover;
+    }
+    .about-img-badge {
+      position: absolute; bottom: -30px; right: -30px;
+      background: var(--red);
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      box-shadow: 0 10px 40px rgba(230,57,70,0.4);
+      border: 4px solid var(--darkbg);
+    }
+    .about-img-badge strong {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 900; color: white;
+      line-height: 1;
+    }
+    .about-img-badge span {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.55rem; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(255,255,255,0.8);
+    }
+    .about-text .section-header { text-align: left; margin-bottom: 30px; }
+    .about-text .section-line { margin-left: 0; }
+    .about-text p { color: rgba(255,255,255,0.65); line-height: 1.9; margin-bottom: 20px; font-size: 0.95rem; }
+    .about-features {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 30px;
+    }
+    .about-feat {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.5px; color: rgba(255,255,255,0.8);
+    }
+    .about-feat-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(244,162,97,0.1);
+      border: 1px solid rgba(244,162,97,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+
+    /* ── POPULAR DISHES ── */
+    #dishes { background: var(--darkbg); }
+    .dishes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      max-width: 1300px; margin: 0 auto;
+    }
+    .dish-card {
+      background: var(--dark);
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .dish-card:hover { transform: translateY(-8px); border-color: rgba(244,162,97,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+    .dish-img {
+      height: 220px; width: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+    .dish-card:hover .dish-img { transform: scale(1.06); }
+    .dish-body { padding: 22px; }
+    .dish-cat {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .dish-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 700;
+      color: white; margin-bottom: 10px;
+    }
+    .dish-desc { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 16px; }
+    .dish-footer { display: flex; align-items: center; justify-content: space-between; }
+    .dish-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700; color: var(--gold);
+    }
+    .dish-badge {
+      background: rgba(230,57,70,0.15);
+      color: var(--red);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 1px;
+      padding: 4px 10px; border-radius: 2px;
+      border: 1px solid rgba(230,57,70,0.3);
+    }
+    .dish-veg-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      position: absolute; top: 14px; right: 14px;
+      border: 2px solid;
+    }
+    .dish-veg-dot.veg { background: #4caf50; border-color: #4caf50; box-shadow: 0 0 8px rgba(76,175,80,0.5); }
+    .dish-veg-dot.nonveg { background: var(--red); border-color: var(--red); box-shadow: 0 0 8px rgba(230,57,70,0.5); }
+
+    /* ── MENU PREVIEW ── */
+    #menu-preview {
+      background: linear-gradient(180deg, var(--darkbg) 0%, var(--dark) 100%);
+      position: relative; overflow: hidden;
+    }
+    #menu-preview::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .menu-cats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; max-width: 1200px; margin: 0 auto 60px;
+    }
+    .menu-cat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 28px 24px;
+      text-align: center;
+      transition: all 0.35s ease; cursor: pointer;
+    }
+    .menu-cat-card:hover {
+      background: rgba(244,162,97,0.07);
+      border-color: rgba(244,162,97,0.5);
+      transform: translateY(-5px);
+    }
+    .menu-cat-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; }
+    .menu-cat-name {
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem; font-weight: 600;
+      color: white; letter-spacing: 1px;
+    }
+    .menu-cat-count {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; color: var(--gold);
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-top: 6px;
+    }
+    .menu-cta-wrap { text-align: center; margin-top: 20px; }
+
+    /* ── RESERVATION ── */
+    #reservation {
+      background: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1920&q=80') center/cover fixed no-repeat;
+      position: relative;
+    }
+    #reservation::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(20,20,20,0.95), rgba(20,20,20,0.88));
+    }
+    .reservation-inner {
+      position: relative; z-index: 1;
+      max-width: 900px; margin: 0 auto;
+    }
+    .reservation-form {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 50px;
+      backdrop-filter: blur(10px);
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px; padding: 14px 18px;
+      color: white; font-family: 'Poppins', sans-serif; font-size: 0.9rem;
+      transition: border 0.3s;
+      outline: none; width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group select option { background: var(--dark); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      width: 100%; background: var(--red);
+      color: white; border: none; cursor: pointer;
+      padding: 18px; border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      transition: all 0.3s ease; margin-top: 10px;
+    }
+    .form-submit:hover { background: var(--cta); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(230,57,70,0.4); }
+    .form-success {
+      display: none; text-align: center; padding: 30px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; color: var(--gold);
+    }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--dark); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px; max-width: 1200px; margin: 0 auto;
+    }
+    .testimonial-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px; padding: 36px 32px;
+      position: relative; transition: all 0.35s ease;
+    }
+    .testimonial-card:hover { border-color: rgba(244,162,97,0.4); transform: translateY(-5px); }
+    .testimonial-card::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 6rem; line-height: 1;
+      color: var(--gold); opacity: 0.15;
+      position: absolute; top: 10px; left: 24px;
+    }
+    .testimonial-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 18px; letter-spacing: 2px; }
+    .testimonial-text {
+      font-size: 0.92rem; line-height: 1.8;
+      color: rgba(255,255,255,0.7); margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .testimonial-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--red), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif; font-size: 1.1rem;
+      font-weight: 700; color: white;
+    }
+    .testimonial-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem; font-weight: 700; color: white;
+    }
+    .testimonial-date { font-size: 0.72rem; color: var(--muted); }
+
+    /* ── MAP & CONTACT ── */
+    #contact { background: var(--darkbg); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; max-width: 1200px; margin: 0 auto;
+      align-items: start;
+    }
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700;
+      color: white; margin-bottom: 30px;
+    }
+    .contact-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      margin-bottom: 28px;
+    }
+    .contact-icon {
+      width: 46px; height: 46px; border-radius: 4px;
+      background: rgba(230,57,70,0.15);
+      border: 1px solid rgba(230,57,70,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .contact-item-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 6px;
+    }
+    .contact-item-val {
+      font-size: 0.92rem; color: rgba(255,255,255,0.75); line-height: 1.6;
+    }
+    .map-container {
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .map-container iframe { width: 100%; height: 400px; display: block; border: none; }
+    .hours-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+    .hour-item {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 4px; padding: 12px 16px;
+    }
+    .hour-day {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 1px; color: var(--gold);
+    }
+    .hour-time { font-size: 0.85rem; color: white; margin-top: 4px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d0d0d;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 70px 5% 30px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 50px; max-width: 1300px; margin: 0 auto 50px;
+    }
+    .footer-brand .nav-logo { font-size: 1.8rem; display: block; margin-bottom: 16px; }
+    .footer-brand p { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.8; max-width: 280px; }
+    .footer-socials { display: flex; gap: 12px; margin-top: 24px; }
+    .social-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.6); text-decoration: none;
+      font-size: 0.9rem; transition: all 0.3s;
+    }
+    .social-btn:hover { background: var(--red); border-color: var(--red); color: white; transform: translateY(-3px); }
+    .footer-col h4 {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 12px; }
+    .footer-col ul li a {
+      font-size: 0.85rem; color: rgba(255,255,255,0.5);
+      text-decoration: none; transition: color 0.3s;
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 28px;
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1300px; margin: 0 auto;
+    }
+    .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+    .footer-bottom a { color: var(--gold); text-decoration: none; }
+
+    /* ── FLOATING BUTTONS ── */
+    .floating-btns {
+      position: fixed; bottom: 30px; right: 30px;
+      z-index: 999;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .float-btn {
+      width: 54px; height: 54px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 1.4rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+    }
+    .float-btn:hover { transform: scale(1.12); }
+    .float-wa { background: #25d366; }
+    .float-call { background: var(--red); }
+    .float-tooltip {
+      position: absolute; right: 70px;
+      background: rgba(20,20,20,0.95);
+      color: white; padding: 6px 12px;
+      border-radius: 4px; font-size: 0.75rem;
+      font-family: 'Montserrat', sans-serif;
+      white-space: nowrap; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s; border: 1px solid var(--border);
+    }
+    .float-btn:hover .float-tooltip { opacity: 1; }
+
+    /* ── MOBILE NAV ── */
+    .mobile-menu {
+      display: none; position: fixed; inset: 0;
+      background: rgba(14,14,14,0.98);
+      z-index: 2000; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 30px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-family: 'Cinzel', serif;
+      font-size: 1.5rem; color: white;
+      text-decoration: none; transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-close {
+      position: absolute; top: 30px; right: 30px;
+      background: none; border: none; color: white;
+      font-size: 2rem; cursor: pointer;
+    }
+
+    /* ── PARALLAX DIVIDER ── */
+    .parallax-strip {
+      height: 300px; position: relative; overflow: hidden;
+    }
+    .parallax-strip-bg {
+      position: absolute; inset: -50px;
+      background-attachment: fixed;
+      background-size: cover; background-position: center;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .parallax-strip-overlay {
+      position: absolute; inset: 0;
+      background: rgba(20,20,20,0.75);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .parallax-strip-text {
+      text-align: center; position: relative; z-index: 1;
+    }
+    .parallax-strip-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.8rem);
+      font-weight: 700; color: white;
+    }
+    .parallax-strip-text h2 em { color: var(--gold); font-style: italic; }
+    .parallax-strip-text p {
+      color: rgba(255,255,255,0.6);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem; letter-spacing: 3px;
+      text-transform: uppercase; margin-top: 10px;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: #1a1a1a; border: 1px solid var(--gold);
+      color: white; padding: 16px 30px; border-radius: 6px;
+      font-family: 'Poppins', sans-serif; font-size: 0.9rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      transition: transform 0.4s ease; z-index: 9999;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 50px; }
+      .about-img-main { height: 350px; }
+      .about-img-badge { bottom: -20px; right: 20px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 70px 5%; }
+      .form-grid { grid-template-columns: 1fr; }
+      .reservation-form { padding: 30px 24px; }
+      .hero-stats { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .about-features { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 2.6rem; }
+      .dishes-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero"><span>L</span>aziz</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#dishes">Dishes</a></li>
+    <li><a href="#menu-preview">Menu</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#reservation" class="nav-cta">Reserve</a></li>
+  </ul>
+  <div class="hamburger" onclick="openMobile()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#dishes" onclick="closeMobile()">Dishes</a>
+  <a href="#menu-preview" onclick="closeMobile()">Menu</a>
+  <a href="#testimonials" onclick="closeMobile()">Reviews</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="#reservation" onclick="closeMobile()" style="color:var(--gold)">Reserve a Table</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Gurgaon's Finest Since 2004 ✦</div>
+    <h1 class="hero-title">Taste The<br><em>Royal</em> Flavors</h1>
+    <p class="hero-subtitle">Authentic Indian &amp; Mughlai Flavors in Gurgaon</p>
+    <div class="hero-buttons">
+      <a href="#reservation" class="btn-primary">🍽 Reserve a Table</a>
+      <a href="#menu-preview" class="btn-outline">View Full Menu</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>↓</span>
+    Scroll to Explore
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <strong class="stat-num">20+</strong>
+      <span class="stat-label">Years Legacy</span>
+    </div>
+    <div class="stat">
+      <strong class="stat-num">50+</strong>
+      <span class="stat-label">Signature Dishes</span>
+    </div>
+    <div class="stat">
+      <strong class="stat-num">4.5★</strong>
+      <span class="stat-label">Guest Rating</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap fade-in">
+      <div class="about-img-main" role="img" aria-label="Laziz Restaurant interior ambiance"></div>
+      <div class="about-img-badge">
+        <strong>2004</strong>
+        <span>Est. Year</span>
+      </div>
+    </div>
+    <div class="about-text fade-in">
+      <div class="section-header">
+        <div class="section-tag">Our Story</div>
+        <h2 class="section-title">Where Every Meal Is a <em>Celebration</em></h2>
+        <div class="section-line" style="margin-left:0"></div>
+      </div>
+      <p>Founded in 2004, Laziz Restaurant has been serving the heart of Gurgaon with authentic North Indian and Mughlai cuisine prepared from generations-old recipes. Our kitchen blends royal Mughal-era cooking techniques with modern presentation.</p>
+      <p>Every dish that leaves our kitchen carries the passion of our master chefs who have dedicated decades to perfecting the art of spices. From the first bite of our Butter Chicken to the last spoonful of our Shahi Biryani — we promise a dining experience you'll remember forever.</p>
+      <div class="about-features">
+        <div class="about-feat"><div class="about-feat-icon">🌿</div>Fresh Ingredients</div>
+        <div class="about-feat"><div class="about-feat-icon">👨‍🍳</div>Expert Chefs</div>
+        <div class="about-feat"><div class="about-feat-icon">🏆</div>Award Winning</div>
+        <div class="about-feat"><div class="about-feat-icon">❤️</div>Made with Love</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POPULAR DISHES -->
+<section id="dishes">
+  <div class="section-header">
+    <div class="section-tag">Fan Favorites</div>
+    <h2 class="section-title">Popular <em>Dishes</em></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">From our kitchen to your table — dishes crafted with passion and served with pride.</p>
+  </div>
+  <div class="dishes-grid">
+
+    <div class="dish-card fade-in">
+      <div class="dish-veg-dot nonveg"></div>
+      <img class="dish-img" src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=80" alt="Butter Chicken" loading="lazy" />
+      <div class="dish-body">
+        <div class="dish-cat">Chicken Specialty</div>
+        <div class="dish-name">Butter Chicken</div>
+        <p class="dish-desc">Tender chicken in a rich, velvety tomato-cream sauce with aromatic spices. Our signature dish.</p>
+        <div class="dish-footer">
+          <span class="dish-price">₹320</span>
+          <span class="dish-badge">BESTSELLER</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card fade-in">
+      <div class="dish-veg-dot nonveg"></div>
+      <img class="dish-img" src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&q=80" alt="Chicken Tikka" loading="lazy" />
+      <div class="dish-body">
+        <div class="dish-cat">BBQ / Tandoor</div>
+        <div class="dish-name">Chicken Tikka</div>
+        <p class="dish-desc">Smoky, char-grilled chicken marinated in yogurt and spices — straight from our clay tandoor.</p>
+        <div class="dish-footer">
+          <span class="dish-price">₹280</span>
+          <span class="dish-badge">MUST TRY</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card fade-in">
+      <div class="dish-veg-dot veg"></div>
+      <img class="dish-img" src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=600&q=80" alt="Paneer Butter Masala" loading="lazy" />
+      <div class="dish-body">
+        <div class="dish-cat">Indian Veg</div>
+        <div class="dish-name">Paneer Butter Masala</div>
+        <p class="dish-desc">Soft cubes of paneer in a luscious, buttery tomato-cashew gravy. Pure vegetarian indulgence.</p>
+        <div class="dish-footer">
+          <span class="dish-price">₹260</span>
+          <span class="dish-badge">VEG SPECIAL</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card fade-in">
+      <div class="dish-veg-dot nonveg"></div>
+      <img class="dish-img" src="https://images.unsplash.com/photo-1563379091339-03246963d651?w=600&q=80" alt="Chicken Biryani" loading="lazy" />
+      <div class="dish-body">
+        <div class="dish-cat">Biryani</div>
+        <div class="dish-name">Chicken Dum Biryani</div>
+        <p class="dish-desc">Slow-cooked long-grain basmati rice layered with succulent chicken and saffron — a royal recipe.</p>
+        <div class="dish-footer">
+          <span class="dish-price">₹340</span>
+          <span class="dish-badge">BESTSELLER</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card fade-in">
+      <div class="dish-veg-dot nonveg"></div>
+      <img class="dish-img" src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=600&q=80" alt="Chicken Roll" loading="lazy" />
+      <div class="dish-body">
+        <div class="dish-cat">Rolls</div>
+        <div class="dish-name">Chicken Kathi Roll</div>
+        <p class="dish-desc">Flaky paratha stuffed with spiced chicken filling, fresh onions, and green chutney.</p>
+        <div class="dish-footer">
+          <span class="dish-price">₹140</span>
+          <span class="dish-badge">STREET FAVORITE</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dish-card fade-in">
+      <div class="dish-veg-dot nonveg"></div>
+      <img class="dish-img" src="https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=600&q=80" alt="Mutton Rogan Josh" loading="lazy" />
+      <div class="dish-body">
+        <div class="dish-cat">Mutton Specialty</div>
+        <div class="dish-name">Mutton Rogan Josh</div>
+        <p class="dish-desc">Aromatic Kashmiri mutton curry with whole spices. A legacy recipe passed down by our head chef.</p>
+        <div class="dish-footer">
+          <span class="dish-price">₹380</span>
+          <span class="dish-badge">CHEF'S PICK</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PARALLAX STRIP -->
+<div class="parallax-strip">
+  <div class="parallax-strip-bg" style="background-image: url('https://images.unsplash.com/photo-1552566626-52f8b828add9?w=1920&q=80'); background-attachment: fixed;"></div>
+  <div class="parallax-strip-overlay">
+    <div class="parallax-strip-text fade-in">
+      <h2>Average Cost ₹600 for <em>Two</em></h2>
+      <p>✦ Dine In &nbsp;·&nbsp; Takeaway &nbsp;·&nbsp; Home Delivery ✦</p>
+    </div>
+  </div>
+</div>
+
+<!-- MENU PREVIEW -->
+<section id="menu-preview">
+  <div class="section-header">
+    <div class="section-tag">Explore Our Menu</div>
+    <h2 class="section-title">16 <em>Delicious</em> Categories</h2>
+    <div class="section-line"></div>
+    <p class="section-desc">From soups to desserts — every category crafted to perfection.</p>
+  </div>
+  <div class="menu-cats">
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍲</span><div class="menu-cat-name">Soups</div><div class="menu-cat-count">8 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🥗</span><div class="menu-cat-name">Snacks</div><div class="menu-cat-count">14 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🥙</span><div class="menu-cat-name">Rolls</div><div class="menu-cat-count">10 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍛</span><div class="menu-cat-name">Indian Veg</div><div class="menu-cat-count">18 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍗</span><div class="menu-cat-name">Chicken</div><div class="menu-cat-count">15 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🐑</span><div class="menu-cat-name">Mutton</div><div class="menu-cat-count">10 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍚</span><div class="menu-cat-name">Biryani</div><div class="menu-cat-count">8 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍜</span><div class="menu-cat-name">Chinese</div><div class="menu-cat-count">20 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🔥</span><div class="menu-cat-name">BBQ / Tandoor</div><div class="menu-cat-count">12 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍞</span><div class="menu-cat-name">Breads</div><div class="menu-cat-count">10 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍮</span><div class="menu-cat-name">Desserts</div><div class="menu-cat-count">8 Items</div></div>
+    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍱</span><div class="menu-cat-name">Combo Meals</div><div class="menu-cat-count">6 Items</div></div>
+  </div>
+  <div class="menu-cta-wrap fade-in">
+    <p style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin-bottom:24px;">Call us to check today's specials!</p>
+    <a href="tel:+919717788806" class="btn-primary">📞 Call to Order: +91 97177 88806</a>
+  </div>
+</section>
+
+<!-- RESERVATION -->
+<section id="reservation">
+  <div class="reservation-inner">
+    <div class="section-header">
+      <div class="section-tag">Book a Table</div>
+      <h2 class="section-title">Reserve Your <em>Table</em></h2>
+      <div class="section-line"></div>
+      <p class="section-desc">Secure your spot for a royal dining experience. We'll confirm within 30 minutes.</p>
+    </div>
+    <div class="reservation-form fade-in">
+      <div id="resForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" id="res_name" placeholder="Enter your name" required />
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" id="res_phone" placeholder="+91 XXXXXXXXXX" required />
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="res_email" placeholder="your@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Number of Guests *</label>
+            <select id="res_guests" required>
+              <option value="">Select guests</option>
+              <option>1 Person</option>
+              <option>2 People</option>
+              <option>3-4 People</option>
+              <option>5-6 People</option>
+              <option>7-10 People</option>
+              <option>10+ People</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preferred Date *</label>
+            <input type="date" id="res_date" required />
+          </div>
+          <div class="form-group">
+            <label>Preferred Time *</label>
+            <select id="res_time" required>
+              <option value="">Select time</option>
+              <option>11:00 AM</option>
+              <option>12:00 PM</option>
+              <option>1:00 PM</option>
+              <option>2:00 PM</option>
+              <option>7:00 PM</option>
+              <option>7:30 PM</option>
+              <option>8:00 PM</option>
+              <option>8:30 PM</option>
+              <option>9:00 PM</option>
+              <option>10:00 PM</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Special Requests</label>
+            <textarea id="res_msg" placeholder="Birthday celebration, dietary requirements, preferred seating..."></textarea>
+          </div>
+        </div>
+        <button class="form-submit" onclick="submitReservation()">✦ CONFIRM RESERVATION ✦</button>
+      </div>
+      <div class="form-success" id="resSuccess">
+        🎉 Thank you! Your table has been reserved.<br>
+        <span style="font-size:1rem; color:rgba(255,255,255,0.6); font-family:'Poppins',sans-serif;">We'll call you to confirm within 30 minutes.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-header">
+    <div class="section-tag">Guest Reviews</div>
+    <h2 class="section-title">What Our Guests <em>Say</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="testimonials-grid">
+
+    <div class="testimonial-card fade-in">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">The Butter Chicken here is absolutely phenomenal — rich, creamy, and perfectly spiced. The ambiance is warm and cozy. We celebrated our anniversary here and the staff was incredibly attentive. Highly recommended!</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">R</div>
+        <div>
+          <div class="testimonial-name">Rahul Sharma</div>
+          <div class="testimonial-date">Google Review · February 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card fade-in">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">Ordered the Chicken Dum Biryani and it blew my mind! The rice was perfectly cooked, the aroma was heavenly. Laziz is now our go-to place every weekend. The Mutton Rogan Josh is another hidden gem!</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">P</div>
+        <div>
+          <div class="testimonial-name">Priya Mehta</div>
+          <div class="testimonial-date">Zomato Review · January 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card fade-in">
+      <div class="testimonial-stars">★★★★☆</div>
+      <p class="testimonial-text">Best North Indian food in Sector 21! The Chicken Tikka from the tandoor is absolutely divine — smoky, juicy and well-marinated. Great value for money. Paneer dishes are top-class for vegetarians too.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">A</div>
+        <div>
+          <div class="testimonial-name">Amit Verma</div>
+          <div class="testimonial-date">Swiggy Review · March 2025</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT & MAP -->
+<section id="contact">
+  <div class="section-header">
+    <div class="section-tag">Find Us</div>
+    <h2 class="section-title">Visit <em>Laziz</em> Restaurant</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info">
+
+      <div class="contact-item fade-in">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-item-title">Address</div>
+          <div class="contact-item-val">Shri Ram Swaroop Market, Old Delhi Road<br>Near Hanuman Mandir, Sector 21<br>Gurgaon, Haryana 122001</div>
+        </div>
+      </div>
+
+      <div class="contact-item fade-in">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-item-title">Phone</div>
+          <div class="contact-item-val"><a href="tel:+919717788806" style="color:var(--gold); text-decoration:none">+91 97177 88806</a></div>
+        </div>
+      </div>
+
+      <div class="contact-item fade-in">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-item-title">Opening Hours</div>
+          <div class="hours-grid">
+            <div class="hour-item"><div class="hour-day">Mon – Sun</div><div class="hour-time">11:00 AM – 11:15 PM</div></div>
+            <div class="hour-item"><div class="hour-day">All Days</div><div class="hour-time">Open 365 Days</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="map-container fade-in">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.8244!2d77.0266!3d28.4743!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDI4JzI3LjUiTiA3N8KwMDEnMzUuOCJF!5e0!3m2!1sen!2sin!4v1234567890"
+        allowfullscreen
+        loading="lazy"
+        title="Laziz Restaurant Location"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="nav-logo" href="#hero"><span>L</span>aziz</a>
+      <p>Serving authentic Indian, Mughlai, and Chinese cuisine in the heart of Gurgaon since 2004. Every meal is crafted with love, tradition, and the finest spices.</p>
+      <div class="footer-socials">
+        <a href="https://wa.me/919717788806" class="social-btn" target="_blank" rel="noopener" title="WhatsApp">💬</a>
+        <a href="tel:+919717788806" class="social-btn" title="Call">📞</a>
+        <a href="#" class="social-btn" title="Instagram">📸</a>
+        <a href="#" class="social-btn" title="Facebook">👍</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#dishes">Popular Dishes</a></li>
+        <li><a href="#menu-preview">Full Menu</a></li>
+        <li><a href="#reservation">Reserve Table</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Cuisine</h4>
+      <ul>
+        <li><a href="#menu-preview">North Indian</a></li>
+        <li><a href="#menu-preview">Mughlai</a></li>
+        <li><a href="#menu-preview">Biryani</a></li>
+        <li><a href="#menu-preview">Chinese</a></li>
+        <li><a href="#menu-preview">BBQ & Tandoor</a></li>
+        <li><a href="#menu-preview">Rolls & Fast Food</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="tel:+919717788806">+91 97177 88806</a></li>
+        <li><a href="https://wa.me/919717788806">WhatsApp Order</a></li>
+        <li><a href="#">Sector 21, Gurgaon</a></li>
+        <li><a href="#">Old Delhi Road</a></li>
+        <li><a href="#">Open 11 AM – 11:15 PM</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 <a href="#hero">Laziz Restaurant</a>. All Rights Reserved. | Sector 21, Gurgaon</p>
+    <p style="color:rgba(255,255,255,0.2)">Best Mughlai & North Indian Restaurant in Gurgaon</p>
+  </div>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="floating-btns">
+  <a href="https://wa.me/919717788806" class="float-btn float-wa" target="_blank" rel="noopener" title="WhatsApp Order">
+    <span class="float-tooltip">Order on WhatsApp</span>
+    💬
+  </a>
+  <a href="tel:+919717788806" class="float-btn float-call" title="Call Now">
+    <span class="float-tooltip">Call Now</span>
+    📞
+  </a>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Mobile menu
+  function openMobile() { document.getElementById('mobileMenu').classList.add('open'); }
+  function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Set min date for reservation
+  const dateInput = document.getElementById('res_date');
+  if (dateInput) { dateInput.min = new Date().toISOString().split('T')[0]; }
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  // Reservation
+  function submitReservation() {
+    const name = document.getElementById('res_name').value.trim();
+    const phone = document.getElementById('res_phone').value.trim();
+    const guests = document.getElementById('res_guests').value;
+    const date = document.getElementById('res_date').value;
+    const time = document.getElementById('res_time').value;
+
+    if (!name || !phone || !guests || !date || !time) {
+      showToast('⚠️ Please fill in all required fields.');
+      return;
+    }
+
+    // Store in localStorage for demo
+    const reservations = JSON.parse(localStorage.getItem('laziz_reservations') || '[]');
+    reservations.push({
+      id: Date.now(),
+      name, phone,
+      email: document.getElementById('res_email').value,
+      guests, date, time,
+      message: document.getElementById('res_msg').value,
+      status: 'pending',
+      created: new Date().toISOString()
+    });
+    localStorage.setItem('laziz_reservations', JSON.stringify(reservations));
+
+    document.getElementById('resForm').style.display = 'none';
+    document.getElementById('resSuccess').style.display = 'block';
+    showToast('🎉 Reservation received! We\'ll call you shortly.');
+  }
+</script>
+
+</body>
+</html>

@@ -466,10 +466,10 @@
     <label class="form-label">Email Address</label>
     <input class="form-input" type="email" id="loginEmail" placeholder="admin@laziz.com" />
     <label class="form-label">Password</label>
-    <input class="form-input" type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" />
-    <button class="btn-login" onclick="doLogin()">Sign In to Dashboard</button>
-    <div class="login-error" id="loginErr">⚠️ Invalid credentials. Try admin@laziz.com / admin123</div>    
-    <div class="login-hint">Demo: admin@laziz.com &nbsp;|&nbsp; admin123</div>
+    <input class="form-input" type="password" id="loginPass" placeholder="••••••••" />
+    <button class="btn-login" id="loginBtn">Sign In to Dashboard</button>
+    <div class="login-error" id="loginErr">⚠️ Invalid credentials. Try <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bbdadfd6d2d5fbd7dac1d2c195d8d4d6">[email&#160;protected]</a> / admin123</div>
+    <div class="login-hint">Demo: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1170757c787f517d706b786b3f727e7c">[email&#160;protected]</a> &nbsp;|&nbsp; admin123</div>
   </div>
 </div>
 
@@ -864,27 +864,33 @@
 <!-- TOAST -->
 <div class="admin-toast" id="adminToast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+// ══════════════════════════════════════════
+//  LAZIZ RESTAURANT — ADMIN PANEL SCRIPT
+//  All logic wrapped in DOMContentLoaded
+//  so functions are always defined before use
+// ══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function () {
+
 // ── STATE ──
 let currentUser = null;
-let currentResFilter = 'all';
 let editingItemId = null;
+let resFilter = 'all';
 
 const ADMIN_EMAIL = 'admin@laziz.com';
 const ADMIN_PASS_KEY = 'laziz_admin_pass';
-
 function getPass() { return localStorage.getItem(ADMIN_PASS_KEY) || 'admin123'; }
 
-// ── DEFAULT MENU ──
+// ── DEFAULT MENU DATA ──
 const defaultMenu = [
-  { id: 1, name: 'Butter Chicken', category: 'Chicken Specialties', price: 320, type: 'nonveg', desc: 'Tender chicken in rich tomato-cream sauce', status: 'available' },
-  { id: 2, name: 'Chicken Tikka', category: 'BBQ', price: 280, type: 'nonveg', desc: 'Smoky char-grilled marinated chicken', status: 'available' },
-  { id: 3, name: 'Paneer Butter Masala', category: 'Indian Veg', price: 260, type: 'veg', desc: 'Paneer in buttery tomato-cashew gravy', status: 'available' },
-  { id: 4, name: 'Chicken Dum Biryani', category: 'Biryani', price: 340, type: 'nonveg', desc: 'Slow-cooked basmati with succulent chicken', status: 'available' },
-  { id: 5, name: 'Mutton Rogan Josh', category: 'Mutton', price: 380, type: 'nonveg', desc: 'Aromatic Kashmiri mutton curry', status: 'available' },
-  { id: 6, name: 'Dal Makhani', category: 'Indian Veg', price: 220, type: 'veg', desc: 'Creamy slow-cooked black lentils', status: 'available' },
-  { id: 7, name: 'Chicken Kathi Roll', category: 'Rolls', price: 140, type: 'nonveg', desc: 'Spiced chicken in flaky paratha', status: 'available' },
-  { id: 8, name: 'Veg Hakka Noodles', category: 'Noodles', price: 180, type: 'veg', desc: 'Stir-fried noodles with vegetables', status: 'available' },
+  { id: 1, name: 'Butter Chicken',       category: 'Chicken Specialties', price: 320, type: 'nonveg', desc: 'Tender chicken in rich tomato-cream sauce',  status: 'available' },
+  { id: 2, name: 'Chicken Tikka',        category: 'BBQ',                  price: 280, type: 'nonveg', desc: 'Smoky char-grilled marinated chicken',        status: 'available' },
+  { id: 3, name: 'Paneer Butter Masala', category: 'Indian Veg',           price: 260, type: 'veg',    desc: 'Paneer in buttery tomato-cashew gravy',      status: 'available' },
+  { id: 4, name: 'Chicken Dum Biryani',  category: 'Biryani',              price: 340, type: 'nonveg', desc: 'Slow-cooked basmati with succulent chicken',  status: 'available' },
+  { id: 5, name: 'Mutton Rogan Josh',    category: 'Mutton',               price: 380, type: 'nonveg', desc: 'Aromatic Kashmiri mutton curry',              status: 'available' },
+  { id: 6, name: 'Dal Makhani',          category: 'Indian Veg',           price: 220, type: 'veg',    desc: 'Creamy slow-cooked black lentils',           status: 'available' },
+  { id: 7, name: 'Chicken Kathi Roll',   category: 'Rolls',                price: 140, type: 'nonveg', desc: 'Spiced chicken in flaky paratha',            status: 'available' },
+  { id: 8, name: 'Veg Hakka Noodles',    category: 'Noodles',              price: 180, type: 'veg',    desc: 'Stir-fried noodles with vegetables',         status: 'available' },
 ];
 
 // ── STORAGE HELPERS ──
@@ -892,141 +898,147 @@ function getMenu() {
   const saved = localStorage.getItem('laziz_menu');
   return saved ? JSON.parse(saved) : [...defaultMenu];
 }
-function saveMenu(m) { localStorage.setItem('laziz_menu', JSON.stringify(m)); }
-function getReservations() { return JSON.parse(localStorage.getItem('laziz_reservations') || '[]'); }
+function saveMenu(m)         { localStorage.setItem('laziz_menu', JSON.stringify(m)); }
+function getReservations()   { return JSON.parse(localStorage.getItem('laziz_reservations') || '[]'); }
 function saveReservations(r) { localStorage.setItem('laziz_reservations', JSON.stringify(r)); }
-function getMessages() { return JSON.parse(localStorage.getItem('laziz_messages') || '[]'); }
+function getMessages()       { return JSON.parse(localStorage.getItem('laziz_messages') || '[]'); }
+
+// ── SEED DEFAULT MENU ──
+if (!localStorage.getItem('laziz_menu')) saveMenu(defaultMenu);
 
 // ── LOGIN ──
 function doLogin() {
   const email = document.getElementById('loginEmail').value.trim();
-  const pass = document.getElementById('loginPass').value;
-  const err = document.getElementById('loginErr');
+  const pass  = document.getElementById('loginPass').value;
+  const err   = document.getElementById('loginErr');
   if (email === ADMIN_EMAIL && pass === getPass()) {
     err.style.display = 'none';
     currentUser = { email };
     document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
+    document.getElementById('dashboard').style.display  = 'block';
     initDashboard();
   } else {
     err.style.display = 'block';
   }
 }
+
+// Wire up login button and Enter key — no inline onclick needed
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('loginPass').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+// ── LOGOUT ──
 function doLogout() {
   currentUser = null;
-  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('dashboard').style.display  = 'none';
   document.getElementById('loginScreen').style.display = 'flex';
   document.getElementById('loginPass').value = '';
 }
+window.doLogout = doLogout;
 
-// ── SIDEBAR ──
+// ── SIDEBAR TOGGLE ──
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
 }
+window.toggleSidebar = toggleSidebar;
 
-// ── INIT ──
+// ── INIT DASHBOARD ──
 function initDashboard() {
   setInterval(updateDate, 1000);
   updateDate();
   refreshStats();
-
-  // Check if menu exists, seed defaults if not
-  if (!localStorage.getItem('laziz_menu')) {
-    saveMenu(defaultMenu);
-  }
 }
 
 function updateDate() {
-  const d = new Date();
-  document.getElementById('topbarDate').textContent =
-    d.toLocaleDateString('en-IN', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) + ' ' +
-    d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+  const el = document.getElementById('topbarDate');
+  if (!el) return;
+  el.textContent =
+    new Date().toLocaleDateString('en-IN', { weekday:'short', year:'numeric', month:'short', day:'numeric' })
+    + ' ' +
+    new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
 }
 
 function refreshStats() {
-  const res = getReservations();
-  const menu = getMenu();
-  const msgs = getMessages();
-  const pending = res.filter(r => r.status === 'pending').length;
-  const today = new Date().toISOString().split('T')[0];
+  const res   = getReservations();
+  const menu  = getMenu();
+  const msgs  = getMessages();
+  const pending  = res.filter(r => r.status === 'pending').length;
+  const today    = new Date().toISOString().split('T')[0];
   const todayRes = res.filter(r => r.created && r.created.startsWith(today)).length;
 
-  document.getElementById('totalRes').textContent = res.length;
+  document.getElementById('totalRes').textContent   = res.length;
   document.getElementById('pendingRes').textContent = pending;
-  document.getElementById('menuCount').textContent = menu.length;
-  document.getElementById('msgCount').textContent = msgs.length;
+  document.getElementById('menuCount').textContent  = menu.length;
+  document.getElementById('msgCount').textContent   = msgs.length;
   document.getElementById('pendingCount').textContent = pending;
-  document.getElementById('todayChange').textContent = `+${todayRes} today`;
+  document.getElementById('todayChange').textContent  = `+${todayRes} today`;
 
   renderOverviewRes(res.slice(-5).reverse());
 }
+window.refreshStats = refreshStats;
 
-function renderOverviewRes(resList) {
+function renderOverviewRes(list) {
   const el = document.getElementById('overviewResList');
-  if (!resList.length) {
+  if (!list.length) {
     el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📅</div><p>No reservations yet</p></div>';
     return;
   }
   el.innerHTML = `<table>
     <tr><th>Name</th><th>Guests</th><th>Date</th><th>Status</th></tr>
-    ${resList.map(r => `<tr>
-      <td>${r.name}</td>
-      <td>${r.guests}</td>
-      <td>${r.date || '—'} ${r.time || ''}</td>
+    ${list.map(r => `<tr>
+      <td>${r.name}</td><td>${r.guests}</td>
+      <td>${r.date||'—'} ${r.time||''}</td>
       <td><span class="badge badge-${r.status}">${r.status}</span></td>
     </tr>`).join('')}
   </table>`;
 }
 
-// ── NAVIGATION ──
+// ── PAGE NAVIGATION ──
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
 
   const titles = {
-    overview: 'Dashboard Overview',
-    reservations: 'Reservations',
-    messages: 'Customer Messages',
-    menu: 'Menu Management',
-    addItem: 'Add Menu Item',
-    settings: 'Settings'
+    overview:'Dashboard Overview', reservations:'Reservations',
+    messages:'Customer Messages', menu:'Menu Management',
+    addItem:'Add Menu Item', settings:'Settings'
   };
   document.getElementById('pageTitle').textContent = titles[page] || page;
 
   if (page === 'reservations') renderReservations();
-  if (page === 'messages') renderMessages();
-  if (page === 'menu') renderMenu();
-  if (page === 'overview') refreshStats();
-  if (page === 'addItem') { editingItemId = null; document.getElementById('addItemTitle').textContent = 'Add New Menu Item'; resetItemForm(); }
+  if (page === 'messages')     renderMessages();
+  if (page === 'menu')         renderMenu();
+  if (page === 'overview')     refreshStats();
+  if (page === 'addItem') {
+    editingItemId = null;
+    document.getElementById('addItemTitle').textContent = 'Add New Menu Item';
+    resetItemForm();
+  }
 
-  // Mark active sidebar
   document.querySelectorAll('.nav-item').forEach(n => {
-    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${page}'`)) {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${page}'`))
       n.classList.add('active');
-    }
   });
-
-  // Close mobile sidebar
   document.getElementById('sidebar').classList.remove('open');
 }
+window.showPage = showPage;
 
 // ── RESERVATIONS ──
-let resFilter = 'all';
 function filterRes(f, btn) {
   resFilter = f;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderReservations();
 }
+window.filterRes = filterRes;
 
 function renderReservations() {
   let res = getReservations();
   const q = (document.getElementById('resSearch')?.value || '').toLowerCase();
   if (q) res = res.filter(r =>
-    r.name.toLowerCase().includes(q) ||
-    r.phone.includes(q) ||
-    (r.date || '').includes(q)
+    r.name.toLowerCase().includes(q) || r.phone.includes(q) || (r.date||'').includes(q)
   );
   if (resFilter !== 'all') res = res.filter(r => r.status === resFilter);
   res = res.slice().reverse();
@@ -1039,101 +1051,100 @@ function renderReservations() {
   el.innerHTML = `<div style="overflow-x:auto"><table>
     <tr><th>Name</th><th>Phone</th><th>Guests</th><th>Date & Time</th><th>Special Request</th><th>Status</th><th>Actions</th></tr>
     ${res.map(r => `<tr>
-      <td><strong>${r.name}</strong><br><span style="color:var(--muted);font-size:0.75rem">${r.email || ''}</span></td>
+      <td><strong>${r.name}</strong><br><span style="color:var(--muted);font-size:.75rem">${r.email||''}</span></td>
       <td><a href="tel:${r.phone}" style="color:var(--gold);text-decoration:none">${r.phone}</a></td>
       <td>${r.guests}</td>
-      <td>${r.date || '—'}<br><span style="color:var(--muted);font-size:0.75rem">${r.time || ''}</span></td>
-      <td style="max-width:150px;font-size:0.78rem;color:var(--muted)">${r.message || '—'}</td>
+      <td>${r.date||'—'}<br><span style="color:var(--muted);font-size:.75rem">${r.time||''}</span></td>
+      <td style="max-width:150px;font-size:.78rem;color:var(--muted)">${r.message||'—'}</td>
       <td><span class="badge badge-${r.status}">${r.status}</span></td>
-      <td>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          ${r.status === 'pending' ? `<button class="btn-success" onclick="updateResStatus(${r.id},'confirmed')">Confirm</button>` : ''}
-          ${r.status !== 'cancelled' ? `<button class="btn-danger" onclick="updateResStatus(${r.id},'cancelled')">Cancel</button>` : ''}
-          <button class="btn-danger" onclick="deleteRes(${r.id})">Delete</button>
-        </div>
-      </td>
+      <td><div style="display:flex;gap:8px;flex-wrap:wrap">
+        ${r.status==='pending'    ? `<button class="btn-success" onclick="updateResStatus(${r.id},'confirmed')">Confirm</button>` : ''}
+        ${r.status!=='cancelled'  ? `<button class="btn-danger"  onclick="updateResStatus(${r.id},'cancelled')">Cancel</button>`  : ''}
+        <button class="btn-danger" onclick="deleteRes(${r.id})">Delete</button>
+      </div></td>
     </tr>`).join('')}
   </table></div>`;
 }
+window.renderReservations = renderReservations;
 
 function updateResStatus(id, status) {
   const res = getReservations();
   const idx = res.findIndex(r => r.id === id);
   if (idx !== -1) { res[idx].status = status; saveReservations(res); }
-  renderReservations();
-  refreshStats();
+  renderReservations(); refreshStats();
   toast(`Reservation ${status}!`, 'success');
 }
+window.updateResStatus = updateResStatus;
 
 function deleteRes(id) {
   if (!confirm('Delete this reservation?')) return;
-  const res = getReservations().filter(r => r.id !== id);
-  saveReservations(res);
-  renderReservations();
-  refreshStats();
+  saveReservations(getReservations().filter(r => r.id !== id));
+  renderReservations(); refreshStats();
   toast('Reservation deleted.', 'success');
 }
+window.deleteRes = deleteRes;
 
 function clearReservations() {
   if (!confirm('Clear ALL reservations? This cannot be undone.')) return;
   saveReservations([]);
-  renderReservations();
-  refreshStats();
+  renderReservations(); refreshStats();
   toast('All reservations cleared.', 'success');
 }
+window.clearReservations = clearReservations;
 
 function exportReservations() {
   const res = getReservations();
   if (!res.length) { toast('No reservations to export.', 'error'); return; }
   const header = 'Name,Phone,Email,Guests,Date,Time,Status,Message';
-  const rows = res.map(r => `"${r.name}","${r.phone}","${r.email || ''}","${r.guests}","${r.date || ''}","${r.time || ''}","${r.status}","${r.message || ''}"`);
-  const csv = [header, ...rows].join('\n');
+  const rows   = res.map(r => `"${r.name}","${r.phone}","${r.email||''}","${r.guests}","${r.date||''}","${r.time||''}","${r.status}","${r.message||''}"`);
+  const csv    = [header, ...rows].join('\n');
   const a = document.createElement('a');
-  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.href     = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
   a.download = 'laziz-reservations.csv';
   a.click();
   toast('Exported as CSV!', 'success');
 }
+window.exportReservations = exportReservations;
 
 // ── MESSAGES ──
 function renderMessages() {
   const msgs = getMessages();
-  const el = document.getElementById('messagesContainer');
+  const el   = document.getElementById('messagesContainer');
   if (!msgs.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✉️</div><p>No messages yet. Messages from the contact form will appear here.</p></div>';
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✉️</div><p>No messages yet.</p></div>';
     return;
   }
   el.innerHTML = msgs.slice().reverse().map(m => `
-    <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px;">
+    <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div>
-          <strong style="color:white">${m.name}</strong>
-          <span style="color:var(--gold);font-size:0.8rem;margin-left:12px">${m.email}</span>
-        </div>
-        <span style="color:var(--muted);font-size:0.75rem">${m.created ? new Date(m.created).toLocaleDateString() : ''}</span>
+        <div><strong style="color:white">${m.name}</strong>
+          <span style="color:var(--gold);font-size:.8rem;margin-left:12px">${m.email}</span></div>
+        <span style="color:var(--muted);font-size:.75rem">${m.created?new Date(m.created).toLocaleDateString():''}</span>
       </div>
-      <p style="font-size:0.87rem;color:rgba(255,255,255,0.7);line-height:1.6">${m.message}</p>
+      <p style="font-size:.87rem;color:rgba(255,255,255,.7);line-height:1.6">${m.message}</p>
       <div style="margin-top:12px;display:flex;gap:10px">
         <a href="mailto:${m.email}" style="text-decoration:none"><button class="btn-success">Reply by Email</button></a>
         <button class="btn-danger" onclick="deleteMsg(${m.id})">Delete</button>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
+window.renderMessages = renderMessages;
+
 function deleteMsg(id) {
   const msgs = getMessages().filter(m => m.id !== id);
   localStorage.setItem('laziz_messages', JSON.stringify(msgs));
-  renderMessages();
-  refreshStats();
+  renderMessages(); refreshStats();
   toast('Message deleted.', 'success');
 }
+window.deleteMsg = deleteMsg;
+
 function clearMessages() {
   if (!confirm('Clear all messages?')) return;
   localStorage.setItem('laziz_messages', '[]');
-  renderMessages();
-  refreshStats();
+  renderMessages(); refreshStats();
   toast('Messages cleared.', 'success');
 }
+window.clearMessages = clearMessages;
 
 // ── MENU ──
 const catEmoji = {
@@ -1145,7 +1156,7 @@ const catEmoji = {
 
 function renderMenu() {
   let menu = getMenu();
-  const q = (document.getElementById('menuSearch')?.value || '').toLowerCase();
+  const q  = (document.getElementById('menuSearch')?.value || '').toLowerCase();
   if (q) menu = menu.filter(m => m.name.toLowerCase().includes(q) || m.category.toLowerCase().includes(q));
 
   const el = document.getElementById('menuGrid');
@@ -1155,51 +1166,61 @@ function renderMenu() {
   }
   el.innerHTML = menu.map(item => `
     <div class="menu-item-card">
-      <div class="menu-item-img">${catEmoji[item.category] || '🍽'}</div>
+      <div class="menu-item-img">${catEmoji[item.category]||'🍽'}</div>
       <div class="menu-item-body">
         <div class="menu-item-cat">${item.category}</div>
         <div class="menu-item-name">${item.name}</div>
-        <div style="font-size:0.75rem;color:var(--muted);margin:6px 0 10px;line-height:1.5">${item.desc || ''}</div>
+        <div style="font-size:.75rem;color:var(--muted);margin:6px 0 10px;line-height:1.5">${item.desc||''}</div>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
           <div class="menu-item-price">₹${item.price}</div>
-          <span class="badge badge-${item.type}">${item.type === 'veg' ? '🟢 Veg' : '🔴 Non-Veg'}</span>
+          <span class="badge badge-${item.type}">${item.type==='veg'?'🟢 Veg':'🔴 Non-Veg'}</span>
         </div>
         <div style="margin-bottom:10px">
-          <span class="badge" style="background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid rgba(255,255,255,0.1)">
-            ${item.status === 'available' ? '✅ Available' : '❌ Unavailable'}
+          <span class="badge" style="background:rgba(255,255,255,.05);color:var(--muted);border:1px solid rgba(255,255,255,.1)">
+            ${item.status==='available'?'✅ Available':'❌ Unavailable'}
           </span>
         </div>
         <div class="menu-item-actions">
           <button class="card-action" onclick="editItem(${item.id})">Edit</button>
-          <button class="btn-danger" onclick="deleteItem(${item.id})">Delete</button>
+          <button class="btn-danger"  onclick="deleteItem(${item.id})">Delete</button>
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
+window.renderMenu = renderMenu;
 
 function resetItemForm() {
-  ['item_name','item_price','item_desc'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
-  const cat = document.getElementById('item_cat'); if(cat) cat.value='';
-  const typ = document.getElementById('item_type'); if(typ) typ.value='veg';
-  const sts = document.getElementById('item_status'); if(sts) sts.value='available';
+  ['item_name','item_price','item_desc'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
+  const cat = document.getElementById('item_cat');   if (cat) cat.value = '';
+  const typ = document.getElementById('item_type');  if (typ) typ.value = 'veg';
+  const sts = document.getElementById('item_status');if (sts) sts.value = 'available';
 }
 
 function saveItem() {
-  const name = document.getElementById('item_name').value.trim();
-  const cat = document.getElementById('item_cat').value;
+  const name  = document.getElementById('item_name').value.trim();
+  const cat   = document.getElementById('item_cat').value;
   const price = document.getElementById('item_price').value;
   if (!name || !cat || !price) { toast('Please fill in all required fields.', 'error'); return; }
 
   const menu = getMenu();
   if (editingItemId) {
     const idx = menu.findIndex(m => m.id === editingItemId);
-    if (idx !== -1) {
-      menu[idx] = { ...menu[idx], name, category: cat, price: parseInt(price), type: document.getElementById('item_type').value, desc: document.getElementById('item_desc').value, status: document.getElementById('item_status').value };
-    }
+    if (idx !== -1) menu[idx] = {
+      ...menu[idx], name, category: cat, price: parseInt(price),
+      type:   document.getElementById('item_type').value,
+      desc:   document.getElementById('item_desc').value,
+      status: document.getElementById('item_status').value
+    };
     toast('Item updated!', 'success');
   } else {
-    menu.push({ id: Date.now(), name, category: cat, price: parseInt(price), type: document.getElementById('item_type').value, desc: document.getElementById('item_desc').value, status: document.getElementById('item_status').value });
+    menu.push({
+      id: Date.now(), name, category: cat, price: parseInt(price),
+      type:   document.getElementById('item_type').value,
+      desc:   document.getElementById('item_desc').value,
+      status: document.getElementById('item_status').value
+    });
     toast('Item added!', 'success');
   }
   saveMenu(menu);
@@ -1208,33 +1229,34 @@ function saveItem() {
   showPage('menu');
   refreshStats();
 }
+window.saveItem = saveItem;
 
 function editItem(id) {
-  const menu = getMenu();
-  const item = menu.find(m => m.id === id);
+  const item = getMenu().find(m => m.id === id);
   if (!item) return;
   editingItemId = id;
-  document.getElementById('edit_name').value = item.name;
-  document.getElementById('edit_cat').value = item.category;
-  document.getElementById('edit_price').value = item.price;
-  document.getElementById('edit_type').value = item.type;
+  document.getElementById('edit_name').value   = item.name;
+  document.getElementById('edit_cat').value    = item.category;
+  document.getElementById('edit_price').value  = item.price;
+  document.getElementById('edit_type').value   = item.type;
   document.getElementById('edit_status').value = item.status;
-  document.getElementById('edit_desc').value = item.desc || '';
+  document.getElementById('edit_desc').value   = item.desc || '';
   document.getElementById('editModal').classList.add('open');
 }
+window.editItem = editItem;
 
 function updateItem() {
   const menu = getMenu();
-  const idx = menu.findIndex(m => m.id === editingItemId);
+  const idx  = menu.findIndex(m => m.id === editingItemId);
   if (idx !== -1) {
     menu[idx] = {
       ...menu[idx],
-      name: document.getElementById('edit_name').value,
+      name:     document.getElementById('edit_name').value,
       category: document.getElementById('edit_cat').value,
-      price: parseInt(document.getElementById('edit_price').value),
-      type: document.getElementById('edit_type').value,
-      status: document.getElementById('edit_status').value,
-      desc: document.getElementById('edit_desc').value
+      price:    parseInt(document.getElementById('edit_price').value),
+      type:     document.getElementById('edit_type').value,
+      status:   document.getElementById('edit_status').value,
+      desc:     document.getElementById('edit_desc').value
     };
     saveMenu(menu);
     closeModal();
@@ -1243,18 +1265,21 @@ function updateItem() {
     toast('Item updated!', 'success');
   }
 }
+window.updateItem = updateItem;
 
 function deleteItem(id) {
   if (!confirm('Delete this menu item?')) return;
-  const menu = getMenu().filter(m => m.id !== id);
-  saveMenu(menu);
-  renderMenu();
-  refreshStats();
+  saveMenu(getMenu().filter(m => m.id !== id));
+  renderMenu(); refreshStats();
   toast('Item deleted.', 'success');
 }
+window.deleteItem = deleteItem;
 
 function cancelEdit() { showPage('menu'); }
+window.cancelEdit = cancelEdit;
+
 function closeModal() { document.getElementById('editModal').classList.remove('open'); }
+window.closeModal = closeModal;
 
 // ── SETTINGS ──
 function changePass() {
@@ -1267,10 +1292,26 @@ function changePass() {
   document.getElementById('newPass').value = '';
   toast('Password changed successfully!', 'success');
 }
+window.changePass = changePass;
 
 // ── TOAST ──
 function toast(msg, type = 'success') {
   const el = document.getElementById('adminToast');
-  el.textContent = (type === 'success' ? '✅ ' : '⚠️ ') + msg;
-  el.className = `admin-toast show ${type}`;
-  setTi
+  el.textContent  = (type === 'success' ? '✅ ' : '⚠️ ') + msg;
+  el.className    = `admin-toast show ${type}`;
+  setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+// ── RESPONSIVE SIDEBAR ──
+const menuBtn = document.getElementById('menuBtn');
+if (menuBtn) {
+  menuBtn.style.display = window.innerWidth < 900 ? 'block' : 'none';
+  window.addEventListener('resize', () => {
+    menuBtn.style.display = window.innerWidth < 900 ? 'block' : 'none';
+  });
+}
+
+}); // end DOMContentLoaded
+</script>
+</body>
+</html>

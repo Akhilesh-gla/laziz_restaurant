@@ -675,11 +675,25 @@
         <div class="card">
           <div class="card-header">
             <div class="card-title">Menu Items</div>
-            <button class="card-action" onclick="showPage('addItem')">+ Add Item</button>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+              <button class="btn-primary-admin" onclick="showPage('addItem')" style="padding:9px 18px;font-size:0.72rem">+ Add New Item</button>
+              <button class="btn-success" onclick="resetToMaster()" style="font-size:0.72rem">↺ Reset to Original</button>
+            </div>
           </div>
-          <div class="search-bar">
-            <span class="search-icon">🔍</span>
-            <input class="search-input" type="text" id="menuSearch" placeholder="Search menu items..." oninput="renderMenu()" />
+          <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap">
+            <div class="search-bar" style="flex:1;min-width:200px;margin-bottom:0">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" type="text" id="menuSearch" placeholder="Search by name or category…" oninput="renderMenuAdmin()" />
+            </div>
+            <select id="menuCatFilter" onchange="renderMenuAdmin()" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:11px 16px;color:white;font-family:'Poppins',sans-serif;font-size:0.85rem;outline:none;min-width:180px">
+              <option value="">All Categories</option>
+              <option>Soups</option><option>Snacks</option><option>Salad & Raita</option>
+              <option>Rice / Pulao</option><option>Biryani</option><option>Indian Veg</option>
+              <option>Chicken Specialties</option><option>Mutton</option><option>BBQ / Tandoor</option>
+              <option>Rolls</option><option>Chinese</option><option>Noodles</option>
+              <option>Chinese Rice</option><option>Bread</option><option>Desserts</option>
+              <option>Thali</option><option>Combo Meals</option>
+            </select>
           </div>
           <div id="menuGrid" class="menu-grid"></div>
         </div>
@@ -692,7 +706,6 @@
             <div class="card-title" id="addItemTitle">Add New Menu Item</div>
           </div>
           <div class="form-row">
-            <div class="form-group2">
               <label>Dish Name *</label>
               <input type="text" id="item_name" placeholder="e.g. Butter Chicken" />
             </div>
@@ -700,29 +713,23 @@
               <label>Category *</label>
               <select id="item_cat">
                 <option value="">Select Category</option>
-                <option>Soups</option>
-                <option>Snacks</option>
-                <option>Salads</option>
-                <option>Rice / Pulao</option>
-                <option>Biryani</option>
-                <option>Indian Veg</option>
-                <option>Chicken Specialties</option>
-                <option>Mutton</option>
-                <option>Chinese</option>
-                <option>Noodles</option>
-                <option>Rolls</option>
-                <option>BBQ</option>
-                <option>Bread</option>
-                <option>Desserts</option>
-                <option>Thali</option>
-                <option>Combo Meals</option>
+                <option>Soups</option><option>Snacks</option><option>Salad & Raita</option>
+                <option>Rice / Pulao</option><option>Biryani</option><option>Indian Veg</option>
+                <option>Chicken Specialties</option><option>Mutton</option><option>BBQ / Tandoor</option>
+                <option>Rolls</option><option>Chinese</option><option>Noodles</option>
+                <option>Chinese Rice</option><option>Bread</option><option>Desserts</option>
+                <option>Thali</option><option>Combo Meals</option>
               </select>
             </div>
           </div>
           <div class="form-row three">
             <div class="form-group2">
-              <label>Price (₹) *</label>
+              <label>Price / Half Price (₹) *</label>
               <input type="number" id="item_price" placeholder="e.g. 280" />
+            </div>
+            <div class="form-group2">
+              <label>Full Price (₹) — leave blank if no half/full</label>
+              <input type="number" id="item_price2" placeholder="e.g. 450 (optional)" />
             </div>
             <div class="form-group2">
               <label>Type</label>
@@ -731,12 +738,20 @@
                 <option value="nonveg">🔴 Non-Vegetarian</option>
               </select>
             </div>
+          </div>
+          <div class="form-row">
             <div class="form-group2">
               <label>Status</label>
               <select id="item_status">
                 <option value="available">Available</option>
-                <option value="unavailable">Unavailable</option>
+                <option value="unavailable">Unavailable (hidden from menu)</option>
               </select>
+            </div>
+            <div class="form-group2" style="justify-content:flex-end;padding-top:24px">
+              <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+                <input type="checkbox" id="item_chef" style="width:18px;height:18px;accent-color:var(--gold)" />
+                ⭐ Mark as Chef's Special
+              </label>
             </div>
           </div>
           <div class="form-row" style="margin-bottom:24px">
@@ -820,42 +835,55 @@
       <div class="form-group2">
         <label>Category</label>
         <select id="edit_cat">
-          <option>Soups</option><option>Snacks</option><option>Salads</option>
+          <option>Soups</option><option>Snacks</option><option>Salad & Raita</option>
           <option>Rice / Pulao</option><option>Biryani</option><option>Indian Veg</option>
-          <option>Chicken Specialties</option><option>Mutton</option><option>Chinese</option>
-          <option>Noodles</option><option>Rolls</option><option>BBQ</option>
-          <option>Bread</option><option>Desserts</option><option>Thali</option><option>Combo Meals</option>
+          <option>Chicken Specialties</option><option>Mutton</option><option>BBQ / Tandoor</option>
+          <option>Rolls</option><option>Chinese</option><option>Noodles</option>
+          <option>Chinese Rice</option><option>Bread</option><option>Desserts</option>
+          <option>Thali</option><option>Combo Meals</option>
         </select>
       </div>
     </div>
-    <div class="form-row three">
+    <div class="form-row">
       <div class="form-group2">
-        <label>Price (₹)</label>
+        <label>Price / Half Price (₹)</label>
         <input type="number" id="edit_price" />
       </div>
       <div class="form-group2">
+        <label>Full Price (₹) — optional</label>
+        <input type="number" id="edit_price2" placeholder="Leave blank if single price" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group2">
         <label>Type</label>
         <select id="edit_type">
-          <option value="veg">🟢 Veg</option>
-          <option value="nonveg">🔴 Non-Veg</option>
+          <option value="veg">🟢 Vegetarian</option>
+          <option value="nonveg">🔴 Non-Vegetarian</option>
         </select>
       </div>
       <div class="form-group2">
         <label>Status</label>
         <select id="edit_status">
           <option value="available">Available</option>
-          <option value="unavailable">Unavailable</option>
+          <option value="unavailable">Unavailable (hidden from menu)</option>
         </select>
       </div>
     </div>
-    <div class="form-row" style="margin-bottom:24px">
+    <div class="form-row" style="margin-bottom:16px">
       <div class="form-group2 full">
-        <label>Description</label>
-        <input type="text" id="edit_desc" />
+        <label>Description / Note</label>
+        <input type="text" id="edit_desc" placeholder="e.g. 4 pieces, Chef's special, etc." />
       </div>
     </div>
+    <div style="margin-bottom:24px">
+      <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:0.85rem;color:var(--text)">
+        <input type="checkbox" id="edit_chef" style="width:18px;height:18px;accent-color:var(--gold)" />
+        ⭐ Mark as Chef's Special (highlighted on menu page)
+      </label>
+    </div>
     <div style="display:flex;gap:12px;">
-      <button class="btn-primary-admin" onclick="updateItem()">Update Item</button>
+      <button class="btn-primary-admin" onclick="updateItem()">💾 Save Changes</button>
       <button class="btn-danger" onclick="closeModal()">Cancel</button>
     </div>
   </div>
@@ -865,70 +893,252 @@
 <div class="admin-toast" id="adminToast"></div>
 
 <script>
-// ══════════════════════════════════════════
-//  LAZIZ RESTAURANT — ADMIN PANEL SCRIPT
-//  All logic wrapped in DOMContentLoaded
-//  so functions are always defined before use
-// ══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function () {
 
-// ── STATE ──
+// ═══════════════════════════════════════════════════════
+//  SHARED STORAGE KEY — same key used by laziz-menu.html
+// ═══════════════════════════════════════════════════════
+const STORAGE_KEY    = 'laziz_menu_v2';
+const ADMIN_PASS_KEY = 'laziz_admin_pass';
+const RES_KEY        = 'laziz_reservations';
+const MSG_KEY        = 'laziz_messages';
+
+// ── AUTH ──
+function getPass() { return localStorage.getItem(ADMIN_PASS_KEY) || 'admin123'; }
 let currentUser = null;
 let editingItemId = null;
 let resFilter = 'all';
 
-const ADMIN_EMAIL = 'admin@laziz.com';
-const ADMIN_PASS_KEY = 'laziz_admin_pass';
-function getPass() { return localStorage.getItem(ADMIN_PASS_KEY) || 'admin123'; }
-
-// ── DEFAULT MENU DATA ──
-const defaultMenu = [
-  { id: 1, name: 'Butter Chicken',       category: 'Chicken Specialties', price: 320, type: 'nonveg', desc: 'Tender chicken in rich tomato-cream sauce',  status: 'available' },
-  { id: 2, name: 'Chicken Tikka',        category: 'BBQ',                  price: 280, type: 'nonveg', desc: 'Smoky char-grilled marinated chicken',        status: 'available' },
-  { id: 3, name: 'Paneer Butter Masala', category: 'Indian Veg',           price: 260, type: 'veg',    desc: 'Paneer in buttery tomato-cashew gravy',      status: 'available' },
-  { id: 4, name: 'Chicken Dum Biryani',  category: 'Biryani',              price: 340, type: 'nonveg', desc: 'Slow-cooked basmati with succulent chicken',  status: 'available' },
-  { id: 5, name: 'Mutton Rogan Josh',    category: 'Mutton',               price: 380, type: 'nonveg', desc: 'Aromatic Kashmiri mutton curry',              status: 'available' },
-  { id: 6, name: 'Dal Makhani',          category: 'Indian Veg',           price: 220, type: 'veg',    desc: 'Creamy slow-cooked black lentils',           status: 'available' },
-  { id: 7, name: 'Chicken Kathi Roll',   category: 'Rolls',                price: 140, type: 'nonveg', desc: 'Spiced chicken in flaky paratha',            status: 'available' },
-  { id: 8, name: 'Veg Hakka Noodles',    category: 'Noodles',              price: 180, type: 'veg',    desc: 'Stir-fried noodles with vegetables',         status: 'available' },
+// ════════════════════════════════════════════════════════
+//  MASTER MENU — All 150+ items from the real menu page
+//  category values MUST match SECTION_CONFIG keys in menu
+// ════════════════════════════════════════════════════════
+const MASTER_MENU = [
+  // SOUPS
+  {id:1,  name:'Tomato Soup',              category:'Soups',               price:110, price2:null, type:'veg',    desc:'',                                         status:'available', isChef:false},
+  {id:2,  name:'Chicken Clear Soup',       category:'Soups',               price:150, price2:null, type:'nonveg', desc:'',                                         status:'available', isChef:false},
+  {id:3,  name:'Veg. Hot & Sour',          category:'Soups',               price:120, price2:null, type:'veg',    desc:'',                                         status:'available', isChef:false},
+  {id:4,  name:'Veg. Sweet Corn',          category:'Soups',               price:120, price2:null, type:'veg',    desc:'',                                         status:'available', isChef:false},
+  {id:5,  name:'Chicken Tulemein Soup',    category:'Soups',               price:160, price2:null, type:'nonveg', desc:'',                                         status:'available', isChef:false},
+  {id:6,  name:'Chicken Manchow Soup',     category:'Soups',               price:160, price2:null, type:'nonveg', desc:'',                                         status:'available', isChef:false},
+  {id:7,  name:'Veg. Manchow Soup',        category:'Soups',               price:120, price2:null, type:'veg',    desc:'',                                         status:'available', isChef:false},
+  {id:8,  name:'Chicken Hot & Sour Soup',  category:'Soups',               price:160, price2:null, type:'nonveg', desc:'',                                         status:'available', isChef:false},
+  // SNACKS
+  {id:10, name:'Egg Bhurji',               category:'Snacks',              price:110, price2:null, type:'nonveg', desc:'Spiced scrambled eggs — a classic Indian breakfast staple',          status:'available', isChef:false},
+  {id:11, name:'French Fries',             category:'Snacks',              price:90,  price2:null, type:'veg',    desc:'Crispy golden fries served with dipping sauce',                      status:'available', isChef:false},
+  {id:12, name:'Paneer Tikka',             category:'Snacks',              price:170, price2:null, type:'veg',    desc:'Marinated paneer cubes grilled in the tandoor to perfection',        status:'available', isChef:false},
+  {id:13, name:'Mushroom Tikka',           category:'Snacks',              price:199, price2:null, type:'veg',    desc:'Succulent mushrooms marinated in spiced yogurt, tandoor-grilled',    status:'available', isChef:false},
+  {id:14, name:'Tandoori Aloo',            category:'Snacks',              price:160, price2:null, type:'veg',    desc:'Whole baby potatoes marinated and roasted in the clay oven',         status:'available', isChef:false},
+  {id:15, name:'Masala Chaap',             category:'Snacks',              price:220, price2:null, type:'veg',    desc:'Spicy soya chaap tossed with aromatic masala',                       status:'available', isChef:false},
+  {id:16, name:'Soya Chaap',               category:'Snacks',              price:210, price2:null, type:'veg',    desc:'Tender soya chaap in a rich and fragrant sauce',                     status:'available', isChef:false},
+  {id:17, name:'Malai Chaap',              category:'Snacks',              price:220, price2:null, type:'veg',    desc:'Soya chaap in a creamy, mellow malai sauce — mildly spiced',         status:'available', isChef:false},
+  {id:18, name:'Achari Paneer Tikka',      category:'Snacks',              price:199, price2:null, type:'veg',    desc:'Tangy pickle-spiced paneer cubes, char-grilled',                     status:'available', isChef:false},
+  {id:19, name:'Paneer Malai Tikka',       category:'Snacks',              price:200, price2:null, type:'veg',    desc:'Melt-in-the-mouth paneer in creamy malai marinade',                  status:'available', isChef:false},
+  // SALAD & RAITA
+  {id:20, name:'Green Salad',              category:'Salad & Raita',       price:99,  price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:21, name:'Onion Salad',              category:'Salad & Raita',       price:99,  price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:22, name:'Mix Raita',                category:'Salad & Raita',       price:140, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:23, name:'Boondi Raita',             category:'Salad & Raita',       price:120, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:24, name:'Pineapple Raita',          category:'Salad & Raita',       price:150, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:25, name:'Plain Curd Amul',          category:'Salad & Raita',       price:0,   price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  // RICE / PULAO
+  {id:30, name:'Plain Rice',               category:'Rice / Pulao',        price:99,  price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:31, name:'Zeera Rice',               category:'Rice / Pulao',        price:149, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:32, name:'Peas Pulao',               category:'Rice / Pulao',        price:170, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:33, name:'Veg. Pulao',               category:'Rice / Pulao',        price:170, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:34, name:'Kashmiri Pulao',           category:'Rice / Pulao',        price:190, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  // BIRYANI
+  {id:40, name:'Veg. Biryani With Raita',         category:'Biryani', price:199, price2:null, type:'veg',    desc:'Fragrant basmati layered with seasonal vegetables and whole spices',          status:'available', isChef:false},
+  {id:41, name:'Mutton Biryani With Gravy',        category:'Biryani', price:399, price2:null, type:'nonveg', desc:'Tender mutton slow-cooked with saffron-infused rice',                         status:'available', isChef:false},
+  {id:42, name:'Chicken Biryani With Gravy',       category:'Biryani', price:299, price2:null, type:'nonveg', desc:'Perfectly marinated chicken pieces dum-cooked with aromatic basmati',         status:'available', isChef:false},
+  {id:43, name:'Mutton Hyderabadi With Gravy',     category:'Biryani', price:399, price2:null, type:'nonveg', desc:'Authentic Hyderabadi dum biryani with rich mutton masala',                    status:'available', isChef:false},
+  {id:44, name:'Egg Biryani With Gravy',           category:'Biryani', price:270, price2:null, type:'nonveg', desc:'Spiced eggs layered in flavourful dum biryani',                               status:'available', isChef:false},
+  // INDIAN VEG
+  {id:50, name:'Shahi Paneer',             category:'Indian Veg',          price:199, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:51, name:'Kadhai Paneer',            category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:52, name:'Palak Paneer',             category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:53, name:'Mutter Paneer',            category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:54, name:'Paneer Hyderabadi',        category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:55, name:'Paneer Pasanda',           category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:56, name:'Paneer Butter Masala',     category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:57, name:'Paneer Lababdar',          category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:58, name:'Mutter Mushroom',          category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:59, name:'Mushroom Dopayaja',        category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:60, name:'Mushroom Masala',          category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:61, name:'Kadhai Mushroom',          category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:62, name:'Veg. Navratan Korma',      category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:63, name:'Zeera Aaloo',              category:'Indian Veg',          price:199, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:64, name:'Dum Aaloo',               category:'Indian Veg',          price:199, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:65, name:'Dum Aaloo Kashmiri',       category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:66, name:'Chana Masala',             category:'Indian Veg',          price:199, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:67, name:'Mutter Methi Malai',       category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:68, name:'Malai Kofta',              category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:69, name:'Kashmiri Kofta',           category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:70, name:'Dal Makhani',              category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:71, name:'Dal Fry',                  category:'Indian Veg',          price:190, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:72, name:'Dal Bhurji',               category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:73, name:'Mix. Veg.',                category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:74, name:'Aloo Gobhi Adraki Tawa',   category:'Indian Veg',          price:220, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:75, name:'Gobhi Masala',             category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:76, name:'Dal Haryali',              category:'Indian Veg',          price:199, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:77, name:'Mushroom Tawa',            category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:78, name:'Rajma Fry',                category:'Indian Veg',          price:199, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:79, name:'Rajma Masala',             category:'Indian Veg',          price:199, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:80, name:'Chaap Masala',             category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:81, name:'Kadhai Chaap',             category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:82, name:'Paneer Do Pyaza',          category:'Indian Veg',          price:230, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:83, name:'Spl. Laziz Paneer Tikka Butter Masala', category:'Indian Veg', price:290, price2:null, type:'veg', desc:'Chef\'s Special — Premium preparation', status:'available', isChef:true},
+  // CHICKEN SPECIALTIES (dual price: half / full)
+  {id:90,  name:'Butter Chicken',             category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:91,  name:'Kadhai Chicken',             category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:92,  name:'Chicken Masala',             category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:93,  name:'Tawa Chicken',               category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:94,  name:'Chicken Curry',              category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:95,  name:'Handi Chicken',              category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:96,  name:'Kali Mirch Chicken',         category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:97,  name:'Chicken Do Pyaza',           category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:98,  name:'Chicken Dhaniya Adraki',     category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:99,  name:'Chicken Tikka Masala B/L',   category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:100, name:'Chicken Tikka Tawa B/L',     category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:101, name:'Mutton Seekh Tawa',          category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:102, name:'Cream Chicken',              category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:103, name:'Chicken Lababdar',           category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:104, name:'Patiyala Chicken',           category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:105, name:'Chicken Rara',               category:'Chicken Specialties', price:399, price2:650, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:106, name:'Chicken Boneless Charge',    category:'Chicken Specialties', price:50,  price2:80,  type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:107, name:'Extra Gravy',                category:'Chicken Specialties', price:150, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  // MUTTON
+  {id:110, name:'Mutton Curry',               category:'Mutton', price:399, price2:null, type:'nonveg', desc:'4 pieces',          status:'available', isChef:false},
+  {id:111, name:'Mutton Roganjosh',           category:'Mutton', price:399, price2:null, type:'nonveg', desc:'4 pieces',          status:'available', isChef:false},
+  {id:112, name:'Mutton Rara',                category:'Mutton', price:399, price2:null, type:'nonveg', desc:'4 pieces',          status:'available', isChef:false},
+  {id:113, name:'Mutton Sagwala',             category:'Mutton', price:399, price2:null, type:'nonveg', desc:'4 pieces',          status:'available', isChef:false},
+  {id:114, name:'Mutton Do Pyaza',            category:'Mutton', price:399, price2:null, type:'nonveg', desc:'4 pieces',          status:'available', isChef:false},
+  {id:115, name:'Mutton Masala',              category:'Mutton', price:399, price2:null, type:'nonveg', desc:'',                  status:'available', isChef:false},
+  {id:116, name:'Mutton Korma',               category:'Mutton', price:399, price2:null, type:'nonveg', desc:'',                  status:'available', isChef:false},
+  {id:117, name:'Mutton Tawa',                category:'Mutton', price:399, price2:null, type:'nonveg', desc:'',                  status:'available', isChef:false},
+  {id:118, name:'Shahi Meet Boneless',        category:'Mutton', price:399, price2:null, type:'nonveg', desc:'',                  status:'available', isChef:false},
+  {id:119, name:'Egg Curry',                  category:'Mutton', price:199, price2:null, type:'nonveg', desc:'2 pieces',          status:'available', isChef:false},
+  // BBQ / TANDOOR (dual price: half / full)
+  {id:120, name:'Tandoori Chicken',           category:'BBQ / Tandoor', price:250, price2:399, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:121, name:'Afgani Chicken',             category:'BBQ / Tandoor', price:270, price2:430, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:122, name:'Haryali Chicken',            category:'BBQ / Tandoor', price:270, price2:430, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:123, name:'Achari Chicken',             category:'BBQ / Tandoor', price:270, price2:430, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:124, name:'Pudhina Chicken',            category:'BBQ / Tandoor', price:270, price2:430, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:125, name:'Chicken Seekh Kabab',        category:'BBQ / Tandoor', price:250, price2:399, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:126, name:'Mutton Seekh Kabab',         category:'BBQ / Tandoor', price:270, price2:430, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:127, name:'Achari Chicken Tikka',       category:'BBQ / Tandoor', price:270, price2:430, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:128, name:'Haryali Chicken Tikka',      category:'BBQ / Tandoor', price:270, price2:430, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:129, name:'Chicken Malai Tikka',        category:'BBQ / Tandoor', price:270, price2:430, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:130, name:'Chicken Tikka',              category:'BBQ / Tandoor', price:270, price2:430, type:'nonveg', desc:'6 Pc / 12 Pc',       status:'available', isChef:false},
+  // ROLLS
+  {id:140, name:'Chicken Tikka Roll',         category:'Rolls', price:120, price2:null, type:'nonveg', desc:'Tandoor chicken tikka wrapped in a soft flaky paratha with chutney',        status:'available', isChef:false},
+  {id:141, name:'Mutton Seekh Roll',          category:'Rolls', price:120, price2:null, type:'nonveg', desc:'Juicy mutton seekh kabab wrapped with onions and mint chutney',              status:'available', isChef:false},
+  {id:142, name:'Chicken Seekh Roll',         category:'Rolls', price:120, price2:null, type:'nonveg', desc:'Chicken seekh kabab in a crispy roll with green chutney',                   status:'available', isChef:false},
+  {id:143, name:'Chicken Roll',               category:'Rolls', price:120, price2:null, type:'nonveg', desc:'Classic spiced chicken filling in a soft paratha roll',                     status:'available', isChef:false},
+  {id:144, name:'Chicken Spring Roll',        category:'Rolls', price:170, price2:null, type:'nonveg', desc:'Crispy Chinese-style spring roll with chicken filling',                      status:'available', isChef:false},
+  {id:145, name:'Paneer Tikka Roll',          category:'Rolls', price:100, price2:null, type:'veg',    desc:'Grilled paneer tikka in a warm paratha with mint chutney',                  status:'available', isChef:false},
+  {id:146, name:'Veg. Spring Roll',           category:'Rolls', price:120, price2:null, type:'veg',    desc:'Crispy spring roll stuffed with stir-fried vegetables',                     status:'available', isChef:false},
+  {id:147, name:'Paneer Roll',                category:'Rolls', price:120, price2:null, type:'veg',    desc:'Soft paneer with spices rolled in flaky paratha',                           status:'available', isChef:false},
+  {id:148, name:'Egg Roll',                   category:'Rolls', price:120, price2:null, type:'nonveg', desc:'Fluffy egg omelette wrapped in a soft paratha with condiments',              status:'available', isChef:false},
+  // CHINESE (dual price)
+  {id:150, name:'Chilly Chicken Boneless',    category:'Chinese', price:350, price2:610, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:151, name:'Chicken Manchurian',         category:'Chinese', price:350, price2:610, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:152, name:'Lemon Chicken',              category:'Chinese', price:350, price2:610, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:153, name:'Chicken Fry',                category:'Chinese', price:330, price2:590, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:154, name:'Chicken Pakora',             category:'Chinese', price:330, price2:590, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:155, name:'Chili Paneer',               category:'Chinese', price:180, price2:270, type:'veg',    desc:'Dry / Gravy', status:'available', isChef:false},
+  {id:156, name:'Chinese Potato With Sauce',  category:'Chinese', price:170, price2:null, type:'veg',   desc:'', status:'available', isChef:false},
+  {id:157, name:'Veg. Manchurian',            category:'Chinese', price:190, price2:230, type:'veg',    desc:'Dry / Gravy', status:'available', isChef:false},
+  {id:158, name:'Chilly Mushroom Dry',        category:'Chinese', price:230, price2:null, type:'veg',   desc:'', status:'available', isChef:false},
+  // NOODLES
+  {id:160, name:'Veg. Chowmein',              category:'Noodles', price:120, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:161, name:'Chicken Chowmein',           category:'Noodles', price:199, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:162, name:'Veg. Hackka Noodles',        category:'Noodles', price:150, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:163, name:'Veg. Chilly Garlic Noodles', category:'Noodles', price:170, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:164, name:'Egg Noodles',                category:'Noodles', price:180, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:165, name:'Chicken Chilly Garlic Noodles', category:'Noodles', price:199, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:166, name:'Veg. Singapuri Noodles',     category:'Noodles', price:199, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:167, name:'Chicken Singapuri Noodles',  category:'Noodles', price:250, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  // CHINESE RICE
+  {id:170, name:'Veg. Fried Rice',            category:'Chinese Rice', price:120, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:171, name:'Chicken Fried Rice',         category:'Chinese Rice', price:250, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:172, name:'Mix Fried Rice Veg.',        category:'Chinese Rice', price:190, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:173, name:'Egg Fried Rice',             category:'Chinese Rice', price:175, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:174, name:'Veg. Sizwan Fried Rice',     category:'Chinese Rice', price:175, price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:175, name:'Chilly Garlic Veg. Fried Rice', category:'Chinese Rice', price:199, price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:176, name:'Chilly Garlic Chicken Fried Rice', category:'Chinese Rice', price:250, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  // BREAD
+  {id:180, name:'Roti',                       category:'Bread', price:16,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:181, name:'Butter Roti',                category:'Bread', price:18,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:182, name:'Miss Roti',                  category:'Bread', price:50,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:183, name:'Plain Parantha',             category:'Bread', price:45,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:184, name:'Plain Kulcha',               category:'Bread', price:45,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:185, name:'Aloo Parantha',              category:'Bread', price:45,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:186, name:'Pudhina Parantha',           category:'Bread', price:50,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:187, name:'Stuff Parantha',             category:'Bread', price:45,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:188, name:'Plain Naan',                 category:'Bread', price:45,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:189, name:'Butter Naan',                category:'Bread', price:50,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:190, name:'Garlic Naan',                category:'Bread', price:60,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:191, name:'Lachha Parantha',            category:'Bread', price:50,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:192, name:'Masala Papad',               category:'Bread', price:25,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:193, name:'Plain Papad',                category:'Bread', price:15,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:194, name:'Aloo Onion Parantha',        category:'Bread', price:50,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:195, name:'Paneer Naan',                category:'Bread', price:55,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:196, name:'Keema Naan',                 category:'Bread', price:70,  price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:197, name:'Rumali Roti',                category:'Bread', price:20,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:198, name:'Stuff Naan',                 category:'Bread', price:55,  price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:199, name:'Laziz Spl. Parantha With White Butter', category:'Bread', price:99, price2:null, type:'veg', desc:'House Special — must try!', status:'available', isChef:true},
+  // DESSERTS
+  {id:200, name:'Gulab Jamun',                category:'Desserts', price:50, price2:null, type:'veg', desc:'2 pieces',          status:'available', isChef:false},
+  {id:201, name:'Gajar Halwa',                category:'Desserts', price:70, price2:null, type:'veg', desc:'Seasonal — 1 plate', status:'available', isChef:false},
+  // THALI
+  {id:210, name:'Laziz Spl. Thali',          category:'Thali', price:149, price2:null, type:'veg',    desc:'Subji + Dal + Rice + 2 Pc Roti — A wholesome simple meal',                                               status:'available', isChef:false},
+  {id:211, name:'Veg. Thali',                category:'Thali', price:225, price2:null, type:'veg',    desc:'Dal Makhani · Shahi Paneer · Mix Veg. Raita · Papad Rice · 2 Lacha Parantha / 3 Butter Roti · 1 Pc Gulab Jamun', status:'available', isChef:false},
+  {id:212, name:'Chur Chur Naan Thali',      category:'Thali', price:199, price2:null, type:'veg',    desc:'Shahi Paneer · Dal Makhani · 2 Pcs. Chur Chur Naan · Raita · Salad',                                     status:'available', isChef:false},
+  {id:213, name:'Non Veg. Thali',            category:'Thali', price:275, price2:null, type:'nonveg', desc:'1 Pc. Chicken / Dal Makhni · Mix Veg. Raita · Papad Rice · 2 Lacha Parantha / 3 Butter Roti',             status:'available', isChef:false},
+  {id:214, name:'Chur Chur Non Veg Naan Thali', category:'Thali', price:275, price2:null, type:'nonveg', desc:'Butter Chicken · Dal Makhani · 2 Pcs. Chur Chur Naan · Raita · Salad',                               status:'available', isChef:false},
+  // COMBO MEALS
+  {id:220, name:'Chola / Rajma / Dal + Rice',  category:'Combo Meals', price:99,  price2:null, type:'veg',    desc:'', status:'available', isChef:false},
+  {id:221, name:'Veg Manchurian / Chilly Paneer + Veg Fry Rice / Noodle', category:'Combo Meals', price:150, price2:null, type:'veg', desc:'', status:'available', isChef:false},
+  {id:222, name:'Butter Chicken / Chicken Curry + 2 Butter Roti / Rice',  category:'Combo Meals', price:199, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
+  {id:223, name:'Chilly Chicken / Chicken Manchurian + Veg Fry Rice / Noodles Veg', category:'Combo Meals', price:250, price2:null, type:'nonveg', desc:'', status:'available', isChef:false},
 ];
 
 // ── STORAGE HELPERS ──
 function getMenu() {
-  const saved = localStorage.getItem('laziz_menu');
-  return saved ? JSON.parse(saved) : [...defaultMenu];
+  const saved = localStorage.getItem(STORAGE_KEY);
+  return saved ? JSON.parse(saved) : [...MASTER_MENU];
 }
-function saveMenu(m)         { localStorage.setItem('laziz_menu', JSON.stringify(m)); }
-function getReservations()   { return JSON.parse(localStorage.getItem('laziz_reservations') || '[]'); }
-function saveReservations(r) { localStorage.setItem('laziz_reservations', JSON.stringify(r)); }
-function getMessages()       { return JSON.parse(localStorage.getItem('laziz_messages') || '[]'); }
+function saveMenu(m) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(m));
+}
+function getReservations()   { return JSON.parse(localStorage.getItem(RES_KEY) || '[]'); }
+function saveReservations(r) { localStorage.setItem(RES_KEY, JSON.stringify(r)); }
+function getMessages()       { return JSON.parse(localStorage.getItem(MSG_KEY) || '[]'); }
 
-// ── SEED DEFAULT MENU ──
-if (!localStorage.getItem('laziz_menu')) saveMenu(defaultMenu);
+// ── SEED on first load ──
+if (!localStorage.getItem(STORAGE_KEY)) {
+  saveMenu(MASTER_MENU);
+}
 
 // ── LOGIN ──
 function doLogin() {
   const email = document.getElementById('loginEmail').value.trim();
   const pass  = document.getElementById('loginPass').value;
   const err   = document.getElementById('loginErr');
-  if (email === ADMIN_EMAIL && pass === getPass()) {
+  if (email === 'admin@laziz.com' && pass === getPass()) {
     err.style.display = 'none';
     currentUser = { email };
     document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('dashboard').style.display  = 'block';
+    document.getElementById('dashboard').style.display   = 'block';
     initDashboard();
   } else {
     err.style.display = 'block';
   }
 }
-
-// Wire up login button and Enter key — no inline onclick needed
 document.getElementById('loginBtn').addEventListener('click', doLogin);
-document.getElementById('loginPass').addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
+document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
-// ── LOGOUT ──
 function doLogout() {
   currentUser = null;
   document.getElementById('dashboard').style.display  = 'none';
@@ -937,89 +1147,62 @@ function doLogout() {
 }
 window.doLogout = doLogout;
 
-// ── SIDEBAR TOGGLE ──
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-}
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 window.toggleSidebar = toggleSidebar;
 
-// ── INIT DASHBOARD ──
+// ── INIT ──
 function initDashboard() {
   setInterval(updateDate, 1000);
   updateDate();
   refreshStats();
 }
-
 function updateDate() {
   const el = document.getElementById('topbarDate');
   if (!el) return;
   el.textContent =
     new Date().toLocaleDateString('en-IN', { weekday:'short', year:'numeric', month:'short', day:'numeric' })
-    + ' ' +
+    + ' · ' +
     new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
 }
-
 function refreshStats() {
   const res   = getReservations();
   const menu  = getMenu();
   const msgs  = getMessages();
-  const pending  = res.filter(r => r.status === 'pending').length;
-  const today    = new Date().toISOString().split('T')[0];
-  const todayRes = res.filter(r => r.created && r.created.startsWith(today)).length;
-
-  document.getElementById('totalRes').textContent   = res.length;
-  document.getElementById('pendingRes').textContent = pending;
-  document.getElementById('menuCount').textContent  = menu.length;
-  document.getElementById('msgCount').textContent   = msgs.length;
-  document.getElementById('pendingCount').textContent = pending;
-  document.getElementById('todayChange').textContent  = `+${todayRes} today`;
-
+  const pend  = res.filter(r => r.status === 'pending').length;
+  const today = new Date().toISOString().split('T')[0];
+  const todR  = res.filter(r => r.created && r.created.startsWith(today)).length;
+  document.getElementById('totalRes').textContent    = res.length;
+  document.getElementById('pendingRes').textContent  = pend;
+  document.getElementById('menuCount').textContent   = menu.length;
+  document.getElementById('msgCount').textContent    = msgs.length;
+  document.getElementById('pendingCount').textContent = pend;
+  document.getElementById('todayChange').textContent = `+${todR} today`;
   renderOverviewRes(res.slice(-5).reverse());
 }
 window.refreshStats = refreshStats;
 
 function renderOverviewRes(list) {
   const el = document.getElementById('overviewResList');
-  if (!list.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📅</div><p>No reservations yet</p></div>';
-    return;
-  }
-  el.innerHTML = `<table>
-    <tr><th>Name</th><th>Guests</th><th>Date</th><th>Status</th></tr>
-    ${list.map(r => `<tr>
-      <td>${r.name}</td><td>${r.guests}</td>
-      <td>${r.date||'—'} ${r.time||''}</td>
-      <td><span class="badge badge-${r.status}">${r.status}</span></td>
-    </tr>`).join('')}
-  </table>`;
+  if (!list.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📅</div><p>No reservations yet</p></div>'; return; }
+  el.innerHTML = `<table><tr><th>Name</th><th>Guests</th><th>Date</th><th>Status</th></tr>
+  ${list.map(r => `<tr><td>${r.name}</td><td>${r.guests}</td><td>${r.date||'—'} ${r.time||''}</td>
+  <td><span class="badge badge-${r.status}">${r.status}</span></td></tr>`).join('')}</table>`;
 }
 
-// ── PAGE NAVIGATION ──
+// ── PAGE NAV ──
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
-
-  const titles = {
-    overview:'Dashboard Overview', reservations:'Reservations',
-    messages:'Customer Messages', menu:'Menu Management',
-    addItem:'Add Menu Item', settings:'Settings'
-  };
+  const titles = { overview:'Dashboard', reservations:'Reservations', messages:'Messages', menu:'Menu Items', addItem:'Add Menu Item', settings:'Settings' };
   document.getElementById('pageTitle').textContent = titles[page] || page;
-
   if (page === 'reservations') renderReservations();
   if (page === 'messages')     renderMessages();
-  if (page === 'menu')         renderMenu();
+  if (page === 'menu')         renderMenuAdmin();
   if (page === 'overview')     refreshStats();
-  if (page === 'addItem') {
-    editingItemId = null;
-    document.getElementById('addItemTitle').textContent = 'Add New Menu Item';
-    resetItemForm();
-  }
-
+  if (page === 'addItem') { editingItemId = null; document.getElementById('addItemTitle').textContent = 'Add New Menu Item'; resetItemForm(); }
   document.querySelectorAll('.nav-item').forEach(n => {
-    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${page}'`))
-      n.classList.add('active');
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${page}'`)) n.classList.add('active');
   });
   document.getElementById('sidebar').classList.remove('open');
 }
@@ -1037,72 +1220,55 @@ window.filterRes = filterRes;
 function renderReservations() {
   let res = getReservations();
   const q = (document.getElementById('resSearch')?.value || '').toLowerCase();
-  if (q) res = res.filter(r =>
-    r.name.toLowerCase().includes(q) || r.phone.includes(q) || (r.date||'').includes(q)
-  );
+  if (q) res = res.filter(r => r.name.toLowerCase().includes(q) || r.phone.includes(q) || (r.date||'').includes(q));
   if (resFilter !== 'all') res = res.filter(r => r.status === resFilter);
   res = res.slice().reverse();
-
   const el = document.getElementById('reservationsTable');
-  if (!res.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📅</div><p>No reservations found</p></div>';
-    return;
-  }
+  if (!res.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📅</div><p>No reservations found</p></div>'; return; }
   el.innerHTML = `<div style="overflow-x:auto"><table>
-    <tr><th>Name</th><th>Phone</th><th>Guests</th><th>Date & Time</th><th>Special Request</th><th>Status</th><th>Actions</th></tr>
+    <tr><th>Name</th><th>Phone</th><th>Guests</th><th>Date & Time</th><th>Note</th><th>Status</th><th>Actions</th></tr>
     ${res.map(r => `<tr>
       <td><strong>${r.name}</strong><br><span style="color:var(--muted);font-size:.75rem">${r.email||''}</span></td>
       <td><a href="tel:${r.phone}" style="color:var(--gold);text-decoration:none">${r.phone}</a></td>
-      <td>${r.guests}</td>
-      <td>${r.date||'—'}<br><span style="color:var(--muted);font-size:.75rem">${r.time||''}</span></td>
+      <td>${r.guests}</td><td>${r.date||'—'}<br><span style="color:var(--muted);font-size:.75rem">${r.time||''}</span></td>
       <td style="max-width:150px;font-size:.78rem;color:var(--muted)">${r.message||'—'}</td>
       <td><span class="badge badge-${r.status}">${r.status}</span></td>
       <td><div style="display:flex;gap:8px;flex-wrap:wrap">
         ${r.status==='pending'    ? `<button class="btn-success" onclick="updateResStatus(${r.id},'confirmed')">Confirm</button>` : ''}
         ${r.status!=='cancelled'  ? `<button class="btn-danger"  onclick="updateResStatus(${r.id},'cancelled')">Cancel</button>`  : ''}
         <button class="btn-danger" onclick="deleteRes(${r.id})">Delete</button>
-      </div></td>
-    </tr>`).join('')}
+      </div></td></tr>`).join('')}
   </table></div>`;
 }
 window.renderReservations = renderReservations;
 
 function updateResStatus(id, status) {
-  const res = getReservations();
-  const idx = res.findIndex(r => r.id === id);
+  const res = getReservations(); const idx = res.findIndex(r => r.id === id);
   if (idx !== -1) { res[idx].status = status; saveReservations(res); }
-  renderReservations(); refreshStats();
-  toast(`Reservation ${status}!`, 'success');
+  renderReservations(); refreshStats(); toast(`Reservation ${status}!`);
 }
 window.updateResStatus = updateResStatus;
-
 function deleteRes(id) {
   if (!confirm('Delete this reservation?')) return;
   saveReservations(getReservations().filter(r => r.id !== id));
-  renderReservations(); refreshStats();
-  toast('Reservation deleted.', 'success');
+  renderReservations(); refreshStats(); toast('Deleted.');
 }
 window.deleteRes = deleteRes;
-
 function clearReservations() {
-  if (!confirm('Clear ALL reservations? This cannot be undone.')) return;
-  saveReservations([]);
-  renderReservations(); refreshStats();
-  toast('All reservations cleared.', 'success');
+  if (!confirm('Clear ALL reservations?')) return;
+  saveReservations([]); renderReservations(); refreshStats(); toast('Cleared.');
 }
 window.clearReservations = clearReservations;
-
 function exportReservations() {
   const res = getReservations();
-  if (!res.length) { toast('No reservations to export.', 'error'); return; }
-  const header = 'Name,Phone,Email,Guests,Date,Time,Status,Message';
-  const rows   = res.map(r => `"${r.name}","${r.phone}","${r.email||''}","${r.guests}","${r.date||''}","${r.time||''}","${r.status}","${r.message||''}"`);
-  const csv    = [header, ...rows].join('\n');
+  if (!res.length) { toast('Nothing to export.', 'error'); return; }
+  const csv = ['Name,Phone,Email,Guests,Date,Time,Status,Message',
+    ...res.map(r => `"${r.name}","${r.phone}","${r.email||''}","${r.guests}","${r.date||''}","${r.time||''}","${r.status}","${r.message||''}"`)
+  ].join('\n');
   const a = document.createElement('a');
-  a.href     = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-  a.download = 'laziz-reservations.csv';
-  a.click();
-  toast('Exported as CSV!', 'success');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'laziz-reservations.csv'; a.click();
+  toast('Exported!');
 }
 window.exportReservations = exportReservations;
 
@@ -1110,15 +1276,11 @@ window.exportReservations = exportReservations;
 function renderMessages() {
   const msgs = getMessages();
   const el   = document.getElementById('messagesContainer');
-  if (!msgs.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✉️</div><p>No messages yet.</p></div>';
-    return;
-  }
+  if (!msgs.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">✉️</div><p>No messages yet.</p></div>'; return; }
   el.innerHTML = msgs.slice().reverse().map(m => `
     <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:20px;margin-bottom:14px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-        <div><strong style="color:white">${m.name}</strong>
-          <span style="color:var(--gold);font-size:.8rem;margin-left:12px">${m.email}</span></div>
+        <div><strong style="color:white">${m.name}</strong><span style="color:var(--gold);font-size:.8rem;margin-left:12px">${m.email}</span></div>
         <span style="color:var(--muted);font-size:.75rem">${m.created?new Date(m.created).toLocaleDateString():''}</span>
       </div>
       <p style="font-size:.87rem;color:rgba(255,255,255,.7);line-height:1.6">${m.message}</p>
@@ -1129,105 +1291,90 @@ function renderMessages() {
     </div>`).join('');
 }
 window.renderMessages = renderMessages;
-
-function deleteMsg(id) {
-  const msgs = getMessages().filter(m => m.id !== id);
-  localStorage.setItem('laziz_messages', JSON.stringify(msgs));
-  renderMessages(); refreshStats();
-  toast('Message deleted.', 'success');
-}
+function deleteMsg(id) { const msgs = getMessages().filter(m => m.id !== id); localStorage.setItem(MSG_KEY, JSON.stringify(msgs)); renderMessages(); refreshStats(); toast('Deleted.'); }
 window.deleteMsg = deleteMsg;
-
-function clearMessages() {
-  if (!confirm('Clear all messages?')) return;
-  localStorage.setItem('laziz_messages', '[]');
-  renderMessages(); refreshStats();
-  toast('Messages cleared.', 'success');
-}
+function clearMessages() { if (!confirm('Clear all messages?')) return; localStorage.setItem(MSG_KEY, '[]'); renderMessages(); refreshStats(); toast('Cleared.'); }
 window.clearMessages = clearMessages;
 
-// ── MENU ──
-const catEmoji = {
-  'Soups':'🍲','Snacks':'🥗','Salads':'🥙','Rice / Pulao':'🍚','Biryani':'🍛',
-  'Indian Veg':'🌿','Chicken Specialties':'🍗','Mutton':'🐑','Chinese':'🥢',
-  'Noodles':'🍜','Rolls':'🥙','BBQ':'🔥','Bread':'🍞','Desserts':'🍮',
-  'Thali':'🍽','Combo Meals':'🍱'
+// ── MENU ADMIN ──
+const CAT_EMOJI = {
+  'Soups':'🍲','Snacks':'🥗','Salad & Raita':'🥗','Rice / Pulao':'🍚','Biryani':'🫕',
+  'Indian Veg':'🌿','Chicken Specialties':'🍗','Mutton':'🐑','BBQ / Tandoor':'🔥',
+  'Rolls':'🥙','Chinese':'🥢','Noodles':'🍜','Chinese Rice':'🍚',
+  'Bread':'🍞','Desserts':'🍮','Thali':'🍽','Combo Meals':'🍱'
 };
+const ALL_CATS = Object.keys(CAT_EMOJI);
 
-function renderMenu() {
+function renderMenuAdmin() {
   let menu = getMenu();
-  const q  = (document.getElementById('menuSearch')?.value || '').toLowerCase();
-  if (q) menu = menu.filter(m => m.name.toLowerCase().includes(q) || m.category.toLowerCase().includes(q));
+  const q   = (document.getElementById('menuSearch')?.value || '').toLowerCase();
+  const cat = (document.getElementById('menuCatFilter')?.value || '');
+  if (q)   menu = menu.filter(m => m.name.toLowerCase().includes(q) || m.category.toLowerCase().includes(q));
+  if (cat) menu = menu.filter(m => m.category === cat);
 
   const el = document.getElementById('menuGrid');
-  if (!menu.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🍛</div><p>No items found</p></div>';
-    return;
-  }
+  if (!menu.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🍛</div><p>No items found</p></div>'; return; }
+
   el.innerHTML = menu.map(item => `
-    <div class="menu-item-card">
-      <div class="menu-item-img">${catEmoji[item.category]||'🍽'}</div>
+    <div class="menu-item-card" style="${item.status==='unavailable'?'opacity:0.5':''}">
+      <div class="menu-item-img">${CAT_EMOJI[item.category]||'🍽'}</div>
       <div class="menu-item-body">
-        <div class="menu-item-cat">${item.category}</div>
+        <div class="menu-item-cat">${item.category} ${item.isChef?'⭐':''}</div>
         <div class="menu-item-name">${item.name}</div>
-        <div style="font-size:.75rem;color:var(--muted);margin:6px 0 10px;line-height:1.5">${item.desc||''}</div>
+        ${item.desc ? `<div style="font-size:.72rem;color:var(--muted);margin:4px 0 8px;line-height:1.5">${item.desc}</div>` : ''}
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-          <div class="menu-item-price">₹${item.price}</div>
-          <span class="badge badge-${item.type}">${item.type==='veg'?'🟢 Veg':'🔴 Non-Veg'}</span>
+          <div class="menu-item-price">${item.price2 ? `₹${item.price} / ₹${item.price2}` : (item.price===0?'MRP':`₹${item.price}`)}</div>
+          <span class="badge badge-${item.type==='veg'?'veg':'nonveg'}">${item.type==='veg'?'🟢 Veg':'🔴 Non-Veg'}</span>
         </div>
         <div style="margin-bottom:10px">
-          <span class="badge" style="background:rgba(255,255,255,.05);color:var(--muted);border:1px solid rgba(255,255,255,.1)">
+          <span class="badge" style="background:rgba(255,255,255,.04);color:var(--muted);border:1px solid rgba(255,255,255,.1)">
             ${item.status==='available'?'✅ Available':'❌ Unavailable'}
           </span>
         </div>
         <div class="menu-item-actions">
-          <button class="card-action" onclick="editItem(${item.id})">Edit</button>
-          <button class="btn-danger"  onclick="deleteItem(${item.id})">Delete</button>
+          <button class="card-action" onclick="editItem(${item.id})">✏️ Edit</button>
+          <button class="btn-danger"  onclick="deleteItem(${item.id})">🗑 Delete</button>
         </div>
       </div>
     </div>`).join('');
 }
-window.renderMenu = renderMenu;
+window.renderMenuAdmin = renderMenuAdmin;
 
 function resetItemForm() {
-  ['item_name','item_price','item_desc'].forEach(id => {
-    const el = document.getElementById(id); if (el) el.value = '';
-  });
-  const cat = document.getElementById('item_cat');   if (cat) cat.value = '';
-  const typ = document.getElementById('item_type');  if (typ) typ.value = 'veg';
-  const sts = document.getElementById('item_status');if (sts) sts.value = 'available';
+  ['item_name','item_price','item_price2','item_desc'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+  const c = document.getElementById('item_cat');   if(c) c.value='';
+  const t = document.getElementById('item_type');  if(t) t.value='veg';
+  const s = document.getElementById('item_status');if(s) s.value='available';
+  const h = document.getElementById('item_chef');  if(h) h.checked=false;
 }
 
 function saveItem() {
   const name  = document.getElementById('item_name').value.trim();
   const cat   = document.getElementById('item_cat').value;
-  const price = document.getElementById('item_price').value;
-  if (!name || !cat || !price) { toast('Please fill in all required fields.', 'error'); return; }
-
+  const price = parseInt(document.getElementById('item_price').value)||0;
+  const price2val = document.getElementById('item_price2').value;
+  if (!name || !cat) { toast('Name and Category are required.', 'error'); return; }
   const menu = getMenu();
+  const newItem = {
+    id:       editingItemId || Date.now(),
+    name, category: cat, price,
+    price2:   price2val ? parseInt(price2val) : null,
+    type:     document.getElementById('item_type').value,
+    desc:     document.getElementById('item_desc').value,
+    status:   document.getElementById('item_status').value,
+    isChef:   document.getElementById('item_chef').checked,
+  };
   if (editingItemId) {
     const idx = menu.findIndex(m => m.id === editingItemId);
-    if (idx !== -1) menu[idx] = {
-      ...menu[idx], name, category: cat, price: parseInt(price),
-      type:   document.getElementById('item_type').value,
-      desc:   document.getElementById('item_desc').value,
-      status: document.getElementById('item_status').value
-    };
-    toast('Item updated!', 'success');
+    if (idx !== -1) menu[idx] = newItem;
+    toast('Item updated! Menu page refreshed.');
   } else {
-    menu.push({
-      id: Date.now(), name, category: cat, price: parseInt(price),
-      type:   document.getElementById('item_type').value,
-      desc:   document.getElementById('item_desc').value,
-      status: document.getElementById('item_status').value
-    });
-    toast('Item added!', 'success');
+    menu.push(newItem);
+    toast('Item added! Now live on menu page.');
   }
   saveMenu(menu);
-  resetItemForm();
-  editingItemId = null;
-  showPage('menu');
-  refreshStats();
+  resetItemForm(); editingItemId = null;
+  showPage('menu'); refreshStats();
 }
 window.saveItem = saveItem;
 
@@ -1235,12 +1382,14 @@ function editItem(id) {
   const item = getMenu().find(m => m.id === id);
   if (!item) return;
   editingItemId = id;
-  document.getElementById('edit_name').value   = item.name;
-  document.getElementById('edit_cat').value    = item.category;
-  document.getElementById('edit_price').value  = item.price;
-  document.getElementById('edit_type').value   = item.type;
-  document.getElementById('edit_status').value = item.status;
-  document.getElementById('edit_desc').value   = item.desc || '';
+  document.getElementById('edit_name').value    = item.name;
+  document.getElementById('edit_cat').value     = item.category;
+  document.getElementById('edit_price').value   = item.price;
+  document.getElementById('edit_price2').value  = item.price2 || '';
+  document.getElementById('edit_type').value    = item.type;
+  document.getElementById('edit_status').value  = item.status;
+  document.getElementById('edit_desc').value    = item.desc || '';
+  document.getElementById('edit_chef').checked  = item.isChef || false;
   document.getElementById('editModal').classList.add('open');
 }
 window.editItem = editItem;
@@ -1253,62 +1402,64 @@ function updateItem() {
       ...menu[idx],
       name:     document.getElementById('edit_name').value,
       category: document.getElementById('edit_cat').value,
-      price:    parseInt(document.getElementById('edit_price').value),
+      price:    parseInt(document.getElementById('edit_price').value)||0,
+      price2:   document.getElementById('edit_price2').value ? parseInt(document.getElementById('edit_price2').value) : null,
       type:     document.getElementById('edit_type').value,
       status:   document.getElementById('edit_status').value,
-      desc:     document.getElementById('edit_desc').value
+      desc:     document.getElementById('edit_desc').value,
+      isChef:   document.getElementById('edit_chef').checked,
     };
-    saveMenu(menu);
-    closeModal();
-    renderMenu();
-    refreshStats();
-    toast('Item updated!', 'success');
+    saveMenu(menu); closeModal(); renderMenuAdmin(); refreshStats();
+    toast('Updated! Changes are live on menu page.');
   }
 }
 window.updateItem = updateItem;
 
 function deleteItem(id) {
-  if (!confirm('Delete this menu item?')) return;
+  if (!confirm('Delete this item? It will be removed from the menu page.')) return;
   saveMenu(getMenu().filter(m => m.id !== id));
-  renderMenu(); refreshStats();
-  toast('Item deleted.', 'success');
+  renderMenuAdmin(); refreshStats(); toast('Item deleted from menu.');
 }
 window.deleteItem = deleteItem;
 
+function resetToMaster() {
+  if (!confirm('Reset ALL menu items to the original master menu? This cannot be undone.')) return;
+  saveMenu([...MASTER_MENU]); renderMenuAdmin(); refreshStats();
+  toast('Menu reset to original master data.');
+}
+window.resetToMaster = resetToMaster;
+
 function cancelEdit() { showPage('menu'); }
 window.cancelEdit = cancelEdit;
-
 function closeModal() { document.getElementById('editModal').classList.remove('open'); }
 window.closeModal = closeModal;
 
 // ── SETTINGS ──
 function changePass() {
-  const oldP = document.getElementById('oldPass').value;
-  const newP = document.getElementById('newPass').value;
-  if (!oldP || !newP) { toast('Please fill in both fields.', 'error'); return; }
-  if (oldP !== getPass()) { toast('Current password is incorrect.', 'error'); return; }
-  localStorage.setItem(ADMIN_PASS_KEY, newP);
+  const o = document.getElementById('oldPass').value;
+  const n = document.getElementById('newPass').value;
+  if (!o||!n) { toast('Fill both fields.', 'error'); return; }
+  if (o !== getPass()) { toast('Wrong current password.', 'error'); return; }
+  localStorage.setItem(ADMIN_PASS_KEY, n);
   document.getElementById('oldPass').value = '';
   document.getElementById('newPass').value = '';
-  toast('Password changed successfully!', 'success');
+  toast('Password changed!');
 }
 window.changePass = changePass;
 
 // ── TOAST ──
-function toast(msg, type = 'success') {
+function toast(msg, type='success') {
   const el = document.getElementById('adminToast');
-  el.textContent  = (type === 'success' ? '✅ ' : '⚠️ ') + msg;
-  el.className    = `admin-toast show ${type}`;
+  el.textContent = (type==='success'?'✅ ':'⚠️ ') + msg;
+  el.className = `admin-toast show ${type}`;
   setTimeout(() => el.classList.remove('show'), 3500);
 }
 
-// ── RESPONSIVE SIDEBAR ──
+// ── RESPONSIVE ──
 const menuBtn = document.getElementById('menuBtn');
 if (menuBtn) {
   menuBtn.style.display = window.innerWidth < 900 ? 'block' : 'none';
-  window.addEventListener('resize', () => {
-    menuBtn.style.display = window.innerWidth < 900 ? 'block' : 'none';
-  });
+  window.addEventListener('resize', () => { menuBtn.style.display = window.innerWidth < 900 ? 'block' : 'none'; });
 }
 
 }); // end DOMContentLoaded

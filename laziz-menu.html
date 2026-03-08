@@ -52,13 +52,13 @@ nav{
 .nav-inner{
   display:flex;align-items:center;justify-content:space-between;
   max-width:1400px;margin:0 auto;
-  height:66px;
+  height:66px;position:relative;
 }
 .nav-logo{
   font-family:'Cinzel',serif;font-size:1.5rem;font-weight:900;
   color:var(--gold);text-decoration:none;letter-spacing:2px;
 }
-.nav-logo em{color:var(--red);font-style:normal}
+.nav-logo span{color:var(--red)}
 .nav-links-full{
   display:flex;align-items:center;gap:32px;
   list-style:none;
@@ -202,7 +202,7 @@ nav{
 /* ── SECTION ── */
 .menu-section{
   margin-bottom:80px;
-  scroll-margin-top:130px;
+  scroll-margin-top:150px;
 }
 .section-head{
   display:flex;align-items:center;gap:20px;
@@ -426,6 +426,67 @@ nav{
   font-size:1.2rem;letter-spacing:8px;
 }
 
+/* ── BACK BUTTON ── */
+.back-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Montserrat',sans-serif;font-size:0.72rem;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(255,255,255,0.55);text-decoration:none;
+  border:1px solid rgba(255,255,255,0.12);
+  padding:9px 18px;border-radius:4px;
+  transition:all 0.25s;
+  position:absolute;left:5%;top:50%;transform:translateY(-50%);
+}
+.back-btn:hover{color:var(--gold);border-color:rgba(244,162,97,0.4)}
+.back-btn svg{width:14px;height:14px;fill:currentColor}
+
+/* ── ORDER ONLINE MODAL ── */
+.order-modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.82);z-index:3000;
+  align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+}
+.order-modal-overlay.open{display:flex}
+.order-modal{
+  background:#1c1c1c;border:1px solid rgba(244,162,97,0.25);
+  border-radius:16px;padding:40px 36px;
+  width:420px;max-width:92vw;
+  text-align:center;position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,0.6);
+}
+.order-modal-close{
+  position:absolute;top:16px;right:18px;
+  background:none;border:none;color:rgba(255,255,255,0.4);
+  font-size:1.4rem;cursor:pointer;transition:color 0.2s;
+}
+.order-modal-close:hover{color:white}
+.order-modal h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;color:white;margin-bottom:8px;
+}
+.order-modal p{font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:28px;line-height:1.6}
+.order-platforms{display:flex;flex-direction:column;gap:14px}
+.platform-btn{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 22px;border-radius:10px;
+  text-decoration:none;font-family:'Poppins',sans-serif;
+  font-size:0.88rem;font-weight:600;
+  transition:all 0.25s;border:1px solid transparent;
+}
+.platform-btn-zomato{
+  background:#cb202d;color:white;
+}
+.platform-btn-zomato:hover{background:#a8191f;transform:translateY(-2px);box-shadow:0 8px 24px rgba(203,32,45,0.4)}
+.platform-btn-swiggy{
+  background:#fc8019;color:white;
+}
+.platform-btn-swiggy:hover{background:#e06d10;transform:translateY(-2px);box-shadow:0 8px 24px rgba(252,128,25,0.4)}
+.platform-btn-img{width:36px;height:36px;border-radius:8px;object-fit:contain;background:white;padding:4px;flex-shrink:0}
+.platform-btn-info{text-align:left}
+.platform-btn-name{font-weight:700;font-size:1rem}
+.platform-btn-sub{font-size:0.72rem;opacity:0.8;margin-top:2px}
+
 /* ── FLOATING CALL BAR ── */
 .float-bar{
   position:fixed;bottom:0;left:0;right:0;z-index:800;
@@ -447,9 +508,10 @@ nav{
   font-family:'Poppins',sans-serif;font-size:0.75rem;font-weight:700;
   letter-spacing:1px;text-transform:uppercase;
   text-decoration:none;transition:all 0.25s;
+  cursor:pointer;border:none;
 }
-.float-btn-wa{background:#25d366;color:white}
-.float-btn-wa:hover{background:#1fb558;transform:translateY(-1px)}
+.float-btn-order{background:#fc8019;color:white}
+.float-btn-order:hover{background:#e06d10;transform:translateY(-1px)}
 .float-btn-call{background:var(--red);color:white}
 .float-btn-call:hover{background:#c42f3c;transform:translateY(-1px)}
 
@@ -505,7 +567,11 @@ nav{
 <!-- NAV -->
 <nav>
   <div class="nav-inner">
-    <a class="nav-logo" href="laziz-restaurant.html"><em>L</em>aziz Restaurant</a>
+    <a class="back-btn" href="laziz-restaurant.html" title="Back to Home">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Back
+    </a>
+    <a class="nav-logo" href="laziz-restaurant.html"><span>L</span>aziz <span>R</span>estaurant</a>
     <ul class="nav-links-full">
       <li><a href="laziz-restaurant.html#about">About</a></li>
       <li><a href="laziz-restaurant.html#dishes">Dishes</a></li>
@@ -523,6 +589,7 @@ nav{
 <!-- MOBILE NAV -->
 <div class="mobile-nav-overlay" id="mobileNavOverlay">
   <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="laziz-restaurant.html" onclick="toggleMobileNav()">← Home</a>
   <a href="laziz-restaurant.html#about" onclick="toggleMobileNav()">About</a>
   <a href="laziz-restaurant.html#dishes" onclick="toggleMobileNav()">Dishes</a>
   <a href="laziz-menu.html" style="color:var(--gold)">Menu</a>
@@ -1076,6 +1143,33 @@ nav{
 
 </div><!-- /menu-body -->
 
+<!-- ORDER ONLINE MODAL -->
+<div class="order-modal-overlay" id="orderModal">
+  <div class="order-modal">
+    <button class="order-modal-close" onclick="closeOrderModal()">✕</button>
+    <h3>Order Online</h3>
+    <p>Choose your preferred platform to order<br>fresh from Laziz Restaurant, Gurgaon</p>
+    <div class="order-platforms">
+      <a href="https://www.zomato.com/ncr/laziz-restaurant-sector-21-gurgaon" target="_blank" rel="noopener" class="platform-btn platform-btn-zomato">
+        <img class="platform-btn-img" src="https://b.zmtcdn.com/images/logo/zomato_logo_2017.png" alt="Zomato" onerror="this.style.display='none'" />
+        <div class="platform-btn-info">
+          <div class="platform-btn-name">Order on Zomato</div>
+          <div class="platform-btn-sub">Fast delivery · Track your order live</div>
+        </div>
+        <span style="margin-left:auto;font-size:1.1rem">→</span>
+      </a>
+      <a href="https://www.swiggy.com/restaurants/laziz-restaurant-sector-21-gurgaon" target="_blank" rel="noopener" class="platform-btn platform-btn-swiggy">
+        <img class="platform-btn-img" src="https://logos-world.net/wp-content/uploads/2020/11/Swiggy-Logo.png" alt="Swiggy" onerror="this.style.display='none'" />
+        <div class="platform-btn-info">
+          <div class="platform-btn-name">Order on Swiggy</div>
+          <div class="platform-btn-sub">Quick delivery · Easy reorder</div>
+        </div>
+        <span style="margin-left:auto;font-size:1.1rem">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- FLOATING BOTTOM BAR -->
 <div class="float-bar">
   <div class="float-bar-left">
@@ -1083,7 +1177,7 @@ nav{
     <strong>+91 97177 88806</strong>
   </div>
   <div class="float-bar-right">
-    <a href="https://wa.me/919717788806" class="float-btn float-btn-wa" target="_blank">💬 WhatsApp Order</a>
+    <button class="float-btn float-btn-order" onclick="openOrderModal()">🛵 Order Online</button>
     <a href="laziz-restaurant.html#reservation" class="float-btn float-btn-call">🍽 Reserve Table</a>
   </div>
 </div>
@@ -1093,6 +1187,37 @@ nav{
 function toggleMobileNav() {
   document.getElementById('mobileNavOverlay').classList.toggle('open');
 }
+
+// Order modal
+function openOrderModal() {
+  document.getElementById('orderModal').classList.add('open');
+}
+function closeOrderModal() {
+  document.getElementById('orderModal').classList.remove('open');
+}
+// Close modal on overlay click
+document.getElementById('orderModal').addEventListener('click', function(e){
+  if(e.target === this) closeOrderModal();
+});
+
+// Auto-scroll to section from URL hash (e.g. laziz-menu.html#sec-snacks)
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash) {
+    const id = hash.replace('#','');
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Highlight the matching tab
+        const secKey = id.replace('sec-','');
+        document.querySelectorAll('.cat-tab').forEach(t => {
+          t.classList.toggle('active', t.dataset.sec === secKey);
+        });
+      }
+    }, 200);
+  }
+});
 
 // Scroll to section
 function scrollTo(id) {

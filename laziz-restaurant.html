@@ -403,27 +403,59 @@
     .menu-cat-card {
       background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
-      border-radius: 6px; padding: 28px 24px;
+      border-radius: 10px; overflow: hidden;
       text-align: center;
       transition: all 0.35s ease; cursor: pointer;
+      text-decoration: none; display: block;
+      position: relative;
     }
     .menu-cat-card:hover {
       background: rgba(244,162,97,0.07);
       border-color: rgba(244,162,97,0.5);
-      transform: translateY(-5px);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
     }
-    .menu-cat-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; }
+    .menu-cat-img-wrap {
+      width: 100%; height: 140px; overflow: hidden;
+      position: relative;
+    }
+    .menu-cat-img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+      filter: brightness(0.85) saturate(1.1);
+    }
+    .menu-cat-card:hover .menu-cat-img {
+      transform: scale(1.08);
+      filter: brightness(1) saturate(1.2);
+    }
+    .menu-cat-img-wrap::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(14,14,14,0.55) 100%);
+    }
     .menu-cat-name {
       font-family: 'Cinzel', serif;
-      font-size: 0.85rem; font-weight: 600;
+      font-size: 0.9rem; font-weight: 600;
       color: white; letter-spacing: 1px;
+      padding: 14px 12px 4px;
     }
     .menu-cat-count {
       font-family: 'Montserrat', sans-serif;
       font-size: 0.65rem; color: var(--gold);
       letter-spacing: 2px; text-transform: uppercase;
-      margin-top: 6px;
+      padding-bottom: 16px;
     }
+    .menu-cat-arrow {
+      position: absolute; top: 10px; right: 10px;
+      background: rgba(230,57,70,0.85);
+      color: white; width: 26px; height: 26px;
+      border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .menu-cat-card:hover .menu-cat-arrow { opacity: 1; }
     .menu-cta-wrap { text-align: center; margin-top: 20px; }
 
     /* ── RESERVATION ── */
@@ -755,7 +787,7 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#dishes">Dishes</a></li>
-    <li><a href="#menu-preview">Menu</a></li>
+    <li><a href="laziz-menu.html">Menu</a></li>
     <li><a href="#testimonials">Reviews</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#reservation" class="nav-cta">Reserve</a></li>
@@ -770,7 +802,7 @@
   <button class="mobile-close" onclick="closeMobile()">✕</button>
   <a href="#about" onclick="closeMobile()">About</a>
   <a href="#dishes" onclick="closeMobile()">Dishes</a>
-  <a href="#menu-preview" onclick="closeMobile()">Menu</a>
+  <a href="laziz-menu.html" onclick="closeMobile()">Menu</a>
   <a href="#testimonials" onclick="closeMobile()">Reviews</a>
   <a href="#contact" onclick="closeMobile()">Contact</a>
   <a href="#reservation" onclick="closeMobile()" style="color:var(--gold)">Reserve a Table</a>
@@ -786,7 +818,7 @@
     <p class="hero-subtitle">Authentic Indian &amp; Mughlai Flavors in Gurgaon</p>
     <div class="hero-buttons">
       <a href="#reservation" class="btn-primary">🍽 Reserve a Table</a>
-      <a href="#menu-preview" class="btn-outline">View Full Menu</a>
+      <a href="laziz-menu.html" class="btn-outline">View Full Menu</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -949,27 +981,111 @@
 <section id="menu-preview">
   <div class="section-header">
     <div class="section-tag">Explore Our Menu</div>
-    <h2 class="section-title">16 <em>Delicious</em> Categories</h2>
+    <h2 class="section-title">12 <em>Delicious</em> Categories</h2>
     <div class="section-line"></div>
-    <p class="section-desc">From soups to desserts — every category crafted to perfection.</p>
+    <p class="section-desc">Click any category to explore the full menu — every dish crafted to perfection.</p>
   </div>
   <div class="menu-cats">
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍲</span><div class="menu-cat-name">Soups</div><div class="menu-cat-count">8 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🥗</span><div class="menu-cat-name">Snacks</div><div class="menu-cat-count">14 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🥙</span><div class="menu-cat-name">Rolls</div><div class="menu-cat-count">10 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍛</span><div class="menu-cat-name">Indian Veg</div><div class="menu-cat-count">18 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍗</span><div class="menu-cat-name">Chicken</div><div class="menu-cat-count">15 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🐑</span><div class="menu-cat-name">Mutton</div><div class="menu-cat-count">10 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍚</span><div class="menu-cat-name">Biryani</div><div class="menu-cat-count">8 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍜</span><div class="menu-cat-name">Chinese</div><div class="menu-cat-count">20 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🔥</span><div class="menu-cat-name">BBQ / Tandoor</div><div class="menu-cat-count">12 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍞</span><div class="menu-cat-name">Breads</div><div class="menu-cat-count">10 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍮</span><div class="menu-cat-name">Desserts</div><div class="menu-cat-count">8 Items</div></div>
-    <div class="menu-cat-card fade-in"><span class="menu-cat-icon">🍱</span><div class="menu-cat-name">Combo Meals</div><div class="menu-cat-count">6 Items</div></div>
+
+    <a href="laziz-menu.html#sec-soups" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300&q=80" alt="Soups" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Soups</div>
+      <div class="menu-cat-count">8 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-snacks" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300&q=80" alt="Snacks" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Snacks</div>
+      <div class="menu-cat-count">14 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-rolls" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=300&q=80" alt="Rolls" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Rolls</div>
+      <div class="menu-cat-count">10 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-indveg" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=300&q=80" alt="Indian Veg" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Indian Veg</div>
+      <div class="menu-cat-count">18 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-chicken" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300&q=80" alt="Chicken" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Chicken</div>
+      <div class="menu-cat-count">15 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-mutton" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=300&q=80" alt="Mutton" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Mutton</div>
+      <div class="menu-cat-count">10 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-biryani" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1563379091339-03246963d651?w=300&q=80" alt="Biryani" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Biryani</div>
+      <div class="menu-cat-count">8 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-chinese" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&q=80" alt="Chinese" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Chinese</div>
+      <div class="menu-cat-count">20 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-bbq" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=300&q=80" alt="BBQ Tandoor" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">BBQ / Tandoor</div>
+      <div class="menu-cat-count">12 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-bread" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80" alt="Breads" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Breads</div>
+      <div class="menu-cat-count">10 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-desserts" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=300&q=80" alt="Desserts" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Desserts</div>
+      <div class="menu-cat-count">8 Items</div>
+    </a>
+
+    <a href="laziz-menu.html#sec-combos" class="menu-cat-card fade-in">
+      <div class="menu-cat-img-wrap">
+        <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=300&q=80" alt="Combo Meals" class="menu-cat-img" loading="lazy"/>
+      </div>
+      <div class="menu-cat-name">Combo Meals</div>
+      <div class="menu-cat-count">6 Items</div>
+    </a>
+
   </div>
   <div class="menu-cta-wrap fade-in">
-    <p style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin-bottom:24px;">Call us to check today's specials!</p>
-    <a href="tel:+916396291221" class="btn-primary">📞 Call to Order: +91 97177 88806</a>
+    <a href="laziz-menu.html" class="btn-primary" style="font-size:0.85rem; padding:16px 44px;">View Full Menu →</a>
   </div>
 </section>
 
@@ -1147,7 +1263,7 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a class="nav-logo" href="#hero"><span>L</span>aziz</a>
+      <a class="nav-logo" href="#hero"><span>L</span>aziz <span>R</span>estaurant</a>
       <p>Serving authentic Indian, Mughlai, and Chinese cuisine in the heart of Gurgaon since 2004. Every meal is crafted with love, tradition, and the finest spices.</p>
       <div class="footer-socials">
         <a href="https://wa.me/916396291221" class="social-btn" target="_blank" rel="noopener" title="WhatsApp">💬</a>

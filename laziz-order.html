@@ -1,288 +1,1051 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>Laziz Restaurant | Order</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Order | Laziz Restaurant Gurgaon — Table Ordering</title>
+<meta name="description" content="Explore the full menu of Laziz Restaurant, Sector 21 Gurgaon. North Indian, Mughlai, Biryani, Chinese, BBQ, Rolls, Desserts and more."/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cinzel:wght@400;600;700;900&family=Poppins:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet"/>
 <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --red:#E63946;--gold:#F4A261;--gold2:#e8925a;
+  --dark:#141414;--card:#1c1c1c;--card2:#202020;
+  --border:rgba(244,162,97,0.18);--border2:rgba(255,255,255,0.06);
+  --muted:rgba(255,255,255,0.42);--text:rgba(255,255,255,0.82);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--dark)}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:0.4}
 
-body{
-font-family:Poppins;
-background:#0f0f0f;
-color:white;
-margin:0;
+/* NAV */
+nav{position:sticky;top:0;z-index:500;background:rgba(14,14,14,0.96);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:0 5%}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:0 auto;height:66px;position:relative}
+.nav-logo{font-family:'Cinzel',serif;font-size:1.5rem;font-weight:900;color:var(--gold);text-decoration:none;letter-spacing:2px;white-space:nowrap;position:absolute;left:50%;transform:translateX(-50%);z-index:0}
+.nav-logo span{color:var(--red)}
+.nav-links-full{display:flex;align-items:center;gap:32px;list-style:none;position:relative;z-index:1}
+.nav-links-full a{font-family:'Poppins',sans-serif;font-size:0.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;transition:color 0.25s;position:relative}
+.nav-links-full a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width 0.3s ease}
+.nav-links-full a:hover{color:var(--gold)}.nav-links-full a:hover::after{width:100%}
+.nav-active{color:var(--gold)!important}.nav-active::after{width:100%!important}
+.nav-cta-full{background:var(--red)!important;color:white!important;padding:9px 22px;border-radius:3px;font-size:0.72rem!important;font-weight:700!important;letter-spacing:2px!important;text-decoration:none;text-transform:uppercase;transition:all 0.25s!important}
+.nav-cta-full:hover{background:#c42f3c!important;transform:translateY(-1px)!important}
+.nav-cta-full::after{display:none!important}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.nav-hamburger span{width:26px;height:2px;background:var(--gold);display:block;transition:all 0.3s}
+.mobile-nav-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.98);z-index:2000;flex-direction:column;align-items:center;justify-content:center;gap:30px}
+.mobile-nav-overlay.open{display:flex}
+.mobile-nav-overlay a{font-family:'Cinzel',serif;font-size:1.5rem;color:white;text-decoration:none;transition:color 0.3s}
+.mobile-nav-overlay a:hover{color:var(--gold)}
+.mobile-nav-close{position:absolute;top:28px;right:28px;background:none;border:none;color:white;font-size:2rem;cursor:pointer}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.55);text-decoration:none;border:1px solid rgba(255,255,255,0.12);padding:9px 18px;border-radius:4px;transition:all 0.25s;position:relative;z-index:1}
+.back-btn:hover{color:var(--gold);border-color:rgba(244,162,97,0.4)}
+.back-btn svg{width:14px;height:14px;fill:currentColor}
+
+/* HERO */
+.menu-hero{position:relative;padding:90px 5% 70px;overflow:hidden;background:radial-gradient(ellipse 80% 50% at 20% 60%,rgba(230,57,70,0.1) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 30%,rgba(244,162,97,0.07) 0%,transparent 60%),var(--dark);text-align:center}
+.menu-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(244,162,97,0.4),transparent)}
+.menu-hero-tag{display:inline-block;font-family:'Cinzel',serif;font-size:0.65rem;font-weight:700;letter-spacing:5px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(244,162,97,0.3);padding:7px 22px;border-radius:2px;margin-bottom:22px}
+.menu-hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,6vw,5.5rem);font-weight:900;line-height:1.05;color:white}
+.menu-hero h1 em{color:var(--gold);font-style:italic}
+.menu-hero-sub{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:rgba(255,255,255,0.5);margin:16px 0 36px;letter-spacing:1px}
+.hero-cuisines{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.cuisine-chip{font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:500;padding:7px 18px;border-radius:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);letter-spacing:0.5px;transition:all 0.25s}
+
+/* CAT STRIP */
+.cat-strip-wrap{position:sticky;top:66px;z-index:400;background:rgba(18,18,18,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border2);overflow-x:auto}
+.cat-strip-wrap::-webkit-scrollbar{height:2px}
+.cat-strip{display:flex;gap:0;max-width:1400px;margin:0 auto;padding:0 5%;white-space:nowrap}
+.cat-tab{padding:16px 20px;font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.45);cursor:pointer;transition:all 0.25s;border-bottom:2px solid transparent;flex-shrink:0;display:flex;align-items:center;gap:7px}
+.cat-tab:hover{color:white}.cat-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.cat-tab-icon{font-size:1rem}
+
+/* BODY */
+.menu-body{max-width:1400px;margin:0 auto;padding:60px 5% 120px}
+.menu-search-wrap{max-width:500px;margin:0 auto 50px;position:relative}
+.menu-search{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px 20px 14px 48px;color:white;font-family:'Poppins',sans-serif;font-size:0.9rem;outline:none;transition:border 0.3s}
+.menu-search:focus{border-color:rgba(244,162,97,0.5)}.menu-search::placeholder{color:var(--muted)}
+.search-icon-abs{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-size:1.1rem}
+.search-results-count{text-align:center;font-size:0.8rem;color:var(--gold);margin-bottom:32px;letter-spacing:1px}
+
+/* SECTION */
+.menu-section{margin-bottom:80px;scroll-margin-top:150px}
+.section-head{display:flex;align-items:center;gap:20px;margin-bottom:36px;position:relative}
+.section-head::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--border),transparent)}
+.section-icon-wrap{width:52px;height:52px;border-radius:10px;background:rgba(244,162,97,0.08);border:1px solid rgba(244,162,97,0.2);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.section-label{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:white}
+.section-label em{color:var(--gold);font-style:italic}
+.section-count{font-family:'Poppins',sans-serif;font-size:0.65rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.note-strip{display:inline-flex;align-items:center;gap:8px;background:rgba(244,162,97,0.05);border:1px solid rgba(244,162,97,0.15);border-radius:4px;padding:8px 16px;font-size:0.72rem;color:var(--muted);margin-bottom:22px;font-family:'Poppins',sans-serif}
+.note-strip span{color:var(--gold)}
+.ornament-divider{text-align:center;padding:40px 0;color:rgba(244,162,97,0.25);font-size:1.2rem;letter-spacing:8px}
+
+/* ITEM STYLES */
+.items-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:2px}
+.item-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-radius:6px;transition:background 0.2s;position:relative;gap:14px}
+.item-row:hover{background:rgba(255,255,255,0.03)}
+.item-row::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:0;border-radius:1px;background:var(--gold);transition:height 0.25s}
+.item-row:hover::before{height:60%}
+.item-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.veg-dot{width:12px;height:12px;border-radius:2px;border:1.5px solid;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.veg-dot::after{content:'';width:6px;height:6px;border-radius:50%}
+.veg-dot.v{border-color:#4caf50}.veg-dot.v::after{background:#4caf50}
+.veg-dot.n{border-color:#e63946}.veg-dot.n::after{background:#e63946}
+.item-name{font-size:0.9rem;font-weight:500;color:rgba(255,255,255,0.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.item-name small{display:block;font-size:0.72rem;color:var(--muted);font-weight:400;margin-top:2px;white-space:normal}
+.item-price{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--gold);white-space:nowrap;flex-shrink:0}
+.item-unavail{opacity:0.4;text-decoration:line-through}
+
+/* DUAL PRICE */
+.dual-header{display:flex;justify-content:flex-end;gap:28px;padding:0 18px 8px;font-family:'Poppins',sans-serif;font-size:0.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.dual-col{width:52px;text-align:right}
+.item-price-dual{display:flex;gap:16px;flex-shrink:0}
+.price-half{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--muted);width:52px;text-align:right}
+.price-full{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--gold);width:52px;text-align:right}
+
+/* FEATURED CARDS */
+.items-featured{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.item-card{background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:22px;transition:all 0.3s;position:relative;overflow:hidden}
+.item-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--gold));transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease}
+.item-card:hover{border-color:rgba(244,162,97,0.25);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,0.35)}
+.item-card:hover::before{transform:scaleX(1)}
+.card-cat{font-family:'Poppins',sans-serif;font-size:0.6rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.card-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:white;margin-bottom:6px}
+.card-desc{font-size:0.78rem;color:var(--muted);line-height:1.6;margin-bottom:14px}
+.card-footer{display:flex;align-items:center;justify-content:space-between}
+.card-price{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--gold)}
+.card-veg-badge{display:flex;align-items:center;gap:5px;font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+
+/* THALI */
+.thali-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
+.thali-card{background:linear-gradient(135deg,rgba(244,162,97,0.06),rgba(230,57,70,0.04));border:1px solid rgba(244,162,97,0.2);border-radius:12px;padding:28px;position:relative;overflow:hidden;transition:all 0.3s}
+.thali-card:hover{border-color:rgba(244,162,97,0.45);transform:translateY(-3px)}
+.thali-card::after{content:'"';position:absolute;bottom:-10px;right:16px;font-family:'Playfair Display',serif;font-size:8rem;line-height:1;color:var(--gold);opacity:0.04}
+.thali-name{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;font-style:italic;color:var(--gold);margin-bottom:10px}
+.thali-desc{font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.7;margin-bottom:16px}
+.thali-price{font-family:'Cinzel',serif;font-size:1.6rem;font-weight:700;color:white}
+
+/* COMBO */
+.combo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:14px}
+.combo-card{background:rgba(255,255,255,0.02);border:1px solid var(--border2);border-radius:8px;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:all 0.3s}
+.combo-card:hover{background:rgba(244,162,97,0.04);border-color:rgba(244,162,97,0.25)}
+.combo-card-label{font-size:0.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.combo-card-name{font-size:0.88rem;font-weight:500;color:rgba(255,255,255,0.85);line-height:1.5}
+.combo-card-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--gold);white-space:nowrap;flex-shrink:0}
+
+/* CHEF SPECIAL */
+.chef-special-row{grid-column:1/-1;background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2);border-radius:8px}
+
+/* FLOAT BAR */
+.float-bar{position:fixed;bottom:0;left:0;right:0;z-index:800;background:rgba(14,14,14,0.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:14px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.float-bar-left{font-family:'Poppins',sans-serif;font-size:0.75rem;color:rgba(255,255,255,0.5)}
+.float-bar-left strong{color:white;font-size:0.9rem;display:block;margin-top:2px}
+.float-bar-right{display:flex;gap:12px}
+.float-btn{padding:11px 24px;border-radius:4px;font-family:'Poppins',sans-serif;font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;transition:all 0.25s;cursor:pointer;border:none}
+.float-btn-order{background:#fc8019;color:white}.float-btn-order:hover{background:#e06d10;transform:translateY(-1px)}
+.float-btn-call{background:var(--red);color:white}.float-btn-call:hover{background:#c42f3c;transform:translateY(-1px)}
+
+/* ORDER MODAL */
+.order-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.82);z-index:3000;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.order-modal-overlay.open{display:flex}
+.order-modal{background:#1c1c1c;border:1px solid rgba(244,162,97,0.25);border-radius:16px;padding:40px 36px;width:420px;max-width:92vw;text-align:center;position:relative;box-shadow:0 30px 80px rgba(0,0,0,0.6)}
+.order-modal-close{position:absolute;top:16px;right:18px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.4rem;cursor:pointer;transition:color 0.2s}
+.order-modal-close:hover{color:white}
+.order-modal h3{font-family:'Playfair Display',serif;font-size:1.6rem;color:white;margin-bottom:8px}
+.order-modal p{font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:28px;line-height:1.6}
+.order-platforms{display:flex;flex-direction:column;gap:14px}
+.platform-btn{display:flex;align-items:center;gap:16px;padding:16px 22px;border-radius:10px;text-decoration:none;font-family:'Poppins',sans-serif;font-size:0.88rem;font-weight:600;transition:all 0.25s;border:1px solid transparent}
+.platform-btn-zomato{background:#cb202d;color:white}.platform-btn-zomato:hover{background:#a8191f;transform:translateY(-2px);box-shadow:0 8px 24px rgba(203,32,45,0.4)}
+.platform-btn-swiggy{background:#fc8019;color:white}.platform-btn-swiggy:hover{background:#e06d10;transform:translateY(-2px);box-shadow:0 8px 24px rgba(252,128,25,0.4)}
+.platform-btn-img{width:36px;height:36px;border-radius:8px;object-fit:contain;background:white;padding:4px;flex-shrink:0}
+.platform-btn-info{text-align:left}.platform-btn-name{font-weight:700;font-size:1rem}.platform-btn-sub{font-size:0.72rem;opacity:0.8;margin-top:2px}
+
+/* FADE */
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-up.vis{opacity:1;transform:translateY(0)}
+
+/* EMPTY */
+.section-empty{text-align:center;padding:40px;color:var(--muted);font-size:0.85rem;border:1px dashed rgba(255,255,255,0.1);border-radius:8px}
+
+@media(max-width:900px){
+  .nav-links-full{display:none}.nav-hamburger{display:flex}
+  .back-btn span{display:none}.back-btn{padding:9px 12px}
+  .combo-grid{grid-template-columns:1fr}
+  .items-list{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .menu-hero h1{font-size:2.4rem}.dual-header,.price-labels{gap:16px}.dual-col{width:42px}
+  .float-bar{flex-direction:column;gap:10px;padding:12px 5%}
+  .float-bar-right{width:100%;justify-content:center}
+  .float-btn{flex:1;text-align:center}
 }
 
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
+/* ══ ORDER ADDITIONS ══ */
+/* ADD / STEPPER — gold outlined, compact */
+.add-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:3px;padding:6px 13px;border-radius:5px;
+  border:1.5px solid rgba(244,162,97,0.6);
+  background:rgba(244,162,97,0.07);color:var(--gold);
+  font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:700;
+  cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0;
 }
-
-h1{
-font-family:Playfair Display;
-color:#F4A261;
+.add-btn:hover{background:var(--gold);color:var(--dark)}
+.stepper{
+  display:inline-flex;align-items:center;
+  border:1.5px solid rgba(244,162,97,0.5);border-radius:5px;
+  background:rgba(244,162,97,0.1);overflow:hidden;flex-shrink:0;
 }
-
-.search{
-width:100%;
-padding:12px;
-border-radius:8px;
-border:none;
-margin-bottom:20px;
+.sp-b{
+  width:28px;height:28px;border:none;background:transparent;
+  color:var(--gold);font-size:1rem;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Poppins',sans-serif;transition:background .15s;
 }
+.sp-b:hover{background:rgba(244,162,97,0.25)}
+.sp-n{min-width:24px;text-align:center;font-size:0.8rem;font-weight:700;color:white}
 
-.menu-grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-gap:20px;
+/* item-row flex — make room for add btn */
+.item-row{align-items:center}
+/* card footer add btn */
+.card-footer{align-items:center}
+/* combo / thali row add */
+.combo-card{align-items:center}
+.thali-card-foot{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+
+/* CART BAR — replaces float bar */
+.cart-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:800;
+  background:rgba(14,14,14,0.97);backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  padding:14px 5%;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  transform:translateY(100%);transition:transform .3s;
 }
+.cart-bar.vis{transform:translateY(0)}
+.cart-bar-left .cb-lbl{font-size:.72rem;color:rgba(255,255,255,.5)}
+.cart-bar-left .cb-info{color:white;font-size:.9rem;font-weight:600;margin-top:2px}
+.cart-bar-right{display:flex;gap:10px}
+.cb-btn{padding:11px 26px;border-radius:4px;font-family:'Poppins',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:all .25s}
+.cb-btn-cart{background:var(--gold);color:var(--dark)}
+.cb-btn-cart:hover{background:var(--gold2);transform:translateY(-1px)}
+.cb-btn-clear{background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.12)!important}
+.cb-btn-clear:hover{background:rgba(255,255,255,.12)}
 
-.card{
-background:#1a1a1a;
-border-radius:12px;
-overflow:hidden;
-transition:.3s;
-border:1px solid rgba(255,255,255,0.05);
-}
-
-.card:hover{
-transform:translateY(-6px);
-box-shadow:0 10px 25px rgba(0,0,0,.6);
-}
-
-.card img{
-width:100%;
-height:160px;
-object-fit:cover;
-}
-
-.card-body{
-padding:12px;
-}
-
-.name{
-font-weight:600;
-font-size:15px;
-}
-
-.price{
-color:#F4A261;
-margin:6px 0;
-}
-
-.btn{
-background:#E63946;
-border:none;
-color:white;
-padding:8px 12px;
-border-radius:6px;
-cursor:pointer;
-}
-
-.qty{
-display:flex;
-gap:8px;
-align-items:center;
-}
-
-.cart{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#E63946;
-padding:16px 24px;
-border-radius:30px;
-font-weight:600;
-}
-
+/* ══ EXTRA PAGES ══ */
+.extra-page{display:none;background:var(--dark);min-height:100vh}
+.extra-page.active{display:block}
+.ep-wrap{max-width:680px;margin:0 auto;padding:40px 5% 120px}
+.ep-hero{text-align:center;padding:40px 0 30px;border-bottom:1px solid var(--border2);margin-bottom:30px}
+.ep-hero-tag{display:inline-block;font-family:'Cinzel',serif;font-size:.58rem;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(244,162,97,.3);padding:5px 16px;border-radius:2px;margin-bottom:14px}
+.ep-hero h2{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:white}
+.ep-hero h2 em{color:var(--gold);font-style:italic}
+.ep-card{background:#1c1c1c;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:22px;margin-bottom:18px}
+.ep-card-ttl{font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+/* Cart rows */
+.cr-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.cr-row:last-child{border-bottom:none}
+.cr-info{flex:1;min-width:0}
+.cr-name{font-size:.85rem;font-weight:600;color:white}
+.cr-cat{font-size:.68rem;color:rgba(255,255,255,.4);margin-top:2px}
+.cr-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--gold);flex-shrink:0;margin-right:8px}
+.cr-stepper{display:flex;align-items:center;flex-shrink:0}
+.cr-sp{width:26px;height:26px;border-radius:5px;border:1px solid rgba(244,162,97,.35);background:rgba(244,162,97,.08);color:var(--gold);font-size:.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;transition:all .2s}
+.cr-sp:hover{background:var(--gold);color:var(--dark)}
+.cr-qty{min-width:24px;text-align:center;font-size:.82rem;font-weight:700;color:white}
+/* Bill */
+.bill-r{display:flex;justify-content:space-between;padding:9px 0;font-size:.8rem;color:rgba(255,255,255,.5)}
+.bill-r.tot{border-top:1px solid rgba(255,255,255,.08);font-size:.92rem;font-weight:700;color:white;padding-top:13px;margin-top:3px}
+.bill-r.tot .bv{color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.2rem}
+/* Note */
+.note-ta{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:12px 15px;color:white;font-family:'Poppins',sans-serif;font-size:.83rem;outline:none;resize:none;transition:border .3s}
+.note-ta:focus{border-color:rgba(244,162,97,.4)}
+.note-ta::placeholder{color:rgba(255,255,255,.28)}
+/* Form */
+.f-lbl{display:block;font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.f-inp{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:12px 15px;color:white;font-family:'Poppins',sans-serif;font-size:.88rem;outline:none;transition:border .3s;margin-bottom:16px}
+.f-inp:focus{border-color:rgba(244,162,97,.5)}
+.f-inp::placeholder{color:rgba(255,255,255,.28)}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+/* Table grid */
+.tbl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:6px}
+.tbl-btn{aspect-ratio:1;border-radius:9px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);color:rgba(255,255,255,.5);font-size:.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;font-family:'Poppins',sans-serif;transition:all .22s}
+.tbl-btn:hover{border-color:rgba(244,162,97,.4);color:var(--gold)}
+.tbl-btn.sel{border-color:var(--gold);background:rgba(244,162,97,.1);color:var(--gold)}
+.tbl-btn .tn{font-size:.95rem}.tbl-btn .tl{font-size:.45rem;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3)}
+/* Mini summary */
+.mini-sum{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:14px;margin-bottom:18px}
+.ms-ttl{font-size:.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:9px}
+.ms-r{display:flex;justify-content:space-between;font-size:.76rem;color:rgba(255,255,255,.6);padding:3px 0}
+.ms-tot{display:flex;justify-content:space-between;font-size:.85rem;font-weight:700;color:white;border-top:1px solid rgba(255,255,255,.07);margin-top:7px;padding-top:7px}
+.ms-tot .mv{color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.1rem}
+/* Pay */
+.pay-opt{border:1.5px solid rgba(255,255,255,.1);border-radius:12px;padding:18px;cursor:pointer;transition:all .25s;margin-bottom:10px;background:rgba(255,255,255,.02);display:flex;align-items:flex-start;gap:14px}
+.pay-opt:hover{border-color:rgba(244,162,97,.4)}
+.pay-opt.sel{border-color:var(--gold);background:rgba(244,162,97,.07)}
+.pay-ico{font-size:1.9rem;flex-shrink:0}
+.pay-ttl{font-size:.9rem;font-weight:700;color:white;margin-bottom:2px}
+.pay-st{font-size:.72rem;color:rgba(255,255,255,.42)}
+.pay-radio{width:17px;height:17px;accent-color:var(--gold);margin-left:auto;flex-shrink:0;cursor:pointer;margin-top:4px}
+.sub-p{display:none;padding-top:10px}
+.sub-p.open{display:block}
+.upi-inp{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:10px 13px;color:white;font-family:'Poppins',sans-serif;font-size:.84rem;outline:none;margin-top:8px;transition:border .3s}
+.upi-inp:focus{border-color:rgba(244,162,97,.5)}
+.upi-inp::placeholder{color:rgba(255,255,255,.28)}
+/* Buttons */
+.btn-f{width:100%;padding:15px;border:none;border-radius:8px;font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;cursor:pointer;transition:all .25s}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dark)}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(244,162,97,.35)}
+.btn-red{background:linear-gradient(135deg,var(--red),#c42f3c);color:white}
+.btn-red:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(230,57,70,.35)}
+.btn-ghost{background:rgba(255,255,255,.06);color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.12)!important}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-pair{display:grid;grid-template-columns:1fr 1.6fr;gap:10px;margin-bottom:10px}
+/* QR box */
+.qr-wrap{text-align:center;padding:10px 0 4px}
+.qr-box{width:162px;height:162px;background:white;border-radius:9px;border:1px solid #e0e0e0;margin:0 auto 8px;display:flex;align-items:center;justify-content:center}
+/* Success */
+.suc-wrap{text-align:center;padding:44px 20px;max-width:480px;margin:0 auto}
+.suc-ring{width:90px;height:90px;border-radius:50%;background:rgba(76,175,80,.12);border:2px solid rgba(76,175,80,.4);margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:2.6rem;animation:popIn .5s cubic-bezier(.175,.885,.32,1.275) both}
+@keyframes popIn{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.suc-ttl{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:900;color:white;margin-bottom:8px}
+.suc-oid{display:inline-block;background:rgba(244,162,97,.1);border:1px solid rgba(244,162,97,.3);border-radius:6px;padding:7px 18px;font-size:.82rem;color:var(--gold);font-weight:700;letter-spacing:2px;margin:12px 0}
+.est-chip{display:inline-flex;align-items:center;gap:7px;background:rgba(76,175,80,.1);border:1px solid rgba(76,175,80,.3);border-radius:20px;padding:6px 16px;font-size:.74rem;color:#4caf50;font-weight:600;margin-bottom:18px}
+.suc-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:18px;text-align:left;margin:14px 0}
+.suc-r{display:flex;justify-content:space-between;padding:5px 0;font-size:.78rem;border-bottom:1px solid rgba(255,255,255,.05)}
+.suc-r:last-child{border-bottom:none}
+.suc-r .k{color:rgba(255,255,255,.42)}.suc-r .v{color:white;font-weight:600}
+/* Toast */
+.o-toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-14px);background:rgba(20,20,20,.97);border:1px solid rgba(244,162,97,.3);border-radius:50px;padding:9px 22px;font-size:.78rem;color:white;font-weight:500;opacity:0;transition:all .3s;z-index:9999;white-space:nowrap}
+.o-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:600px){.f-row{grid-template-columns:1fr}.tbl-grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
-
 <body>
+<div id="menuRoot">
 
-<div class="container">
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="back-btn" href="laziz-restaurant.html" title="Back to Home">
+      <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      <span>Back</span>
+    </a>
+    <a class="nav-logo" href="laziz-restaurant.html"><span>L</span>aziz <span>R</span>estaurant</a>
+    <ul class="nav-links-full">
+      <li><a href="laziz-restaurant.html#about">About</a></li>
+      <li><a href="laziz-restaurant.html#dishes">Dishes</a></li>
+      <li><a href="laziz-menu.html" class="nav-active">Menu</a></li>
+      <li><a href="laziz-restaurant.html#testimonials">Reviews</a></li>
+      <li><a href="laziz-restaurant.html#contact">Contact</a></li>
+      <li><a href="laziz-restaurant.html#reservation" class="nav-cta-full">Reserve</a></li>
+    </ul>
+    <div class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
 
-<h1>Laziz Restaurant</h1>
-
-<input class="search" id="search" placeholder="Search dishes">
-
-<div class="menu-grid" id="menu"></div>
-
+<!-- MOBILE NAV -->
+<div class="mobile-nav-overlay" id="mobileNavOverlay">
+  <button class="mobile-nav-close" onclick="toggleMobileNav()">✕</button>
+  <a href="laziz-restaurant.html" onclick="toggleMobileNav()">← Home</a>
+  <a href="laziz-restaurant.html#about" onclick="toggleMobileNav()">About</a>
+  <a href="laziz-restaurant.html#dishes" onclick="toggleMobileNav()">Dishes</a>
+  <a href="laziz-menu.html" style="color:var(--gold)">Menu</a>
+  <a href="laziz-restaurant.html#testimonials" onclick="toggleMobileNav()">Reviews</a>
+  <a href="laziz-restaurant.html#contact" onclick="toggleMobileNav()">Contact</a>
+  <a href="laziz-restaurant.html#reservation" onclick="toggleMobileNav()" style="color:var(--gold)">Reserve a Table</a>
 </div>
 
-<div class="cart" id="cartBtn">
-🛒 0 items
+<!-- HERO -->
+<div class="menu-hero">
+  <div class="menu-hero-tag">✦ Our Full Menu ✦</div>
+  <h1>The <em>Laziz</em><br>Experience</h1>
+  <p class="menu-hero-sub">Every dish, every flavour — crafted with love since 2004</p>
+  <div class="hero-cuisines">
+    <span class="cuisine-chip">🍲 North Indian</span>
+    <span class="cuisine-chip">🫕 Mughlai</span>
+    <span class="cuisine-chip">🍚 Biryani</span>
+    <span class="cuisine-chip">🥢 Chinese</span>
+    <span class="cuisine-chip">🔥 BBQ & Tandoor</span>
+    <span class="cuisine-chip">🥙 Rolls</span>
+    <span class="cuisine-chip">🍮 Desserts</span>
+    <span class="cuisine-chip">🍱 Combos & Thali</span>
+  </div>
+</div>
+
+<!-- CATEGORY NAV STRIP (dynamic) -->
+<div class="cat-strip-wrap">
+  <div class="cat-strip" id="catStrip"></div>
+</div>
+
+<!-- MENU BODY (100% dynamic) -->
+<div class="menu-body">
+  <div class="menu-search-wrap fade-up">
+    <span class="search-icon-abs">🔍</span>
+    <input class="menu-search" type="text" id="menuSearch" placeholder="Search any dish…" oninput="searchMenu()"/>
+  </div>
+  <div class="search-results-count" id="searchCount" style="display:none"></div>
+  <div id="menuSections"></div>
+
+  <!-- LEGEND -->
+  <div style="display:flex;gap:24px;justify-content:center;margin-top:60px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:10px;font-size:0.8rem;color:var(--muted)"><div class="veg-dot v" style="width:16px;height:16px"></div> Vegetarian</div>
+    <div style="display:flex;align-items:center;gap:10px;font-size:0.8rem;color:var(--muted)"><div class="veg-dot n" style="width:16px;height:16px"></div> Non-Vegetarian</div>
+    <div style="font-size:0.8rem;color:var(--muted)">• Prices inclusive of all taxes • Subject to change without notice</div>
+  </div>
+</div>
+
+</div><!-- /menuRoot -->
+<!-- ORDER MODAL -->
+<div class="order-modal-overlay" id="orderModal">
+  <div class="order-modal">
+    <button class="order-modal-close" onclick="closeOrderModal()">✕</button>
+    <h3>Order Online</h3>
+    <p>Choose your preferred platform to order<br>fresh from Laziz Restaurant, Gurgaon</p>
+    <div class="order-platforms">
+      <a href="https://www.zomato.com/ncr/laziz-restaurant-sector-21-gurgaon" target="_blank" rel="noopener" class="platform-btn platform-btn-zomato">
+        <img class="platform-btn-img" src="https://b.zmtcdn.com/images/logo/zomato_logo_2017.png" alt="Zomato" onerror="this.style.display='none'"/>
+        <div class="platform-btn-info"><div class="platform-btn-name">Order on Zomato</div><div class="platform-btn-sub">Fast delivery · Track your order live</div></div>
+        <span style="margin-left:auto;font-size:1.1rem">→</span>
+      </a>
+      <a href="https://www.swiggy.com/restaurants/laziz-restaurant-sector-21-gurgaon" target="_blank" rel="noopener" class="platform-btn platform-btn-swiggy">
+        <img class="platform-btn-img" src="https://logos-world.net/wp-content/uploads/2020/11/Swiggy-Logo.png" alt="Swiggy" onerror="this.style.display='none'"/>
+        <div class="platform-btn-info"><div class="platform-btn-name">Order on Swiggy</div><div class="platform-btn-sub">Quick delivery · Easy reorder</div></div>
+        <span style="margin-left:auto;font-size:1.1rem">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING BAR -->
+<div class="float-bar">
+  <div class="float-bar-left">
+    <span>Open 11 AM – 11:15 PM · Sector 21, Gurgaon</span>
+    <strong>+91 97177 88806</strong>
+  </div>
+  <div class="float-bar-right">
+    <button class="float-btn float-btn-order" onclick="openOrderModal()">🛵 Order Online</button>
+    <a href="laziz-restaurant.html#reservation" class="float-btn float-btn-call">🍽 Reserve Table</a>
+  </div>
 </div>
 
 <script>
+// ═══════════════════════════════════════════
+//  LAZIZ MENU PAGE — FULLY DYNAMIC RENDERER
+//  Single source of truth: localStorage key
+//  'laziz_menu_v2' (shared with admin panel)
+// ═══════════════════════════════════════════
 
-const MENU_KEY="laziz_menu_v2"
-const ORDERS_KEY="laziz_orders"
+// ── SECTION CONFIG (order, icon, label, style, note) ──
+const SECTION_CONFIG = [
+  { key:'Soups',                id:'soups',    icon:'🍲', label:'Soups',                    style:'list'     },
+  { key:'Snacks',               id:'snacks',   icon:'🥗', label:'Snacks',                   style:'featured' },
+  { key:'Salad & Raita',        id:'salad',    icon:'🥗', label:'Salad <em>&</em> Raita',   style:'list'     },
+  { key:'Rice / Pulao',         id:'rice',     icon:'🍚', label:'Rice <em>/</em> Pulao',    style:'list'     },
+  { key:'Biryani',              id:'biryani',  icon:'🫕', label:'<em>Royal</em> Biryani',   style:'featured', note:'🍚 All Biryani served with Raita on request' },
+  { key:'Indian Veg',           id:'indveg',   icon:'🌿', label:'Indian <em>Veg</em>',      style:'list'     },
+  { key:'Chicken Specialties',  id:'chicken',  icon:'🍗', label:'Chicken <em>Specialties</em>', style:'dual', dualNote:'Half / Full available' },
+  { key:'Mutton',               id:'mutton',   icon:'🐑', label:'Mutton <em>Specialties</em>', style:'list', note:'🐑 All mutton dishes served with 4 pieces unless stated' },
+  { key:'BBQ / Tandoor',        id:'bbq',      icon:'🔥', label:'Bar-B-Que <em>& Tandoor</em>', style:'dual', dualNote:'Half / Full' },
+  { key:'Rolls',                id:'rolls',    icon:'🥙', label:'Rolls <em>Speciality</em>', style:'featured' },
+  { key:'Chinese',              id:'chinese',  icon:'🥢', label:'<em>Chinese</em> Specialties', style:'dual', dualNote:'Half / Full' },
+  { key:'Noodles',              id:'noodles',  icon:'🍜', label:'Noodles',                  style:'list'     },
+  { key:'Chinese Rice',         id:'chrice',   icon:'🍚', label:'Chinese <em>Rice</em>',    style:'list'     },
+  { key:'Bread',                id:'bread',    icon:'🍞', label:'Bread <em>(Tandoori)</em>', style:'list'    },
+  { key:'Desserts',             id:'desserts', icon:'🍮', label:'Desserts',                 style:'list'     },
+  { key:'Thali',                id:'thali',    icon:'🍽', label:'<em>Royal</em> Thali',     style:'thali'    },
+  { key:'Combo Meals',          id:'combos',   icon:'🍱', label:'Combo <em>Meals</em>',     style:'combo'    },
+];
 
-let cart={}
-let menu=[]
+// ── STORAGE KEY (same as admin) ──
+const STORAGE_KEY = 'laziz_menu_v2';
 
-
-/* AUTO IMAGE BASED ON DISH NAME */
-
-function getDishImage(name){
-
-name=name.toLowerCase()
-
-if(name.includes("biryani"))
-return "https://source.unsplash.com/600x600/?biryani"
-
-if(name.includes("paneer"))
-return "https://source.unsplash.com/600x600/?paneer+curry"
-
-if(name.includes("chicken"))
-return "https://source.unsplash.com/600x600/?chicken+curry"
-
-if(name.includes("mutton"))
-return "https://source.unsplash.com/600x600/?mutton+curry"
-
-if(name.includes("noodle"))
-return "https://source.unsplash.com/600x600/?noodles"
-
-if(name.includes("rice"))
-return "https://source.unsplash.com/600x600/?fried+rice"
-
-if(name.includes("roll"))
-return "https://source.unsplash.com/600x600/?kathi+roll"
-
-if(name.includes("naan") || name.includes("roti"))
-return "https://source.unsplash.com/600x600/?naan"
-
-if(name.includes("soup"))
-return "https://source.unsplash.com/600x600/?soup"
-
-if(name.includes("gulab"))
-return "https://source.unsplash.com/600x600/?gulab+jamun"
-
-return "https://source.unsplash.com/600x600/?indian+food"
-
+function getMenuData() {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  return saved ? JSON.parse(saved) : null;
 }
 
-
-/* LOAD MENU */
-
-function loadMenu(){
-
-const saved=localStorage.getItem(MENU_KEY)
-
-menu=saved?JSON.parse(saved):[]
-
-renderMenu()
-
+// ── VEG DOT HTML ──
+function vegDot(type) {
+  const cls = (type === 'veg') ? 'v' : 'n';
+  return `<div class="veg-dot ${cls}"></div>`;
 }
 
-
-function renderMenu(){
-
-const search=document.getElementById("search").value.toLowerCase()
-
-let html=""
-
-menu
-.filter(d=>d.name.toLowerCase().includes(search))
-.forEach(item=>{
-
-const qty=cart[item.id]||0
-
-const price=item.price2?item.price2:item.price
-
-html+=`
-
-<div class="card">
-
-<img src="${getDishImage(item.name)}">
-
-<div class="card-body">
-
-<div class="name">${item.name}</div>
-
-<div class="price">
-
-${item.price2
-?`Half ₹${item.price} | Full ₹${item.price2}`
-:`₹${item.price}`}
-
-</div>
-
-${
-qty>0
-?`
-<div class="qty">
-
-<button class="btn" onclick="changeQty(${item.id},-1)">-</button>
-
-<span>${qty}</span>
-
-<button class="btn" onclick="changeQty(${item.id},1)">+</button>
-
-</div>
-`
-:`
-<button class="btn" onclick="addItem(${item.id})">Add</button>
-`
+// ── PRICE DISPLAY ──
+function priceDisplay(item) {
+  if (item.price2) {
+    return `<div class="item-price-dual">
+      <span class="price-half">₹${item.price}</span>
+      <span class="price-full">₹${item.price2}</span>
+    </div>`;
+  }
+  const priceStr = item.price === 0 ? 'MRP' : `₹${item.price}`;
+  return `<div class="item-price">${priceStr}</div>`;
 }
 
-</div>
+// ── RENDER ONE SECTION ──
+function renderSection(cfg, items) {
+  const available = items.filter(i => i.status !== 'unavailable');
+  if (!available.length) return '';
 
-</div>
+  const isChef = (item) => item.isChef || item.chef;
 
-`
+  let inner = '';
 
-})
+  if (cfg.style === 'list' || cfg.style === 'dual') {
+    if (cfg.style === 'dual') {
+      inner += `<div class="dual-header"><div class="dual-col">Half</div><div class="dual-col">Full</div></div>`;
+    }
+    inner += `<div class="items-list">`;
+    available.forEach(item => {
+      const unavailCls = item.status === 'unavailable' ? ' item-unavail' : '';
+      const chefCls = isChef(item) ? ' chef-special-row' : '';
+      const nameHtml = item.desc
+        ? `<div class="item-name${unavailCls}">${item.name}<small>${item.desc}</small></div>`
+        : `<div class="item-name${unavailCls}">${item.name}</div>`;
+      inner += `<div class="item-row${chefCls}">
+        <div class="item-left">${vegDot(item.type)}${nameHtml}</div>
+        ${priceDisplay(item)}
+        <div data-aw="${item.id}" style="margin-left:8px"></div>
+      </div>`;
+    });
+    inner += `</div>`;
 
-document.getElementById("menu").innerHTML=html
+  } else if (cfg.style === 'featured') {
+    inner += `<div class="items-featured">`;
+    available.forEach(item => {
+      const vegColor = item.type === 'veg' ? '#4caf50' : 'var(--red)';
+      const vegLabel = item.type === 'veg' ? 'Veg' : 'Non-Veg';
+      const priceVal = item.price === 0 ? 'MRP' : `₹${item.price}`;
+      inner += `<div class="item-card">
+        <div class="card-cat">${item.category}</div>
+        <div class="card-name">${item.name}</div>
+        ${item.desc ? `<div class="card-desc">${item.desc}</div>` : '<div class="card-desc">&nbsp;</div>'}
+        <div class="card-footer">
+          <div class="card-price">${priceVal}</div>
+          <div data-aw="${item.id}"></div>
+        </div>
+      </div>`;
+    });
+    inner += `</div>`;
 
+  } else if (cfg.style === 'thali') {
+    inner += `<div class="thali-grid">`;
+    available.forEach(item => {
+      const vegEmoji = item.type === 'veg' ? '🟢' : '🔴';
+      inner += `<div class="thali-card">
+        <div class="thali-name">${item.name} ${vegEmoji}</div>
+        <div class="thali-desc">${item.desc || ''}</div>
+        <div class="thali-card-foot">
+          <div class="thali-price">₹${item.price}</div>
+          <div data-aw="${item.id}"></div>
+        </div>
+      </div>`;
+    });
+    inner += `</div>`;
+
+  } else if (cfg.style === 'combo') {
+    inner += `<div class="combo-grid">`;
+    available.forEach(item => {
+      const vegEmoji = item.type === 'veg' ? '🟢 Veg Combo' : '🔴 Non Veg Combo';
+      inner += `<div class="combo-card">
+        <div>
+          <div class="combo-card-label">${vegEmoji}</div>
+          <div class="combo-card-name">${item.name}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+          <div class="combo-card-price">₹${item.price}</div>
+          <div data-aw="${item.id}"></div>
+        </div>
+      </div>`;
+    });
+    inner += `</div>`;
+  }
+
+  const noteHtml = cfg.note
+    ? `<div class="note-strip"><span>✦</span> ${cfg.note}</div>`
+    : '';
+  const dualNoteHtml = cfg.dualNote
+    ? ` · ${cfg.dualNote}` : '';
+
+  return `
+    <div class="menu-section fade-up" id="sec-${cfg.id}">
+      <div class="section-head">
+        <div class="section-icon-wrap">${cfg.icon}</div>
+        <div>
+          <div class="section-label">${cfg.label}</div>
+          <div class="section-count">${available.length} item${available.length !== 1 ? 's' : ''}${dualNoteHtml}</div>
+        </div>
+      </div>
+      ${noteHtml}
+      ${inner}
+    </div>
+    <div class="ornament-divider">✦ · · ✦ · · ✦</div>`;
 }
 
-
-function addItem(id){
-
-cart[id]=1
-
-updateCart()
-
-renderMenu()
-
+// ── BUILD CATEGORY NAV STRIP ──
+function buildCatStrip(menuData) {
+  const strip = document.getElementById('catStrip');
+  let html = '';
+  SECTION_CONFIG.forEach((cfg, i) => {
+    const items = menuData.filter(m => m.category === cfg.key && m.status !== 'unavailable');
+    if (!items.length) return;
+    html += `<div class="cat-tab${i === 0 ? ' active' : ''}" onclick="scrollToSec('${cfg.id}')" data-sec="${cfg.id}">
+      <span class="cat-tab-icon">${cfg.icon}</span>${cfg.key}
+    </div>`;
+  });
+  strip.innerHTML = html;
 }
 
-function changeQty(id,d){
+// ── RENDER ALL SECTIONS ──
+function renderAllSections(menuData) {
+  const container = document.getElementById('menuSections');
+  let html = '';
+  SECTION_CONFIG.forEach(cfg => {
+    const items = menuData.filter(m => m.category === cfg.key);
+    if (!items.length) return;
+    html += renderSection(cfg, items);
+  });
+  container.innerHTML = html || '<div class="section-empty">No menu items found. Please check back later.</div>';
 
-cart[id]=(cart[id]||0)+d
+  // Inject ADD buttons
+  injectAddButtons();
+  // Re-observe fade-up elements
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.06 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 
-if(cart[id]<=0) delete cart[id]
-
-updateCart()
-
-renderMenu()
-
+  // Scroll highlight listener
+  setupScrollHighlight();
 }
 
-
-function updateCart(){
-
-const count=Object.values(cart).reduce((a,b)=>a+b,0)
-
-document.getElementById("cartBtn").innerText=`🛒 ${count} items`
-
+// ── SCROLL HIGHLIGHT ──
+function setupScrollHighlight() {
+  const NAV_OFFSET = 150;
+  window.addEventListener('scroll', () => {
+    let current = '';
+    document.querySelectorAll('.menu-section').forEach(sec => {
+      if (sec.getBoundingClientRect().top < NAV_OFFSET + 80)
+        current = sec.id.replace('sec-', '');
+    });
+    document.querySelectorAll('.cat-tab').forEach(t =>
+      t.classList.toggle('active', t.dataset.sec === current));
+  }, { passive: true });
 }
 
+// ── SCROLL TO SECTION ──
+function scrollToSec(id) {
+  const el = document.getElementById('sec-' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.cat-tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.sec === id));
+}
 
-document.getElementById("search").oninput=renderMenu
+// ── SEARCH ──
+function searchMenu() {
+  const q = document.getElementById('menuSearch').value.trim().toLowerCase();
+  const countEl = document.getElementById('searchCount');
+  if (!q) {
+    document.querySelectorAll('.item-row,.item-card,.thali-card,.combo-card').forEach(el => el.style.display = '');
+    document.querySelectorAll('.menu-section').forEach(sec => sec.style.display = '');
+    countEl.style.display = 'none';
+    return;
+  }
+  let total = 0;
+  document.querySelectorAll('.menu-section').forEach(sec => {
+    let found = 0;
+    sec.querySelectorAll('.item-row,.item-card,.thali-card,.combo-card').forEach(item => {
+      const show = item.textContent.toLowerCase().includes(q);
+      item.style.display = show ? '' : 'none';
+      if (show) found++;
+    });
+    sec.style.display = found > 0 ? '' : 'none';
+    total += found;
+  });
+  countEl.style.display = 'block';
+  countEl.textContent = `${total} dish${total !== 1 ? 'es' : ''} found for "${q}"`;
+}
 
-loadMenu()
+// ── ORDER MODAL ──
+function openOrderModal() { document.getElementById('orderModal').classList.add('open'); }
+function closeOrderModal() { document.getElementById('orderModal').classList.remove('open'); }
+document.getElementById('orderModal').addEventListener('click', function(e) {
+  if (e.target === this) closeOrderModal();
+});
 
+// ── MOBILE NAV ──
+function toggleMobileNav() {
+  document.getElementById('mobileNavOverlay').classList.toggle('open');
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', () => {
+  const menuData = getMenuData();
+  if (!menuData) {
+    document.getElementById('menuSections').innerHTML =
+      '<div class="section-empty" style="padding:80px;font-size:1rem">⚠️ Menu data not loaded yet. Please visit the admin panel first to initialize the menu.</div>';
+    return;
+  }
+  buildCatStrip(menuData);
+  renderAllSections(menuData);
+
+  // Hash-based scroll (from clicking category cards on main page)
+  const hash = window.location.hash;
+  if (hash) {
+    const id = hash.replace('#', '').replace('sec-', '');
+    setTimeout(() => scrollToSec(id), 300);
+  }
+});
+
+// ── LIVE UPDATE: listen for changes from admin in another tab ──
+window.addEventListener('storage', (e) => {
+  if (e.key === STORAGE_KEY) {
+    const newData = e.newValue ? JSON.parse(e.newValue) : null;
+    if (newData) {
+      buildCatStrip(newData);
+      renderAllSections(newData);
+    }
+  }
+});
 </script>
 
+<!-- ══ CART BAR ══ -->
+<div class="cart-bar" id="cartBar">
+  <div class="cart-bar-left">
+    <div class="cb-lbl">Your Cart</div>
+    <div class="cb-info" id="cbInfo">0 items · ₹0</div>
+  </div>
+  <div class="cart-bar-right">
+    <button class="cb-btn cb-btn-clear" onclick="clearCart()">Clear</button>
+    <button class="cb-btn cb-btn-cart" onclick="goToPage('cart')">View Cart →</button>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div class="o-toast" id="oToast"></div>
+
+<!-- ════════════════ CART PAGE ════════════════ -->
+<div class="extra-page" id="ep-cart">
+  <div class="ep-wrap">
+    <div class="ep-hero">
+      <div class="ep-hero-tag">✦ Your Order ✦</div>
+      <h2>Review <em>Cart</em></h2>
+    </div>
+    <div class="ep-card" id="cartItemsBlock"></div>
+    <div class="ep-card" id="cartBillBlock"></div>
+    <div class="ep-card">
+      <div class="ep-card-ttl">Special Instructions</div>
+      <textarea class="note-ta" id="orderNote" rows="3" placeholder="Spice level, allergy, or any special request…"></textarea>
+    </div>
+    <div class="btn-pair">
+      <button class="btn-f btn-ghost" onclick="goToPage('menu')">← Menu</button>
+      <button class="btn-f btn-gold" onclick="goToPage('details')">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ DETAILS PAGE ════════════════ -->
+<div class="extra-page" id="ep-details">
+  <div class="ep-wrap">
+    <div class="ep-hero">
+      <div class="ep-hero-tag">✦ Table & Guest ✦</div>
+      <h2>Your <em>Details</em></h2>
+    </div>
+    <div class="ep-card">
+      <div class="ep-card-ttl">Select Table Number</div>
+      <div class="tbl-grid" id="tableGrid"></div>
+    </div>
+    <div class="ep-card">
+      <div class="ep-card-ttl">Guest Information</div>
+      <div class="f-row">
+        <div><label class="f-lbl">Your Name *</label><input type="text" class="f-inp" id="guestName" placeholder="e.g. Rahul"/></div>
+        <div><label class="f-lbl">Phone *</label><input type="tel" class="f-inp" id="guestPhone" placeholder="+91 98765…"/></div>
+      </div>
+      <label class="f-lbl">No. of Guests</label>
+      <input type="number" class="f-inp" id="guestCount" value="1" min="1" max="20"/>
+    </div>
+    <div class="mini-sum" id="detailsSum"></div>
+    <div class="btn-pair">
+      <button class="btn-f btn-ghost" onclick="goToPage('cart')">← Back</button>
+      <button class="btn-f btn-gold" onclick="goToDetails2()">Payment →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ PAYMENT PAGE ════════════════ -->
+<div class="extra-page" id="ep-payment">
+  <div class="ep-wrap">
+    <div class="ep-hero">
+      <div class="ep-hero-tag">✦ Payment ✦</div>
+      <h2>Choose <em>Payment</em></h2>
+    </div>
+    <div class="mini-sum" id="paymentSum"></div>
+    <div class="ep-card">
+      <div class="ep-card-ttl">Payment Method</div>
+      <div class="pay-opt sel" id="po-counter" onclick="selPay('counter')">
+        <div class="pay-ico">🪙</div>
+        <div style="flex:1"><div class="pay-ttl">Pay at Counter</div><div class="pay-st">Cash or card — waiter will assist</div></div>
+        <input type="radio" class="pay-radio" name="pm" checked/>
+      </div>
+      <div class="pay-opt" id="po-upi" onclick="selPay('upi')">
+        <div class="pay-ico">📱</div>
+        <div style="flex:1">
+          <div class="pay-ttl">UPI Transfer</div><div class="pay-st">GPay, PhonePe, Paytm — any UPI app</div>
+          <div class="sub-p" id="upiPanel" onclick="event.stopPropagation()">
+            <div style="font-size:.7rem;color:rgba(255,255,255,.42);margin-bottom:4px">Pay to: <strong style="color:var(--gold)">lazizrestaurant@upi</strong></div>
+            <input type="text" class="upi-inp" id="upiId" placeholder="Your UPI ID (optional)"/>
+          </div>
+        </div>
+        <input type="radio" class="pay-radio" name="pm"/>
+      </div>
+      <div class="pay-opt" id="po-qr" onclick="selPay('qr')">
+        <div class="pay-ico">📷</div>
+        <div style="flex:1">
+          <div class="pay-ttl">Scan QR Code</div><div class="pay-st">Scan &amp; pay instantly</div>
+          <div class="sub-p" id="qrPanel" onclick="event.stopPropagation()">
+            <div class="qr-wrap">
+              <div class="qr-box">
+                <svg viewBox="0 0 100 100" width="150" height="150" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="100" height="100" fill="white"/>
+                  <rect x="5" y="5" width="30" height="30" fill="none" stroke="#111" stroke-width="4"/>
+                  <rect x="11" y="11" width="18" height="18" fill="#111"/>
+                  <rect x="65" y="5" width="30" height="30" fill="none" stroke="#111" stroke-width="4"/>
+                  <rect x="71" y="11" width="18" height="18" fill="#111"/>
+                  <rect x="5" y="65" width="30" height="30" fill="none" stroke="#111" stroke-width="4"/>
+                  <rect x="11" y="71" width="18" height="18" fill="#111"/>
+                  <rect x="40" y="5" width="5" height="5" fill="#111"/><rect x="52" y="5" width="5" height="5" fill="#111"/>
+                  <rect x="40" y="40" width="5" height="5" fill="#111"/><rect x="56" y="40" width="5" height="5" fill="#111"/><rect x="72" y="40" width="5" height="5" fill="#111"/><rect x="88" y="40" width="5" height="5" fill="#111"/>
+                  <rect x="5" y="52" width="5" height="5" fill="#111"/><rect x="22" y="52" width="5" height="5" fill="#111"/><rect x="40" y="52" width="5" height="5" fill="#111"/>
+                  <rect x="40" y="64" width="5" height="5" fill="#111"/><rect x="58" y="64" width="5" height="5" fill="#111"/>
+                  <rect x="46" y="76" width="5" height="5" fill="#111"/><rect x="64" y="76" width="5" height="5" fill="#111"/><rect x="82" y="76" width="5" height="5" fill="#111"/>
+                  <text x="50" y="58" text-anchor="middle" font-family="Georgia,serif" font-size="7.5" font-weight="bold" fill="#E63946">LAZIZ</text>
+                </svg>
+              </div>
+              <div style="font-size:.74rem;font-weight:700;color:rgba(255,255,255,.7)">lazizrestaurant@upi</div>
+              <div style="font-size:.65rem;color:rgba(255,255,255,.35);margin-top:4px">Show payment screenshot to waiter</div>
+            </div>
+          </div>
+        </div>
+        <input type="radio" class="pay-radio" name="pm"/>
+      </div>
+    </div>
+    <div class="btn-pair">
+      <button class="btn-f btn-ghost" onclick="goToPage('details')">← Back</button>
+      <button class="btn-f btn-red" onclick="placeOrder()">🍽 Place Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ SUCCESS PAGE ════════════════ -->
+<div class="extra-page" id="ep-success">
+  <div class="ep-wrap">
+    <div class="suc-wrap">
+      <div class="suc-ring">✅</div>
+      <div class="suc-ttl">Order Placed!</div>
+      <div class="suc-oid" id="sucOid">ORDER #LZ-0000</div>
+      <div class="est-chip">⏱ Estimated: <strong style="margin-left:4px">20–30 minutes</strong></div>
+      <p style="color:rgba(255,255,255,.42);font-size:.82rem;line-height:1.7">Your order has been received by our kitchen.<br>Sit back, relax — great food is on its way! 🍛</p>
+      <div class="suc-card" id="sucDetails"></div>
+      <button class="btn-f btn-gold" style="max-width:320px;margin:18px auto 0;display:block" onclick="goToPage('menu')">Order More Items</button>
+      <div style="margin-top:14px;font-size:.72rem;color:rgba(255,255,255,.35)">Need help? <a href="tel:+919717788806" style="color:var(--gold);text-decoration:none">+91 97177 88806</a></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════
+//  LAZIZ ORDER SYSTEM — layered onto menu page
+// ══════════════════════════════════════════════════════
+const ORDERS_KEY = 'laziz_orders';
+let cart = {};       // { itemId: qty }
+let activeTable = null;
+let activePay = 'counter';
+
+// ── ADD / CHANGE QTY ──
+function addToCart(id, price) {
+  cart[id] = 1;
+  refreshBtn(id, price);
+  updateCartBar();
+  oToast('Added to cart ✓');
+}
+function changeQty(id, price, d) {
+  cart[id] = (cart[id] || 0) + d;
+  if (cart[id] <= 0) delete cart[id];
+  refreshBtn(id, price);
+  updateCartBar();
+}
+
+// ── REFRESH THE ADD/STEPPER BUTTON for one item ──
+function refreshBtn(id, price) {
+  const els = document.querySelectorAll('[data-aw="' + id + '"]');
+  const qty = cart[id] || 0;
+  els.forEach(el => {
+    el.innerHTML = qty > 0
+      ? `<div class="stepper">
+          <button class="sp-b" onclick="changeQty(${id},${price},-1)">−</button>
+          <span class="sp-n">${qty}</span>
+          <button class="sp-b" onclick="changeQty(${id},${price},1)">+</button>
+        </div>`
+      : `<button class="add-btn" onclick="addToCart(${id},${price})">ADD +</button>`;
+  });
+}
+
+// ── CART COUNTS ──
+function cartCount() { return Object.values(cart).reduce((a,b)=>a+b,0); }
+function cartTotal() {
+  const md = getMenuData() || [];
+  return Object.entries(cart).reduce((t,[id,qty])=>{
+    const it = md.find(m => m.id == id);
+    return t + (it ? (it.price2||it.price)*qty : 0);
+  }, 0);
+}
+function clearCart() {
+  const md = getMenuData() || [];
+  Object.keys(cart).forEach(id => {
+    const it = md.find(m => m.id == id);
+    if (it) refreshBtn(it.id, it.price2||it.price);
+  });
+  cart = {};
+  updateCartBar();
+}
+
+function updateCartBar() {
+  const c = cartCount(), t = cartTotal();
+  const bar = document.getElementById('cartBar');
+  bar.classList.toggle('vis', c > 0);
+  document.getElementById('cbInfo').textContent = `${c} item${c!==1?'s':''} · ₹${t}`;
+}
+
+// ── PAGE NAVIGATION ──
+function goToPage(page) {
+  if (['cart','details','payment'].includes(page) && cartCount()===0) {
+    oToast('Add items to cart first!'); return;
+  }
+  // Show/hide menu vs extra pages
+  const menuEl = document.getElementById('menuRoot');
+  ['cart','details','payment','success'].forEach(p => {
+    document.getElementById('ep-'+p).classList.toggle('active', p===page);
+  });
+  const isMenu = page === 'menu';
+  menuEl.style.display = isMenu ? '' : 'none';
+  if (!isMenu) window.scrollTo({top:0,behavior:'instant'});
+  if (page==='cart') renderCartPage();
+  if (page==='details') { renderMiniSum('detailsSum'); buildTableGrid(); }
+  if (page==='payment') renderMiniSum('paymentSum');
+}
+
+// ── TABLE GRID ──
+function buildTableGrid() {
+  let h='';
+  for(let i=1;i<=20;i++) h+=`<button class="tbl-btn${activeTable===i?' sel':''}" onclick="selTable(${i})"><span class="tn">${i}</span><span class="tl">Table</span></button>`;
+  document.getElementById('tableGrid').innerHTML=h;
+}
+function selTable(n) {
+  activeTable=n;
+  document.querySelectorAll('.tbl-btn').forEach((b,i)=>b.classList.toggle('sel',i+1===n));
+}
+
+// ── MINI SUMMARY ──
+function renderMiniSum(id) {
+  const md = getMenuData()||[];
+  const sub=cartTotal(),gst=Math.round(sub*.05),tot=sub+gst;
+  const rows=Object.entries(cart).map(([cid,qty])=>{
+    const it=md.find(m=>m.id==cid);
+    return it?`<div class="ms-r"><span>${it.name} ×${qty}</span><span>₹${(it.price2||it.price)*qty}</span></div>`:'';
+  }).join('');
+  document.getElementById(id).innerHTML=`<div class="ms-ttl">Order Summary</div>${rows}<div class="ms-tot"><span>Total (incl. GST)</span><span class="mv">₹${tot}</span></div>`;
+}
+
+// ── RENDER CART PAGE ──
+function renderCartPage() {
+  const md = getMenuData()||[];
+  const items = Object.entries(cart).map(([id,qty])=>{const it=md.find(m=>m.id==id);return it?{...it,qty}:null;}).filter(Boolean);
+  const cb=document.getElementById('cartItemsBlock');
+  const ICONS={'Soups':'🍲','Snacks':'🥗','Salad & Raita':'🥗','Rice / Pulao':'🍚','Biryani':'🫕','Indian Veg':'🌿','Chicken Specialties':'🍗','Mutton':'🐑','BBQ / Tandoor':'🔥','Rolls':'🥙','Chinese':'🥢','Noodles':'🍜','Chinese Rice':'🍚','Bread':'🍞','Desserts':'🍮','Thali':'🍱','Combo Meals':'🍱'};
+  if(!items.length){cb.innerHTML='<div style="text-align:center;padding:48px 0"><div style="font-size:2.5rem;opacity:.3;margin-bottom:12px">🛒</div><p style="color:rgba(255,255,255,.42);font-size:.82rem">Cart is empty.</p></div>';document.getElementById('cartBillBlock').innerHTML='';return;}
+  cb.innerHTML=`<div class="ep-card-ttl">Your Items</div>`+items.map(it=>{
+    const p=it.price2||it.price;
+    return `<div class="cr-row"><div style="font-size:1.4rem;flex-shrink:0">${ICONS[it.category]||'🍽'}</div>
+      <div class="cr-info"><div class="cr-name">${it.name}</div><div class="cr-cat">${it.category}</div></div>
+      <div class="cr-price">₹${p*it.qty}</div>
+      <div class="cr-stepper"><button class="cr-sp" onclick="changeQty(${it.id},${p},-1);renderCartPage()">−</button><span class="cr-qty">${it.qty}</span><button class="cr-sp" onclick="changeQty(${it.id},${p},1);renderCartPage()">+</button></div>
+    </div>`;
+  }).join('');
+  const sub=cartTotal(),gst=Math.round(sub*.05),tot=sub+gst;
+  document.getElementById('cartBillBlock').innerHTML=`<div class="ep-card-ttl">Bill Details</div>
+    <div class="bill-r"><span>Item total</span><span>₹${sub}</span></div>
+    <div class="bill-r"><span>GST & charges (5%)</span><span>₹${gst}</span></div>
+    <div class="bill-r tot"><span>To pay</span><span class="bv">₹${tot}</span></div>`;
+}
+
+// ── PAY SELECTION ──
+function selPay(type) {
+  activePay=type;
+  ['counter','upi','qr'].forEach(t=>{
+    document.getElementById('po-'+t).classList.toggle('sel',t===type);
+    document.getElementById('po-'+t).querySelector('input[type=radio]').checked=(t===type);
+  });
+  document.getElementById('upiPanel').classList.toggle('open',type==='upi');
+  document.getElementById('qrPanel').classList.toggle('open',type==='qr');
+}
+
+function goToDetails2(){
+  if(!activeTable){oToast('Please select a table!');return;}
+  if(!document.getElementById('guestName').value.trim()){oToast('Please enter your name!');return;}
+  if(!document.getElementById('guestPhone').value.trim()){oToast('Please enter phone!');return;}
+  goToPage('payment');
+}
+
+// ── PLACE ORDER ──
+function placeOrder() {
+  if(!activeTable){oToast('No table selected!');return;}
+  const md=getMenuData()||[];
+  const name=document.getElementById('guestName').value.trim();
+  const phone=document.getElementById('guestPhone').value.trim();
+  const guests=parseInt(document.getElementById('guestCount').value)||1;
+  const note=document.getElementById('orderNote').value.trim();
+  const upiId=document.getElementById('upiId').value.trim();
+  const items=Object.entries(cart).map(([id,qty])=>{
+    const it=md.find(m=>m.id==id);const price=it.price2||it.price;
+    return{id:parseInt(id),name:it.name,category:it.category,type:it.type,price,qty,lineTotal:price*qty};
+  });
+  const sub=cartTotal(),gst=Math.round(sub*.05),tot=sub+gst;
+  const orderId='LZ-'+Date.now().toString().slice(-6);
+  const now=new Date();
+  const order={id:orderId,tableNo:activeTable,guestName:name,guestPhone:phone,guests,items,note,subtotal:sub,gst,total:tot,paymentMethod:activePay,upiId:activePay==='upi'?upiId:null,status:'new',createdAt:now.toISOString(),createdDate:now.toLocaleDateString('en-IN'),createdTime:now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})};
+  const orders=JSON.parse(localStorage.getItem(ORDERS_KEY)||'[]');orders.push(order);localStorage.setItem(ORDERS_KEY,JSON.stringify(orders));
+  document.getElementById('sucOid').textContent='ORDER #'+orderId;
+  document.getElementById('sucDetails').innerHTML=`
+    <div class="suc-r"><span class="k">Table</span><span class="v">Table ${activeTable}</span></div>
+    <div class="suc-r"><span class="k">Name</span><span class="v">${name}</span></div>
+    <div class="suc-r"><span class="k">Dishes</span><span class="v">${items.length} dishes · ${cartCount()} qty</span></div>
+    <div class="suc-r"><span class="k">Total</span><span class="v" style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.1rem">₹${tot}</span></div>
+    <div class="suc-r"><span class="k">Payment</span><span class="v">${activePay==='counter'?'Pay at Counter':activePay==='upi'?'UPI Transfer':'QR Scan'}</span></div>
+    ${note?`<div class="suc-r"><span class="k">Note</span><span class="v">${note}</span></div>`:''}`;
+  cart={};updateCartBar();goToPage('success');
+}
+
+// ── TOAST ──
+let _tt;
+function oToast(msg){const el=document.getElementById('oToast');el.textContent=msg;el.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2200);}
+
+// ── INJECT ADD BUTTONS after menu renders ──
+function injectAddButtons() {
+  const md = getMenuData()||[];
+  // For every item that has an add-wrap placeholder, inject
+  document.querySelectorAll('[data-aw]').forEach(el=>{
+    const id=parseInt(el.dataset.aw), it=md.find(m=>m.id==id);
+    if(!it) return;
+    const price=it.price2||it.price, qty=cart[id]||0;
+    el.innerHTML=qty>0
+      ?`<div class="stepper"><button class="sp-b" onclick="changeQty(${id},${price},-1)">−</button><span class="sp-n">${qty}</span><button class="sp-b" onclick="changeQty(${id},${price},1)">+</button></div>`
+      :`<button class="add-btn" onclick="addToCart(${id},${price})">ADD +</button>`;
+  });
+}
+</script>
 </body>
 </html>

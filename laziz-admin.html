@@ -489,6 +489,10 @@
       </a>
 
       <div class="nav-section-label">Operations</div>
+      <a class="nav-item" onclick="showPage('orders')">
+        <span class="nav-icon">🧾</span> Live Orders
+        <span class="nav-badge" id="newOrderCount" style="background:var(--success)">0</span>
+      </a>
       <a class="nav-item" onclick="showPage('reservations')">
         <span class="nav-icon">📅</span> Reservations
         <span class="nav-badge" id="pendingCount">0</span>
@@ -514,6 +518,9 @@
       </a>
       <a class="nav-item" href="laziz-menu.html" target="_blank">
         <span class="nav-icon">📋</span> View Menu Page
+      </a>
+      <a class="nav-item" href="laziz-order.html" target="_blank">
+        <span class="nav-icon">📲</span> Order Page (QR)
       </a>
     </nav>
     <div class="sidebar-footer">
@@ -545,7 +552,13 @@
 
       <!-- ── OVERVIEW ── -->
       <div class="page active" id="page-overview">
-        <div class="stats-grid">
+        <div class="stats-grid" style="grid-template-columns:repeat(5,1fr)">
+          <div class="stat-card" style="border-top:3px solid var(--success)">
+            <div class="stat-change up" id="newOrdersBadge" style="background:rgba(76,175,80,0.15);color:var(--success)">Live</div>
+            <div class="stat-icon">🧾</div>
+            <div class="stat-num-big" id="totalOrders">0</div>
+            <div class="stat-lbl">Total Orders</div>
+          </div>
           <div class="stat-card red">
             <div class="stat-change up" id="todayChange">+0 today</div>
             <div class="stat-icon">📅</div>
@@ -582,30 +595,11 @@
           </div>
           <div class="card">
             <div class="card-header">
-              <div class="card-title">Recent Activity</div>
+              <div class="card-title">🧾 Latest Orders</div>
+              <button class="card-action" onclick="showPage('orders')">View All</button>
             </div>
-            <div id="activityFeed">
-              <div class="activity-item">
-                <div class="activity-dot" style="background:var(--gold)"></div>
-                <div>
-                  <div class="activity-text">Admin panel loaded</div>
-                  <div class="activity-time">Just now</div>
-                </div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-dot" style="background:var(--info)"></div>
-                <div>
-                  <div class="activity-text">Website is live and active</div>
-                  <div class="activity-time">System status</div>
-                </div>
-              </div>
-              <div class="activity-item">
-                <div class="activity-dot" style="background:var(--success)"></div>
-                <div>
-                  <div class="activity-text">All systems operational</div>
-                  <div class="activity-time">Auto-check</div>
-                </div>
-              </div>
+            <div id="overviewOrdersList">
+              <div class="empty-state"><div class="empty-state-icon">🧾</div><p>No orders yet</p></div>
             </div>
           </div>
         </div>
@@ -767,6 +761,81 @@
         </div>
       </div>
 
+      <!-- ── ORDERS ── -->
+      <div class="page" id="page-orders">
+
+        <!-- ANALYTICS ROW -->
+        <div class="stats-grid" id="ordersStatsGrid" style="grid-template-columns:repeat(4,1fr);margin-bottom:24px">
+          <div class="stat-card" style="border-top:3px solid var(--success)">
+            <div class="stat-icon">🧾</div>
+            <div class="stat-num-big" id="o-total">0</div>
+            <div class="stat-lbl">Total Orders</div>
+          </div>
+          <div class="stat-card gold">
+            <div class="stat-icon">⏳</div>
+            <div class="stat-num-big" id="o-new">0</div>
+            <div class="stat-lbl">New / Pending</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon">💰</div>
+            <div class="stat-num-big" id="o-revenue">₹0</div>
+            <div class="stat-lbl">Total Revenue</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-icon">🍽</div>
+            <div class="stat-num-big" id="o-avg">₹0</div>
+            <div class="stat-lbl">Avg Order Value</div>
+          </div>
+        </div>
+
+        <!-- ANALYTICS CHARTS ROW -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px">
+          <div class="card" style="margin-bottom:0">
+            <div class="card-header"><div class="card-title">Orders by Payment Method</div></div>
+            <div id="payChart" style="padding:8px 0"></div>
+          </div>
+          <div class="card" style="margin-bottom:0">
+            <div class="card-header"><div class="card-title">Top Ordered Dishes</div></div>
+            <div id="topDishesChart" style="padding:8px 0;max-height:220px;overflow-y:auto"></div>
+          </div>
+        </div>
+
+        <!-- TABLE HEATMAP -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Table Activity</div>
+            <span style="font-size:0.72rem;color:var(--muted)">Orders per table today</span>
+          </div>
+          <div id="tableHeatmap" style="display:grid;grid-template-columns:repeat(10,1fr);gap:8px;padding:8px 0"></div>
+        </div>
+
+        <!-- ORDERS TABLE -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">All Orders</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="card-action" onclick="exportOrders()">Export CSV</button>
+              <button class="btn-danger" onclick="clearOrders()">Clear All</button>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+            <div class="search-bar" style="flex:1;min-width:200px;margin-bottom:0">
+              <span class="search-icon">🔍</span>
+              <input class="search-input" type="text" id="orderSearch" placeholder="Search by name, table, order ID…" oninput="renderOrdersPage()"/>
+            </div>
+          </div>
+          <div class="tabs" id="orderTabs">
+            <button class="tab-btn active" onclick="setOrderFilter('all',this)">All</button>
+            <button class="tab-btn" onclick="setOrderFilter('new',this)">🟡 New</button>
+            <button class="tab-btn" onclick="setOrderFilter('preparing',this)">🟠 Preparing</button>
+            <button class="tab-btn" onclick="setOrderFilter('ready',this)">🟢 Ready</button>
+            <button class="tab-btn" onclick="setOrderFilter('served',this)">✅ Served</button>
+            <button class="tab-btn" onclick="setOrderFilter('cancelled',this)">❌ Cancelled</button>
+          </div>
+          <div id="ordersTableWrap"></div>
+        </div>
+      </div>
+
       <!-- ── SETTINGS ── -->
       <div class="page" id="page-settings">
         <div class="card">
@@ -889,6 +958,15 @@
   </div>
 </div>
 
+<!-- MODAL: Order Detail -->
+<div class="modal-overlay" id="orderDetailModal">
+  <div class="modal" style="max-width:640px">
+    <div class="modal-title" id="orderDetailTitle">Order Details</div>
+    <button class="modal-close" onclick="closeOrderModal()">✕</button>
+    <div id="orderDetailBody"></div>
+  </div>
+</div>
+
 <!-- TOAST -->
 <div class="admin-toast" id="adminToast"></div>
 
@@ -902,6 +980,7 @@ const STORAGE_KEY    = 'laziz_menu_v2';
 const ADMIN_PASS_KEY = 'laziz_admin_pass';
 const RES_KEY        = 'laziz_reservations';
 const MSG_KEY        = 'laziz_messages';
+const ORDERS_KEY     = 'laziz_orders';
 
 // ── AUTH ──
 function getPass() { return localStorage.getItem(ADMIN_PASS_KEY) || 'admin123'; }
@@ -1115,6 +1194,8 @@ function saveMenu(m) {
 function getReservations()   { return JSON.parse(localStorage.getItem(RES_KEY) || '[]'); }
 function saveReservations(r) { localStorage.setItem(RES_KEY, JSON.stringify(r)); }
 function getMessages()       { return JSON.parse(localStorage.getItem(MSG_KEY) || '[]'); }
+function getOrders()         { return JSON.parse(localStorage.getItem(ORDERS_KEY) || '[]'); }
+function saveOrders(o)       { localStorage.setItem(ORDERS_KEY, JSON.stringify(o)); }
 
 // ── SEED on first load ──
 if (!localStorage.getItem(STORAGE_KEY)) {
@@ -1168,18 +1249,44 @@ function refreshStats() {
   const res   = getReservations();
   const menu  = getMenu();
   const msgs  = getMessages();
+  const orders= getOrders();
   const pend  = res.filter(r => r.status === 'pending').length;
   const today = new Date().toISOString().split('T')[0];
   const todR  = res.filter(r => r.created && r.created.startsWith(today)).length;
+  const newOrd= orders.filter(o => o.status === 'new').length;
+  const todayOrds = orders.filter(o => o.createdAt && o.createdAt.startsWith(today));
+  const revenue = orders.filter(o=>o.status!=='cancelled').reduce((s,o)=>s+o.total,0);
+
   document.getElementById('totalRes').textContent    = res.length;
   document.getElementById('pendingRes').textContent  = pend;
   document.getElementById('menuCount').textContent   = menu.length;
   document.getElementById('msgCount').textContent    = msgs.length;
   document.getElementById('pendingCount').textContent = pend;
   document.getElementById('todayChange').textContent = `+${todR} today`;
+  document.getElementById('totalOrders').textContent  = orders.length;
+  document.getElementById('newOrderCount').textContent= newOrd;
+  document.getElementById('newOrdersBadge').textContent = newOrd > 0 ? `${newOrd} new` : 'Live';
+
   renderOverviewRes(res.slice(-5).reverse());
+  renderOverviewOrders(orders.slice(-5).reverse());
 }
 window.refreshStats = refreshStats;
+
+function renderOverviewOrders(list) {
+  const el = document.getElementById('overviewOrdersList');
+  if (!list.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🧾</div><p>No orders yet</p></div>'; return; }
+  el.innerHTML = list.map(o => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)">
+      <div>
+        <div style="font-size:0.82rem;font-weight:600;color:white">#${o.id} · Table ${o.tableNo}</div>
+        <div style="font-size:0.72rem;color:var(--muted)">${o.guestName} · ${o.createdTime||''}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:'Playfair Display',serif;color:var(--gold);font-size:0.95rem">₹${o.total}</div>
+        <span class="badge ${orderStatusBadge(o.status)}">${o.status}</span>
+      </div>
+    </div>`).join('');
+}
 
 function renderOverviewRes(list) {
   const el = document.getElementById('overviewResList');
@@ -1200,6 +1307,7 @@ function showPage(page) {
   if (page === 'messages')     renderMessages();
   if (page === 'menu')         renderMenuAdmin();
   if (page === 'overview')     refreshStats();
+  if (page === 'orders')       renderOrdersPage();
   if (page === 'addItem') { editingItemId = null; document.getElementById('addItemTitle').textContent = 'Add New Menu Item'; resetItemForm(); }
   document.querySelectorAll('.nav-item').forEach(n => {
     if (n.getAttribute('onclick') && n.getAttribute('onclick').includes(`'${page}'`)) n.classList.add('active');
@@ -1447,7 +1555,281 @@ function changePass() {
 }
 window.changePass = changePass;
 
-// ── TOAST ──
+// ══════════════════════════════════════
+//  ORDERS MANAGEMENT
+// ══════════════════════════════════════
+let orderFilter = 'all';
+
+const ORDER_STATUS_FLOW = ['new','preparing','ready','served'];
+function orderStatusBadge(s) {
+  return {new:'badge-pending', preparing:'badge-warning', ready:'badge-confirmed', served:'badge-confirmed', cancelled:'badge-cancelled'}[s] || 'badge-pending';
+}
+function orderStatusEmoji(s) {
+  return {new:'🟡', preparing:'🟠', ready:'🟢', served:'✅', cancelled:'❌'}[s] || '⚪';
+}
+// Extra badge style for preparing/ready
+function extraBadgeStyle(s) {
+  if (s==='preparing') return 'background:rgba(255,152,0,0.15);color:#ff9800;border:1px solid rgba(255,152,0,0.3)';
+  if (s==='ready')     return 'background:rgba(76,175,80,0.15);color:#4caf50;border:1px solid rgba(76,175,80,0.3)';
+  return '';
+}
+
+function setOrderFilter(f, btn) {
+  orderFilter = f;
+  document.querySelectorAll('#orderTabs .tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderOrdersTable();
+}
+window.setOrderFilter = setOrderFilter;
+
+function renderOrdersPage() {
+  const orders = getOrders();
+  renderOrderAnalytics(orders);
+  renderOrdersTable();
+}
+window.renderOrdersPage = renderOrdersPage;
+
+function renderOrderAnalytics(orders) {
+  // Stats
+  const active = orders.filter(o=>o.status!=='cancelled');
+  const revenue = active.reduce((s,o)=>s+o.total,0);
+  const avg = active.length ? Math.round(revenue/active.length) : 0;
+  const newCount = orders.filter(o=>o.status==='new').length;
+  document.getElementById('o-total').textContent   = orders.length;
+  document.getElementById('o-new').textContent     = newCount;
+  document.getElementById('o-revenue').textContent = `₹${revenue.toLocaleString('en-IN')}`;
+  document.getElementById('o-avg').textContent     = `₹${avg}`;
+
+  // Payment method bars
+  const payMap = {};
+  orders.forEach(o => { payMap[o.paymentMethod] = (payMap[o.paymentMethod]||0)+1; });
+  const payLabels = {counter:'🪙 Pay at Counter', upi:'📱 UPI Transfer', qr:'📷 QR Scan'};
+  const maxPay = Math.max(1,...Object.values(payMap));
+  document.getElementById('payChart').innerHTML = Object.entries(payMap).map(([k,v])=>`
+    <div style="margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:6px">
+        <span style="color:var(--text)">${payLabels[k]||k}</span>
+        <span style="color:var(--gold);font-weight:700">${v} orders</span>
+      </div>
+      <div style="height:8px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden">
+        <div style="height:100%;width:${Math.round(v/maxPay*100)}%;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:4px;transition:width 0.6s ease"></div>
+      </div>
+    </div>`).join('') || '<div style="color:var(--muted);font-size:0.82rem;padding:20px 0">No orders yet</div>';
+
+  // Top dishes
+  const dishMap = {};
+  orders.filter(o=>o.status!=='cancelled').forEach(o => {
+    (o.items||[]).forEach(i => { dishMap[i.name] = (dishMap[i.name]||0) + i.qty; });
+  });
+  const topDishes = Object.entries(dishMap).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const maxDish = topDishes.length ? topDishes[0][1] : 1;
+  document.getElementById('topDishesChart').innerHTML = topDishes.length ? topDishes.map(([name,qty],i)=>`
+    <div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;font-size:0.78rem;margin-bottom:5px">
+        <span style="color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${i+1}. ${name}</span>
+        <span style="color:var(--gold);font-weight:700;margin-left:8px">${qty}×</span>
+      </div>
+      <div style="height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${Math.round(qty/maxDish*100)}%;background:var(--success);border-radius:3px;transition:width 0.6s ease"></div>
+      </div>
+    </div>`).join('') : '<div style="color:var(--muted);font-size:0.82rem;padding:20px 0">No data yet</div>';
+
+  // Table heatmap
+  const tableMap = {};
+  const today = new Date().toISOString().split('T')[0];
+  orders.filter(o=>o.createdAt&&o.createdAt.startsWith(today)).forEach(o => {
+    tableMap[o.tableNo] = (tableMap[o.tableNo]||0)+1;
+  });
+  const maxT = Math.max(1,...Object.values(tableMap));
+  document.getElementById('tableHeatmap').innerHTML = Array.from({length:20},(_,i)=>{
+    const t = i+1, cnt = tableMap[t]||0;
+    const intensity = cnt/maxT;
+    const bg = cnt===0 ? 'rgba(255,255,255,0.04)' : `rgba(244,162,97,${0.15+intensity*0.6})`;
+    const border = cnt===0 ? 'rgba(255,255,255,0.1)' : `rgba(244,162,97,${0.3+intensity*0.5})`;
+    return `<div style="aspect-ratio:1;border-radius:8px;background:${bg};border:1px solid ${border};display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:default" title="Table ${t}: ${cnt} orders">
+      <span style="font-size:0.8rem;font-weight:700;color:${cnt>0?'white':'rgba(255,255,255,0.3)'}">${t}</span>
+      ${cnt>0?`<span style="font-size:0.55rem;color:var(--gold)">${cnt}</span>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderOrdersTable() {
+  let orders = getOrders();
+  const q = (document.getElementById('orderSearch')?.value||'').toLowerCase();
+  if (q) orders = orders.filter(o =>
+    o.id.toLowerCase().includes(q) ||
+    o.guestName.toLowerCase().includes(q) ||
+    String(o.tableNo).includes(q) ||
+    o.guestPhone.includes(q)
+  );
+  if (orderFilter !== 'all') orders = orders.filter(o => o.status === orderFilter);
+  orders = orders.slice().reverse();
+
+  const wrap = document.getElementById('ordersTableWrap');
+  if (!orders.length) {
+    wrap.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🧾</div><p>No orders found</p></div>';
+    return;
+  }
+
+  wrap.innerHTML = `<div style="overflow-x:auto"><table>
+    <tr>
+      <th>Order ID</th><th>Table</th><th>Guest</th><th>Items</th>
+      <th>Total</th><th>Payment</th><th>Time</th><th>Status</th><th>Actions</th>
+    </tr>
+    ${orders.map(o=>`<tr>
+      <td><strong style="color:var(--gold)">#${o.id}</strong></td>
+      <td><span style="background:rgba(244,162,97,0.12);border:1px solid rgba(244,162,97,0.3);padding:3px 10px;border-radius:4px;font-weight:700;font-size:0.82rem">T-${o.tableNo}</span></td>
+      <td><strong>${o.guestName}</strong><br><span style="color:var(--muted);font-size:0.72rem">${o.guestPhone}</span></td>
+      <td>${o.items.length} dish${o.items.length!==1?'es':''}<br>
+          <span style="color:var(--muted);font-size:0.72rem">${o.items.map(i=>i.name).slice(0,2).join(', ')}${o.items.length>2?'…':''}</span></td>
+      <td style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold)">₹${o.total}</td>
+      <td><span style="font-size:0.78rem">${o.paymentMethod==='counter'?'🪙 Counter':o.paymentMethod==='upi'?'📱 UPI':'📷 QR'}</span></td>
+      <td style="font-size:0.78rem;color:var(--muted)">${o.createdDate||''}<br>${o.createdTime||''}</td>
+      <td><span class="badge ${orderStatusBadge(o.status)}" style="${extraBadgeStyle(o.status)}">${orderStatusEmoji(o.status)} ${o.status}</span></td>
+      <td>
+        <div style="display:flex;flex-direction:column;gap:6px;min-width:110px">
+          <button class="card-action" style="font-size:0.65rem;padding:5px 10px" onclick="viewOrder('${o.id}')">👁 View</button>
+          ${o.status!=='served'&&o.status!=='cancelled' ? nextStatusBtn(o) : ''}
+          ${o.status!=='cancelled'&&o.status!=='served' ? `<button class="btn-danger" style="font-size:0.65rem;padding:5px 10px" onclick="cancelOrder('${o.id}')">❌ Cancel</button>` : ''}
+        </div>
+      </td>
+    </tr>`).join('')}
+  </table></div>`;
+}
+
+function nextStatusBtn(o) {
+  const flow = {new:'preparing', preparing:'ready', ready:'served'};
+  const labels = {preparing:'🟠 Mark Preparing', ready:'🟢 Mark Ready', served:'✅ Mark Served'};
+  const next = flow[o.status];
+  if (!next) return '';
+  const colors = {preparing:'rgba(255,152,0,0.15)', ready:'rgba(76,175,80,0.15)', served:'rgba(76,175,80,0.15)'};
+  return `<button onclick="advanceOrder('${o.id}')"
+    style="background:${colors[next]||'rgba(244,162,97,0.1)'};border:1px solid rgba(244,162,97,0.3);color:white;padding:5px 10px;border-radius:5px;font-size:0.65rem;font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.5px;cursor:pointer;transition:all 0.2s">
+    ${labels[next]}
+  </button>`;
+}
+
+function advanceOrder(id) {
+  const orders = getOrders();
+  const idx = orders.findIndex(o=>o.id===id);
+  const flow = {new:'preparing', preparing:'ready', ready:'served'};
+  if (idx!==-1 && flow[orders[idx].status]) {
+    orders[idx].status = flow[orders[idx].status];
+    saveOrders(orders); renderOrdersPage(); refreshStats();
+    toast(`Order #${id} → ${orders[idx].status}!`);
+  }
+}
+window.advanceOrder = advanceOrder;
+
+function cancelOrder(id) {
+  if (!confirm(`Cancel order #${id}?`)) return;
+  const orders = getOrders();
+  const idx = orders.findIndex(o=>o.id===id);
+  if (idx!==-1) { orders[idx].status='cancelled'; saveOrders(orders); renderOrdersPage(); refreshStats(); toast('Order cancelled.'); }
+}
+window.cancelOrder = cancelOrder;
+
+function viewOrder(id) {
+  const order = getOrders().find(o=>o.id===id);
+  if (!order) return;
+  document.getElementById('orderDetailTitle').textContent = `Order #${order.id} · Table ${order.tableNo}`;
+  document.getElementById('orderDetailBody').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-size:0.6rem;font-family:'Montserrat',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Guest</div>
+        <div style="font-weight:600;color:white">${order.guestName}</div>
+        <div style="font-size:0.78rem;color:var(--muted)">${order.guestPhone} · ${order.guests} guest${order.guests!==1?'s':''}</div>
+      </div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:14px">
+        <div style="font-size:0.6rem;font-family:'Montserrat',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Payment</div>
+        <div style="font-weight:600;color:white">${order.paymentMethod==='counter'?'🪙 Pay at Counter':order.paymentMethod==='upi'?'📱 UPI':'📷 QR Scan'}</div>
+        ${order.upiId ? `<div style="font-size:0.78rem;color:var(--muted)">${order.upiId}</div>` : ''}
+        <div style="font-size:0.78rem;color:var(--muted)">${order.createdDate} · ${order.createdTime}</div>
+      </div>
+    </div>
+    <div style="margin-bottom:18px">
+      <div style="font-size:0.65rem;font-family:'Montserrat',sans-serif;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Items Ordered</div>
+      ${order.items.map(i=>`
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)">
+          <div>
+            <span style="font-size:0.88rem;font-weight:500;color:white">${i.name}</span>
+            <span style="font-size:0.72rem;color:var(--muted);margin-left:8px">×${i.qty}</span>
+            <div style="font-size:0.72rem;color:var(--muted)">${i.category}</div>
+          </div>
+          <div style="font-family:'Playfair Display',serif;color:var(--gold)">₹${i.lineTotal}</div>
+        </div>`).join('')}
+      <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:0.82rem;color:var(--muted)">
+        <span>Subtotal</span><span>₹${order.subtotal}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:6px 0;font-size:0.82rem;color:var(--muted)">
+        <span>GST (5%)</span><span>₹${order.gst}</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0;font-size:1rem;font-weight:700;border-top:1px solid var(--border);color:white">
+        <span>Total</span><span style="font-family:'Playfair Display',serif;color:var(--gold);font-size:1.2rem">₹${order.total}</span>
+      </div>
+    </div>
+    ${order.note ? `<div style="background:rgba(244,162,97,.05);border:1px solid rgba(244,162,97,.15);border-radius:8px;padding:12px;margin-bottom:18px"><div style="font-size:0.62rem;color:var(--gold);font-weight:700;letter-spacing:2px;margin-bottom:4px">SPECIAL NOTE</div><div style="font-size:0.85rem;color:rgba(255,255,255,.75)">${order.note}</div></div>` : ''}
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      ${ORDER_STATUS_FLOW.filter(s=>s!==order.status&&order.status!=='cancelled').map(s=>`
+        <button class="btn-primary-admin" style="padding:9px 16px;font-size:0.72rem" onclick="setOrderStatus('${order.id}','${s}')">
+          ${orderStatusEmoji(s)} Set ${s}
+        </button>`).join('')}
+      ${order.status!=='cancelled'?`<button class="btn-danger" onclick="cancelOrder('${order.id}');closeOrderModal()">❌ Cancel Order</button>`:''}
+    </div>`;
+  document.getElementById('orderDetailModal').classList.add('open');
+}
+window.viewOrder = viewOrder;
+
+function setOrderStatus(id, status) {
+  const orders = getOrders();
+  const idx = orders.findIndex(o=>o.id===id);
+  if (idx!==-1) {
+    orders[idx].status = status; saveOrders(orders);
+    closeOrderModal(); renderOrdersPage(); refreshStats();
+    toast(`Order #${id} set to ${status}!`);
+  }
+}
+window.setOrderStatus = setOrderStatus;
+
+function closeOrderModal() { document.getElementById('orderDetailModal').classList.remove('open'); }
+window.closeOrderModal = closeOrderModal;
+
+function clearOrders() {
+  if (!confirm('Clear ALL orders? This cannot be undone.')) return;
+  saveOrders([]); renderOrdersPage(); refreshStats(); toast('All orders cleared.');
+}
+window.clearOrders = clearOrders;
+
+function exportOrders() {
+  const orders = getOrders();
+  if (!orders.length) { toast('Nothing to export.','error'); return; }
+  const rows = ['OrderID,Table,Name,Phone,Guests,Items,Subtotal,GST,Total,Payment,Status,Date,Time,Note'];
+  orders.forEach(o => {
+    const itemStr = o.items.map(i=>`${i.name}x${i.qty}`).join(' | ');
+    rows.push(`"${o.id}","${o.tableNo}","${o.guestName}","${o.guestPhone}","${o.guests}","${itemStr}","${o.subtotal}","${o.gst}","${o.total}","${o.paymentMethod}","${o.status}","${o.createdDate||''}","${o.createdTime||''}","${o.note||''}"`);
+  });
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,'+encodeURIComponent(rows.join('\n'));
+  a.download = 'laziz-orders.csv'; a.click(); toast('Orders exported!');
+}
+window.exportOrders = exportOrders;
+
+// ── LIVE ORDER POLLING (check every 15s for new orders from QR page) ──
+setInterval(() => {
+  refreshStats();
+  if (document.getElementById('page-orders').classList.contains('active')) renderOrdersPage();
+}, 15000);
+
+// ── LISTEN FOR REAL-TIME ORDERS FROM QR PAGE (same browser, different tab) ──
+window.addEventListener('storage', e => {
+  if (e.key === ORDERS_KEY) {
+    refreshStats();
+    if (document.getElementById('page-orders').classList.contains('active')) renderOrdersPage();
+    const orders = JSON.parse(e.newValue||'[]');
+    const latest = orders[orders.length-1];
+    if (latest && latest.status === 'new') toast(`🔔 New order from Table ${latest.tableNo}!`);
+  }
+});
 function toast(msg, type='success') {
   const el = document.getElementById('adminToast');
   el.textContent = (type==='success'?'✅ ':'⚠️ ') + msg;

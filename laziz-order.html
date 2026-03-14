@@ -1,6 +1,3 @@
-
-<!-- ========================================================================================================================= -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -323,240 +320,6 @@ nav{position:sticky;top:0;z-index:500;background:rgba(14,14,14,0.96);backdrop-fi
 .o-toast{position:fixed;top:76px;left:50%;transform:translateX(-50%) translateY(-14px);background:rgba(20,20,20,.97);border:1px solid rgba(244,162,97,.3);border-radius:50px;padding:9px 22px;font-size:.78rem;color:white;font-weight:500;opacity:0;transition:all .3s;z-index:9999;white-space:nowrap}
 .o-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:600px){.f-row{grid-template-columns:1fr}.tbl-grid{grid-template-columns:repeat(4,1fr)}}
-
-/* ══ NEW CARD LAYOUT — screenshot style ══ */
-/* Remove old item styles that conflict */
-.items-list, .items-featured, .thali-grid, .combo-grid { all: unset; }
-
-/* Universal card grid */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 14px;
-}
-
-/* The card itself */
-.dish-card {
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.22);
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
-}
-.dish-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.32);
-}
-
-/* TOP: image */
-.dc-img-wrap {
-  position: relative;
-  width: 100%;
-  height: 160px;
-  flex-shrink: 0;
-  background: #f0ede8;
-  overflow: hidden;
-}
-.dc-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.dc-img-ph {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3.5rem;
-  background: linear-gradient(135deg, #2a1f14, #1c1408);
-}
-/* Chef badge overlay on image */
-.dc-chef-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(230,57,70,0.9);
-  color: white;
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 3px 8px;
-  border-radius: 3px;
-  backdrop-filter: blur(4px);
-}
-
-/* BOTTOM: info */
-.dc-body {
-  padding: 14px 14px 14px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  background: #1c1c1c;
-}
-.dc-top-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-.dc-name {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.92);
-  line-height: 1.3;
-  flex: 1;
-}
-.dc-desc {
-  font-size: 0.72rem;
-  color: rgba(255,255,255,0.45);
-  line-height: 1.5;
-  margin-bottom: 12px;
-  flex: 1;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.dc-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: auto;
-}
-/* Price area */
-.dc-price-area {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-.dc-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--gold);
-  line-height: 1;
-}
-/* Half/Full pills for dual price items */
-.dc-dual {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.dc-dual-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 20px;
-  padding: 3px 10px;
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: rgba(255,255,255,0.55);
-  white-space: nowrap;
-}
-.dc-dual-pill .dp-label {
-  font-size: 0.58rem;
-  opacity: 0.7;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.dc-dual-pill .dp-price {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 0.9rem;
-  color: var(--gold);
-  font-weight: 600;
-}
-
-/* ADD / STEPPER — red pill, matches screenshot */
-.dc-add-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  background: var(--red);
-  color: white;
-  border: none;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: all 0.18s;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.dc-add-btn:hover { background: #c42f3c; transform: scale(1.04); }
-.dc-add-btn:active { transform: scale(0.97); }
-
-.dc-stepper {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1.5px solid var(--red);
-  background: rgba(230,57,70,0.08);
-  flex-shrink: 0;
-}
-.dc-sp {
-  width: 32px;
-  height: 32px;
-  border: none;
-  background: var(--red);
-  color: white;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Poppins', sans-serif;
-  transition: background 0.15s;
-}
-.dc-sp:hover { background: #c42f3c; }
-.dc-sp-num {
-  min-width: 28px;
-  text-align: center;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: white;
-  background: rgba(230,57,70,0.08);
-}
-
-/* veg dot — keep as is */
-.dc-veg {
-  width: 13px;
-  height: 13px;
-  border-radius: 2px;
-  border: 1.5px solid;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2px;
-}
-.dc-veg::after { content:''; width:6px; height:6px; border-radius:50%; }
-.dc-veg.v { border-color:#4caf50; } .dc-veg.v::after { background:#4caf50; }
-.dc-veg.n { border-color:#e63946; } .dc-veg.n::after { background:#e63946; }
-
-@media(max-width:600px){
-  .card-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .dc-img-wrap { height: 120px; }
-  .dc-name { font-size: 0.78rem; }
-  .dc-add-btn { padding: 7px 10px; font-size: 0.68rem; }
-}
-@media(max-width:380px){
-  .card-grid { grid-template-columns: 1fr; }
-}
 </style>
 </head>
 <body>
@@ -700,105 +463,6 @@ const SECTION_CONFIG = [
 // ── STORAGE KEY (same as admin) ──
 const STORAGE_KEY = 'laziz_menu_v2';
 
-// ── FOOD IMAGE MAP ──
-const FOOD_IMG = {
-  'malai chaap':'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=220&h=180&fit=crop&q=80',
-  'soya chaap':'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=220&h=180&fit=crop&q=80',
-  'chaap':'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=220&h=180&fit=crop&q=80',
-  'chicken biryani':'https://images.unsplash.com/photo-1633945274417-e84b849e33ba?w=220&h=180&fit=crop&q=80',
-  'mutton biryani':'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=220&h=180&fit=crop&q=80',
-  'veg biryani':'https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=220&h=180&fit=crop&q=80',
-  'biryani':'https://images.unsplash.com/photo-1563379091339-03246963d1b3?w=220&h=180&fit=crop&q=80',
-  'paneer butter masala':'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=220&h=180&fit=crop&q=80',
-  'shahi paneer':'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=220&h=180&fit=crop&q=80',
-  'kadai paneer':'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=220&h=180&fit=crop&q=80',
-  'paneer tikka':'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=220&h=180&fit=crop&q=80',
-  'paneer':'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=220&h=180&fit=crop&q=80',
-  'butter chicken':'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=220&h=180&fit=crop&q=80',
-  'chicken tikka masala':'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=220&h=180&fit=crop&q=80',
-  'chicken tikka':'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=220&h=180&fit=crop&q=80',
-  'tandoori chicken':'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=220&h=180&fit=crop&q=80',
-  'chicken korma':'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=220&h=180&fit=crop&q=80',
-  'chicken':'https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?w=220&h=180&fit=crop&q=80',
-  'mutton rogan josh':'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=220&h=180&fit=crop&q=80',
-  'rogan josh':'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=220&h=180&fit=crop&q=80',
-  'mutton':'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=220&h=180&fit=crop&q=80',
-  'dal makhani':'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=220&h=180&fit=crop&q=80',
-  'dal fry':'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=220&h=180&fit=crop&q=80',
-  'dal':'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=220&h=180&fit=crop&q=80',
-  'seekh kebab':'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=220&h=180&fit=crop&q=80',
-  'kebab':'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=220&h=180&fit=crop&q=80',
-  'seekh':'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=220&h=180&fit=crop&q=80',
-  'tikka':'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=220&h=180&fit=crop&q=80',
-  'tandoori':'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=220&h=180&fit=crop&q=80',
-  'chicken roll':'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=220&h=180&fit=crop&q=80',
-  'paneer roll':'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=220&h=180&fit=crop&q=80',
-  'roll':'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=220&h=180&fit=crop&q=80',
-  'manchow soup':'https://images.unsplash.com/photo-1604152135912-04a022e23696?w=220&h=180&fit=crop&q=80',
-  'sweet corn soup':'https://images.unsplash.com/photo-1601315379734-425a469078de?w=220&h=180&fit=crop&q=80',
-  'tomato soup':'https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=220&h=180&fit=crop&q=80',
-  'soup':'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=220&h=180&fit=crop&q=80',
-  'hakka noodles':'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=220&h=180&fit=crop&q=80',
-  'chowmein':'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=220&h=180&fit=crop&q=80',
-  'noodles':'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=220&h=180&fit=crop&q=80',
-  'manchurian':'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=220&h=180&fit=crop&q=80',
-  'spring roll':'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=220&h=180&fit=crop&q=80',
-  'fried rice':'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=220&h=180&fit=crop&q=80',
-  'garlic naan':'https://images.unsplash.com/photo-1633945274405-9b4871eb7950?w=220&h=180&fit=crop&q=80',
-  'naan':'https://images.unsplash.com/photo-1633945274405-9b4871eb7950?w=220&h=180&fit=crop&q=80',
-  'laccha paratha':'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=220&h=180&fit=crop&q=80',
-  'paratha':'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=220&h=180&fit=crop&q=80',
-  'roti':'https://images.unsplash.com/photo-1604908177453-7462950a6a3b?w=220&h=180&fit=crop&q=80',
-  'kulcha':'https://images.unsplash.com/photo-1633945274405-9b4871eb7950?w=220&h=180&fit=crop&q=80',
-  'pulao':'https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=220&h=180&fit=crop&q=80',
-  'jeera rice':'https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=220&h=180&fit=crop&q=80',
-  'rice':'https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=220&h=180&fit=crop&q=80',
-  'samosa':'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=220&h=180&fit=crop&q=80',
-  'pav bhaji':'https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=220&h=180&fit=crop&q=80',
-  'chole':'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=220&h=180&fit=crop&q=80',
-  'aloo tikki':'https://images.unsplash.com/photo-1639024471283-03518883512d?w=220&h=180&fit=crop&q=80',
-  'raita':'https://images.unsplash.com/photo-1631452180775-0b10c6e9e6c1?w=220&h=180&fit=crop&q=80',
-  'salad':'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=220&h=180&fit=crop&q=80',
-  'gulab jamun':'https://images.unsplash.com/photo-1601303516534-bf48de5d2a53?w=220&h=180&fit=crop&q=80',
-  'kheer':'https://images.unsplash.com/photo-1605361492087-8e8e5a7a6862?w=220&h=180&fit=crop&q=80',
-  'kulfi':'https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=220&h=180&fit=crop&q=80',
-  'thali':'https://images.unsplash.com/photo-1567337710282-00832b415979?w=220&h=180&fit=crop&q=80',
-  'combo':'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=220&h=180&fit=crop&q=80',
-  'palak':'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=220&h=180&fit=crop&q=80',
-  'korma':'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=220&h=180&fit=crop&q=80',
-  'handi':'https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?w=220&h=180&fit=crop&q=80',
-  'curry':'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=220&h=180&fit=crop&q=80',
-  'masala':'https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?w=220&h=180&fit=crop&q=80',
-  'kofta':'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=220&h=180&fit=crop&q=80',
-  'aloo':'https://images.unsplash.com/photo-1639024471283-03518883512d?w=220&h=180&fit=crop&q=80'
-};
-const CAT_IMG = {
-  'Soups':'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=220&h=180&fit=crop&q=80',
-  'Snacks':'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=220&h=180&fit=crop&q=80',
-  'Salad & Raita':'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=220&h=180&fit=crop&q=80',
-  'Rice / Pulao':'https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=220&h=180&fit=crop&q=80',
-  'Biryani':'https://images.unsplash.com/photo-1563379091339-03246963d1b3?w=220&h=180&fit=crop&q=80',
-  'Indian Veg':'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=220&h=180&fit=crop&q=80',
-  'Chicken Specialties':'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=220&h=180&fit=crop&q=80',
-  'Mutton':'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=220&h=180&fit=crop&q=80',
-  'BBQ / Tandoor':'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=220&h=180&fit=crop&q=80',
-  'Rolls':'https://images.unsplash.com/photo-1626804475297-41608ea09aeb?w=220&h=180&fit=crop&q=80',
-  'Chinese':'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=220&h=180&fit=crop&q=80',
-  'Noodles':'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=220&h=180&fit=crop&q=80',
-  'Chinese Rice':'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=220&h=180&fit=crop&q=80',
-  'Bread':'https://images.unsplash.com/photo-1633945274405-9b4871eb7950?w=220&h=180&fit=crop&q=80',
-  'Desserts':'https://images.unsplash.com/photo-1601303516534-bf48de5d2a53?w=220&h=180&fit=crop&q=80',
-  'Thali':'https://images.unsplash.com/photo-1567337710282-00832b415979?w=220&h=180&fit=crop&q=80',
-  'Combo Meals':'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=220&h=180&fit=crop&q=80'
-};
-function getDishImg(item) {
-  const n = item.name.toLowerCase();
-  const keys = Object.keys(FOOD_IMG).sort((a,b)=>b.length-a.length);
-  for (const k of keys) { if (n.includes(k)) return FOOD_IMG[k]; }
-  return CAT_IMG[item.category] || null;
-}
-
-
 function getMenuData() {
   const saved = localStorage.getItem(STORAGE_KEY);
   return saved ? JSON.parse(saved) : null;
@@ -822,52 +486,90 @@ function priceDisplay(item) {
   return `<div class="item-price">${priceStr}</div>`;
 }
 
-// ── RENDER ONE SECTION — card grid layout ──
+// ── RENDER ONE SECTION ──
 function renderSection(cfg, items) {
   const available = items.filter(i => i.status !== 'unavailable');
   if (!available.length) return '';
+
   const isChef = (item) => item.isChef || item.chef;
-  const noteHtml = cfg.note ? `<div class="note-strip"><span>✦</span> ${cfg.note}</div>` : '';
-  const dualNoteHtml = cfg.dualNote ? ` · ${cfg.dualNote}` : '';
 
-  let cards = '<div class="card-grid">';
-  available.forEach(item => {
-    const img = getDishImg(item);
-    const chefBadge = isChef(item) ? '<div class="dc-chef-badge">★ Chef's Special</div>' : '';
-    const imgHtml = img
-      ? `<img class="dc-img" src="${img}" loading="lazy" alt="${item.name}"
-           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-         /><div class="dc-img-ph" style="display:none">${cfg.icon}</div>`
-      : `<div class="dc-img-ph">${cfg.icon}</div>`;
+  let inner = '';
 
-    // Price block — dual shows Half/Full pills, single shows price
-    let priceBlock;
-    if (item.price2) {
-      priceBlock = `<div class="dc-dual">
-        <div class="dc-dual-pill"><span class="dp-label">Half</span><span class="dp-price">₹${item.price}</span></div>
-        <div class="dc-dual-pill"><span class="dp-label">Full</span><span class="dp-price">₹${item.price2}</span></div>
-      </div>`;
-    } else {
-      const p = item.price === 0 ? 'MRP' : `₹${item.price}`;
-      priceBlock = `<div class="dc-price">${p}</div>`;
+  if (cfg.style === 'list' || cfg.style === 'dual') {
+    if (cfg.style === 'dual') {
+      inner += `<div class="dual-header"><div class="dual-col">Half</div><div class="dual-col">Full</div></div>`;
     }
+    inner += `<div class="items-list">`;
+    available.forEach(item => {
+      const unavailCls = item.status === 'unavailable' ? ' item-unavail' : '';
+      const chefCls = isChef(item) ? ' chef-special-row' : '';
+      const nameHtml = item.desc
+        ? `<div class="item-name${unavailCls}">${item.name}<small>${item.desc}</small></div>`
+        : `<div class="item-name${unavailCls}">${item.name}</div>`;
+      inner += `<div class="item-row${chefCls}">
+        <div class="item-left">${vegDot(item.type)}${nameHtml}</div>
+        ${priceDisplay(item)}
+        <div data-aw="${item.id}" style="margin-left:8px"></div>
+      </div>`;
+    });
+    inner += `</div>`;
 
-    cards += `<div class="dish-card" id="dc-${item.id}">
-      <div class="dc-img-wrap">${imgHtml}${chefBadge}</div>
-      <div class="dc-body">
-        <div class="dc-top-row">
-          <div class="dc-veg ${item.type === 'veg' ? 'v' : 'n'}"></div>
-          <div class="dc-name">${item.name}</div>
+  } else if (cfg.style === 'featured') {
+    inner += `<div class="items-featured">`;
+    available.forEach(item => {
+      const vegColor = item.type === 'veg' ? '#4caf50' : 'var(--red)';
+      const vegLabel = item.type === 'veg' ? 'Veg' : 'Non-Veg';
+      const priceVal = item.price === 0 ? 'MRP' : `₹${item.price}`;
+      inner += `<div class="item-card">
+        <div class="card-cat">${item.category}</div>
+        <div class="card-name">${item.name}</div>
+        ${item.desc ? `<div class="card-desc">${item.desc}</div>` : '<div class="card-desc">&nbsp;</div>'}
+        <div class="card-footer">
+          <div class="card-price">${priceVal}</div>
+          <div data-aw="${item.id}"></div>
         </div>
-        ${item.desc ? `<div class="dc-desc">${item.desc}</div>` : '<div class="dc-desc" style="min-height:1rem"></div>'}
-        <div class="dc-foot">
-          <div class="dc-price-area">${priceBlock}</div>
-          <div id="daw-${item.id}"></div>
+      </div>`;
+    });
+    inner += `</div>`;
+
+  } else if (cfg.style === 'thali') {
+    inner += `<div class="thali-grid">`;
+    available.forEach(item => {
+      const vegEmoji = item.type === 'veg' ? '🟢' : '🔴';
+      inner += `<div class="thali-card">
+        <div class="thali-name">${item.name} ${vegEmoji}</div>
+        <div class="thali-desc">${item.desc || ''}</div>
+        <div class="thali-card-foot">
+          <div class="thali-price">₹${item.price}</div>
+          <div data-aw="${item.id}"></div>
         </div>
-      </div>
-    </div>`;
-  });
-  cards += '</div>';
+      </div>`;
+    });
+    inner += `</div>`;
+
+  } else if (cfg.style === 'combo') {
+    inner += `<div class="combo-grid">`;
+    available.forEach(item => {
+      const vegEmoji = item.type === 'veg' ? '🟢 Veg Combo' : '🔴 Non Veg Combo';
+      inner += `<div class="combo-card">
+        <div>
+          <div class="combo-card-label">${vegEmoji}</div>
+          <div class="combo-card-name">${item.name}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+          <div class="combo-card-price">₹${item.price}</div>
+          <div data-aw="${item.id}"></div>
+        </div>
+      </div>`;
+    });
+    inner += `</div>`;
+  }
+
+  const noteHtml = cfg.note
+    ? `<div class="note-strip"><span>✦</span> ${cfg.note}</div>`
+    : '';
+  const dualNoteHtml = cfg.dualNote
+    ? ` · ${cfg.dualNote}` : '';
 
   return `
     <div class="menu-section fade-up" id="sec-${cfg.id}">
@@ -879,7 +581,7 @@ function renderSection(cfg, items) {
         </div>
       </div>
       ${noteHtml}
-      ${cards}
+      ${inner}
     </div>
     <div class="ornament-divider">✦ · · ✦ · · ✦</div>`;
 }
@@ -1156,13 +858,14 @@ window.addEventListener('storage', (e) => {
 
 <script>
 // ══════════════════════════════════════════════════════
-//  LAZIZ ORDER SYSTEM
+//  LAZIZ ORDER SYSTEM — layered onto menu page
 // ══════════════════════════════════════════════════════
 const ORDERS_KEY = 'laziz_orders';
-let cart = {};
+let cart = {};       // { itemId: qty }
 let activeTable = null;
 let activePay = 'counter';
 
+// ── ADD / CHANGE QTY ──
 function addToCart(id, price) {
   cart[id] = 1;
   refreshBtn(id, price);
@@ -1175,18 +878,23 @@ function changeQty(id, price, d) {
   refreshBtn(id, price);
   updateCartBar();
 }
+
+// ── REFRESH THE ADD/STEPPER BUTTON for one item ──
 function refreshBtn(id, price) {
-  const el = document.getElementById('daw-' + id);
-  if (!el) return;
+  const els = document.querySelectorAll('[data-aw="' + id + '"]');
   const qty = cart[id] || 0;
-  el.innerHTML = qty > 0
-    ? `<div class="dc-stepper">
-        <button class="dc-sp" onclick="changeQty(${id},${price},-1)">−</button>
-        <span class="dc-sp-num">${qty}</span>
-        <button class="dc-sp" onclick="changeQty(${id},${price},1)">+</button>
-       </div>`
-    : `<button class="dc-add-btn" onclick="addToCart(${id},${price})">+ ADD</button>`;
+  els.forEach(el => {
+    el.innerHTML = qty > 0
+      ? `<div class="stepper">
+          <button class="sp-b" onclick="changeQty(${id},${price},-1)">−</button>
+          <span class="sp-n">${qty}</span>
+          <button class="sp-b" onclick="changeQty(${id},${price},1)">+</button>
+        </div>`
+      : `<button class="add-btn" onclick="addToCart(${id},${price})">ADD +</button>`;
+  });
 }
+
+// ── CART COUNTS ──
 function cartCount() { return Object.values(cart).reduce((a,b)=>a+b,0); }
 function cartTotal() {
   const md = getMenuData() || [];
@@ -1197,20 +905,31 @@ function cartTotal() {
 }
 function clearCart() {
   const md = getMenuData() || [];
-  const ids = Object.keys({...cart});
+  Object.keys(cart).forEach(id => {
+    const it = md.find(m => m.id == id);
+    if (it) refreshBtn(it.id, it.price2||it.price);
+  });
   cart = {};
-  ids.forEach(id => { const it=md.find(m=>m.id==id); if(it) refreshBtn(it.id, it.price2||it.price); });
   updateCartBar();
 }
+
 function updateCartBar() {
   const c = cartCount(), t = cartTotal();
-  document.getElementById('cartBar').classList.toggle('vis', c > 0);
+  const bar = document.getElementById('cartBar');
+  bar.classList.toggle('vis', c > 0);
   document.getElementById('cbInfo').textContent = `${c} item${c!==1?'s':''} · ₹${t}`;
 }
+
+// ── PAGE NAVIGATION ──
 function goToPage(page) {
-  if (['cart','details','payment'].includes(page) && cartCount()===0) { oToast('Add items to cart first!'); return; }
+  if (['cart','details','payment'].includes(page) && cartCount()===0) {
+    oToast('Add items to cart first!'); return;
+  }
+  // Show/hide menu vs extra pages
   const menuEl = document.getElementById('menuRoot');
-  ['cart','details','payment','success'].forEach(p => document.getElementById('ep-'+p).classList.toggle('active', p===page));
+  ['cart','details','payment','success'].forEach(p => {
+    document.getElementById('ep-'+p).classList.toggle('active', p===page);
+  });
   const isMenu = page === 'menu';
   menuEl.style.display = isMenu ? '' : 'none';
   if (!isMenu) window.scrollTo({top:0,behavior:'instant'});
@@ -1218,6 +937,8 @@ function goToPage(page) {
   if (page==='details') { renderMiniSum('detailsSum'); buildTableGrid(); }
   if (page==='payment') renderMiniSum('paymentSum');
 }
+
+// ── TABLE GRID ──
 function buildTableGrid() {
   let h='';
   for(let i=1;i<=20;i++) h+=`<button class="tbl-btn${activeTable===i?' sel':''}" onclick="selTable(${i})"><span class="tn">${i}</span><span class="tl">Table</span></button>`;
@@ -1227,21 +948,28 @@ function selTable(n) {
   activeTable=n;
   document.querySelectorAll('.tbl-btn').forEach((b,i)=>b.classList.toggle('sel',i+1===n));
 }
+
+// ── MINI SUMMARY ──
 function renderMiniSum(id) {
-  const md=getMenuData()||[], sub=cartTotal(), gst=Math.round(sub*.05), tot=sub+gst;
-  const rows=Object.entries(cart).map(([cid,qty])=>{const it=md.find(m=>m.id==cid);return it?`<div class="ms-r"><span>${it.name} ×${qty}</span><span>₹${(it.price2||it.price)*qty}</span></div>`:''}).join('');
+  const md = getMenuData()||[];
+  const sub=cartTotal(),gst=Math.round(sub*.05),tot=sub+gst;
+  const rows=Object.entries(cart).map(([cid,qty])=>{
+    const it=md.find(m=>m.id==cid);
+    return it?`<div class="ms-r"><span>${it.name} ×${qty}</span><span>₹${(it.price2||it.price)*qty}</span></div>`:'';
+  }).join('');
   document.getElementById(id).innerHTML=`<div class="ms-ttl">Order Summary</div>${rows}<div class="ms-tot"><span>Total (incl. GST)</span><span class="mv">₹${tot}</span></div>`;
 }
+
+// ── RENDER CART PAGE ──
 function renderCartPage() {
-  const md=getMenuData()||[];
-  const items=Object.entries(cart).map(([id,qty])=>{const it=md.find(m=>m.id==id);return it?{...it,qty}:null;}).filter(Boolean);
+  const md = getMenuData()||[];
+  const items = Object.entries(cart).map(([id,qty])=>{const it=md.find(m=>m.id==id);return it?{...it,qty}:null;}).filter(Boolean);
   const cb=document.getElementById('cartItemsBlock');
   const ICONS={'Soups':'🍲','Snacks':'🥗','Salad & Raita':'🥗','Rice / Pulao':'🍚','Biryani':'🫕','Indian Veg':'🌿','Chicken Specialties':'🍗','Mutton':'🐑','BBQ / Tandoor':'🔥','Rolls':'🥙','Chinese':'🥢','Noodles':'🍜','Chinese Rice':'🍚','Bread':'🍞','Desserts':'🍮','Thali':'🍱','Combo Meals':'🍱'};
   if(!items.length){cb.innerHTML='<div style="text-align:center;padding:48px 0"><div style="font-size:2.5rem;opacity:.3;margin-bottom:12px">🛒</div><p style="color:rgba(255,255,255,.42);font-size:.82rem">Cart is empty.</p></div>';document.getElementById('cartBillBlock').innerHTML='';return;}
   cb.innerHTML=`<div class="ep-card-ttl">Your Items</div>`+items.map(it=>{
-    const p=it.price2||it.price, img=getDishImg(it);
-    return `<div class="cr-row">
-      ${img?`<img src="${img}" style="width:52px;height:42px;object-fit:cover;border-radius:7px;flex-shrink:0" loading="lazy" onerror="this.style.display='none'" alt=""/>`:`<div style="width:52px;height:42px;border-radius:7px;background:#2a2a2a;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0">${ICONS[it.category]||'🍽'}</div>`}
+    const p=it.price2||it.price;
+    return `<div class="cr-row"><div style="font-size:1.4rem;flex-shrink:0">${ICONS[it.category]||'🍽'}</div>
       <div class="cr-info"><div class="cr-name">${it.name}</div><div class="cr-cat">${it.category}</div></div>
       <div class="cr-price">₹${p*it.qty}</div>
       <div class="cr-stepper"><button class="cr-sp" onclick="changeQty(${it.id},${p},-1);renderCartPage()">−</button><span class="cr-qty">${it.qty}</span><button class="cr-sp" onclick="changeQty(${it.id},${p},1);renderCartPage()">+</button></div>
@@ -1253,18 +981,26 @@ function renderCartPage() {
     <div class="bill-r"><span>GST & charges (5%)</span><span>₹${gst}</span></div>
     <div class="bill-r tot"><span>To pay</span><span class="bv">₹${tot}</span></div>`;
 }
+
+// ── PAY SELECTION ──
 function selPay(type) {
   activePay=type;
-  ['counter','upi','qr'].forEach(t=>{document.getElementById('po-'+t).classList.toggle('sel',t===type);document.getElementById('po-'+t).querySelector('input[type=radio]').checked=(t===type);});
+  ['counter','upi','qr'].forEach(t=>{
+    document.getElementById('po-'+t).classList.toggle('sel',t===type);
+    document.getElementById('po-'+t).querySelector('input[type=radio]').checked=(t===type);
+  });
   document.getElementById('upiPanel').classList.toggle('open',type==='upi');
   document.getElementById('qrPanel').classList.toggle('open',type==='qr');
 }
+
 function goToDetails2(){
   if(!activeTable){oToast('Please select a table!');return;}
   if(!document.getElementById('guestName').value.trim()){oToast('Please enter your name!');return;}
   if(!document.getElementById('guestPhone').value.trim()){oToast('Please enter phone!');return;}
   goToPage('payment');
 }
+
+// ── PLACE ORDER ──
 function placeOrder() {
   if(!activeTable){oToast('No table selected!');return;}
   const md=getMenuData()||[];
@@ -1273,7 +1009,10 @@ function placeOrder() {
   const guests=parseInt(document.getElementById('guestCount').value)||1;
   const note=document.getElementById('orderNote').value.trim();
   const upiId=document.getElementById('upiId').value.trim();
-  const items=Object.entries(cart).map(([id,qty])=>{const it=md.find(m=>m.id==id);const price=it.price2||it.price;return{id:parseInt(id),name:it.name,category:it.category,type:it.type,price,qty,lineTotal:price*qty};});
+  const items=Object.entries(cart).map(([id,qty])=>{
+    const it=md.find(m=>m.id==id);const price=it.price2||it.price;
+    return{id:parseInt(id),name:it.name,category:it.category,type:it.type,price,qty,lineTotal:price*qty};
+  });
   const sub=cartTotal(),gst=Math.round(sub*.05),tot=sub+gst;
   const orderId='LZ-'+Date.now().toString().slice(-6);
   const now=new Date();
@@ -1289,19 +1028,22 @@ function placeOrder() {
     ${note?`<div class="suc-r"><span class="k">Note</span><span class="v">${note}</span></div>`:''}`;
   cart={};updateCartBar();goToPage('success');
 }
+
+// ── TOAST ──
 let _tt;
 function oToast(msg){const el=document.getElementById('oToast');el.textContent=msg;el.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>el.classList.remove('show'),2200);}
-// injectAddButtons — called after renderAllSections
+
+// ── INJECT ADD BUTTONS after menu renders ──
 function injectAddButtons() {
   const md = getMenuData()||[];
-  document.querySelectorAll('[id^="daw-"]').forEach(el=>{
-    const id = parseInt(el.id.replace('daw-',''));
-    const it = md.find(m=>m.id==id);
+  // For every item that has an add-wrap placeholder, inject
+  document.querySelectorAll('[data-aw]').forEach(el=>{
+    const id=parseInt(el.dataset.aw), it=md.find(m=>m.id==id);
     if(!it) return;
-    const price = it.price2||it.price, qty=cart[id]||0;
-    el.innerHTML = qty>0
-      ? `<div class="dc-stepper"><button class="dc-sp" onclick="changeQty(${id},${price},-1)">−</button><span class="dc-sp-num">${qty}</span><button class="dc-sp" onclick="changeQty(${id},${price},1)">+</button></div>`
-      : `<button class="dc-add-btn" onclick="addToCart(${id},${price})">+ ADD</button>`;
+    const price=it.price2||it.price, qty=cart[id]||0;
+    el.innerHTML=qty>0
+      ?`<div class="stepper"><button class="sp-b" onclick="changeQty(${id},${price},-1)">−</button><span class="sp-n">${qty}</span><button class="sp-b" onclick="changeQty(${id},${price},1)">+</button></div>`
+      :`<button class="add-btn" onclick="addToCart(${id},${price})">ADD +</button>`;
   });
 }
 </script>
